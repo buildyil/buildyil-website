@@ -1,0 +1,2350 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buildy IL | buildyil.net | סוכנות דיגיטל מבוססת AI</title>
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;700;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --dark: #080C14;
+    --dark2: #0D1420;
+    --blue: #00AAFF;
+    --blue2: #0077CC;
+    --gold: #FFD700;
+    --white: #FFFFFF;
+    --gray: #8899AA;
+    --card-bg: #0F1923;
+    --border: rgba(0,170,255,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--dark);
+    color: var(--white);
+    font-family: 'Heebo', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* NAVBAR */
+  nav {
+    position: fixed;
+    top: 0; width: 100%;
+    z-index: 100;
+    padding: 18px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(8,12,20,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem;
+    font-weight: 900;
+    color: var(--white);
+    letter-spacing: 1px;
+  }
+
+  .nav-logo span { color: var(--blue); }
+
+  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 0.95rem;
+    font-weight: 500;
+    transition: color 0.3s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--blue);
+    color: var(--dark) !important;
+    padding: 10px 24px;
+    border-radius: 6px;
+    font-weight: 700 !important;
+    transition: background 0.3s !important;
+  }
+  .nav-cta:hover { background: var(--blue2) !important; color: var(--white) !important; }
+
+  /* HAMBURGER */
+  .hamburger {
+    display: none;
+    flex-direction: column;
+    gap: 5px;
+    cursor: pointer;
+    padding: 4px;
+    background: none;
+    border: none;
+  }
+  .hamburger span {
+    display: block;
+    width: 24px; height: 2px;
+    background: var(--white);
+    border-radius: 2px;
+    transition: all 0.3s;
+  }
+  .mobile-menu {
+    display: none;
+    position: fixed;
+    top: 64px; left: 0; right: 0;
+    background: rgba(8,12,20,0.98);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 20px 5%;
+    z-index: 99;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 500;
+    padding: 14px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: block;
+  }
+  .mobile-menu a:last-child { border-bottom: none; color: var(--blue); font-weight: 700; }
+
+  @media (max-width: 600px) {
+    .hamburger { display: flex; }
+    .nav-links { display: none !important; }
+  }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 60px;
+    padding: 120px 5% 80px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse 60% 60% at 20% 50%, rgba(0,120,255,0.12) 0%, transparent 70%),
+                radial-gradient(ellipse 40% 40% at 80% 20%, rgba(255,215,0,0.05) 0%, transparent 60%);
+  }
+
+  .hero-grid {
+    position: absolute;
+    inset: 0;
+    background-image: 
+      linear-gradient(rgba(0,170,255,0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0,170,255,0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  .hero-content {
+    position: relative;
+    max-width: 540px;
+    flex-shrink: 0;
+  }
+
+  /* ===== HERO VISUAL - FLOATING MOCKUPS ===== */
+  .hero-visual {
+    position: relative;
+    width: 460px;
+    height: 420px;
+    flex-shrink: 0;
+  }
+
+  .mockup {
+    position: absolute;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 30px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.07);
+    transition: transform 0.1s ease;
+  }
+
+  .mockup-bar {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 10px 14px;
+    background: rgba(255,255,255,0.06);
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    backdrop-filter: blur(4px);
+  }
+
+  .mdot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .mockup-url {
+    flex: 1;
+    background: rgba(255,255,255,0.06);
+    border-radius: 20px;
+    padding: 3px 12px;
+    font-size: 0.68rem;
+    color: rgba(255,255,255,0.35);
+    text-align: center;
+    font-family: monospace;
+  }
+
+  .mockup-body { overflow: hidden; }
+
+  /* Mockup 1 — Landing page */
+  .mockup-1 {
+    width: 280px;
+    top: 20px; right: 20px;
+    transform: perspective(1200px) rotateY(-12deg) rotateX(4deg);
+    animation: floatA 6s ease-in-out infinite;
+    z-index: 3;
+  }
+
+  .mockup-1 .mockup-body {
+    height: 200px;
+    background: linear-gradient(135deg, #0a0a1a 0%, #0d1535 50%, #0a1628 100%);
+    padding: 14px;
+  }
+
+  .m1-nav { height: 8px; background: rgba(0,170,255,0.15); border-radius: 4px; margin-bottom: 14px; }
+
+  .m1-hero {
+    height: 70px;
+    background: linear-gradient(135deg, rgba(0,120,255,0.2), rgba(0,200,255,0.05));
+    border-radius: 8px;
+    border: 1px solid rgba(0,170,255,0.15);
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+
+  .m1-title { height: 8px; background: rgba(255,255,255,0.6); border-radius: 3px; width: 70%; margin-bottom: 6px; }
+  .m1-sub { height: 5px; background: rgba(255,255,255,0.2); border-radius: 3px; width: 90%; margin-bottom: 4px; }
+  .m1-btn { height: 16px; background: #00AAFF; border-radius: 4px; width: 40%; margin-top: 8px; box-shadow: 0 0 10px rgba(0,170,255,0.4); }
+
+  .m1-cards { display: flex; gap: 6px; }
+  .m1-card { flex: 1; height: 36px; background: rgba(255,255,255,0.05); border: 1px solid rgba(0,170,255,0.1); border-radius: 6px; }
+
+  /* Mockup 2 — Dashboard */
+  .mockup-2 {
+    width: 220px;
+    top: 0; left: 0;
+    transform: perspective(1200px) rotateY(8deg) rotateX(-3deg);
+    animation: floatB 7s ease-in-out infinite;
+    z-index: 2;
+  }
+
+  .mockup-2 .mockup-body {
+    height: 160px;
+    background: #0b0f1a;
+    display: flex;
+    padding: 10px;
+    gap: 8px;
+  }
+
+  .m2-sidebar { width: 28px; display: flex; flex-direction: column; gap: 5px; }
+  .m2-side-item { height: 20px; background: rgba(0,170,255,0.12); border-radius: 4px; }
+  .m2-side-item.active { background: rgba(0,170,255,0.4); }
+
+  .m2-main { flex: 1; }
+  .m2-stat-row { display: flex; gap: 5px; margin-bottom: 8px; }
+  .m2-stat { flex: 1; height: 32px; background: rgba(255,255,255,0.04); border: 1px solid rgba(0,170,255,0.1); border-radius: 5px; }
+
+  .m2-chart { height: 70px; background: rgba(255,255,255,0.03); border-radius: 6px; border: 1px solid rgba(0,170,255,0.08); padding: 8px; position: relative; overflow: hidden; }
+
+  .m2-bar { position: absolute; bottom: 8px; width: 12px; border-radius: 2px 2px 0 0; background: linear-gradient(to top, #00AAFF, rgba(0,170,255,0.3)); }
+
+  /* Mockup 3 — E-commerce */
+  .mockup-3 {
+    width: 180px;
+    bottom: 10px; left: 30px;
+    transform: perspective(1200px) rotateY(5deg) rotateX(6deg);
+    animation: floatC 8s ease-in-out infinite;
+    z-index: 4;
+  }
+
+  .mockup-3 .mockup-body {
+    height: 130px;
+    background: #f8f8ff;
+    padding: 10px;
+  }
+
+  .m3-search { height: 12px; background: #eee; border-radius: 6px; border: 1px solid #ddd; margin-bottom: 10px; }
+  .m3-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+  .m3-item { height: 42px; border-radius: 6px; overflow: hidden; }
+  .m3-item-img { height: 28px; }
+  .m3-item-txt { height: 6px; background: #ddd; border-radius: 2px; margin: 4px 4px 0; }
+
+  /* Floating badges */
+  .tech-badge {
+    position: absolute;
+    background: rgba(13,20,32,0.9);
+    border: 1px solid rgba(0,170,255,0.3);
+    border-radius: 30px;
+    padding: 6px 14px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    color: #00AAFF;
+    font-family: 'Heebo', sans-serif;
+    white-space: nowrap;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
+    z-index: 10;
+  }
+
+  .badge-ai { top: -10px; right: 100px; animation: floatBadge 5s ease-in-out infinite; }
+  .badge-speed { bottom: 60px; right: -10px; animation: floatBadge 5s 1s ease-in-out infinite; }
+  .badge-react { bottom: -5px; right: 120px; animation: floatBadge 5s 2s ease-in-out infinite; }
+
+  .glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(60px);
+    pointer-events: none;
+  }
+  .orb-blue { width: 200px; height: 200px; background: rgba(0,120,255,0.15); top: 50%; left: 50%; transform: translate(-50%,-50%); }
+  .orb-cyan { width: 120px; height: 120px; background: rgba(0,200,200,0.1); top: 0; right: 0; }
+
+  /* Floating animations */
+  @keyframes floatA {
+    0%,100% { transform: perspective(1200px) rotateY(-12deg) rotateX(4deg) translateY(0); }
+    50% { transform: perspective(1200px) rotateY(-12deg) rotateX(4deg) translateY(-14px); }
+  }
+  @keyframes floatB {
+    0%,100% { transform: perspective(1200px) rotateY(8deg) rotateX(-3deg) translateY(0); }
+    50% { transform: perspective(1200px) rotateY(8deg) rotateX(-3deg) translateY(-18px); }
+  }
+  @keyframes floatC {
+    0%,100% { transform: perspective(1200px) rotateY(5deg) rotateX(6deg) translateY(0); }
+    50% { transform: perspective(1200px) rotateY(5deg) rotateX(6deg) translateY(-10px); }
+  }
+  @keyframes floatBadge {
+    0%,100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
+  }
+
+  /* Cursor spotlight */
+  #spotlight {
+    position: fixed;
+    width: 400px; height: 400px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(0,150,255,0.06) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: 0;
+    transform: translate(-50%, -50%);
+    transition: left 0.15s ease, top 0.15s ease;
+  }
+
+  @media (max-width: 1000px) {
+    .hero-visual { display: none; }
+    .hero-content { max-width: 700px; }
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,170,255,0.1);
+    border: 1px solid rgba(0,170,255,0.3);
+    padding: 8px 18px;
+    border-radius: 50px;
+    font-size: 0.85rem;
+    color: var(--blue);
+    font-weight: 500;
+    margin-bottom: 28px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .badge-dot {
+    width: 8px; height: 8px;
+    background: var(--blue);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2.8rem, 6vw, 4.5rem);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 24px;
+    animation: fadeUp 0.8s 0.1s ease both;
+  }
+
+  .hero h1 .accent { color: var(--blue); }
+  .hero h1 .gold { color: var(--gold); }
+
+  .hero-sub {
+    font-size: 1.15rem;
+    color: var(--gray);
+    line-height: 1.7;
+    margin-bottom: 40px;
+    max-width: 560px;
+    font-weight: 300;
+    animation: fadeUp 0.8s 0.2s ease both;
+  }
+
+  .hero-btns {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    animation: fadeUp 0.8s 0.3s ease both;
+  }
+
+  .btn-primary {
+    background: var(--blue);
+    color: var(--dark);
+    padding: 16px 36px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .btn-primary:hover {
+    background: var(--white);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(0,170,255,0.3);
+  }
+
+  .btn-secondary {
+    background: transparent;
+    color: var(--white);
+    padding: 16px 36px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.2);
+    transition: all 0.3s;
+  }
+
+  .btn-secondary:hover {
+    border-color: var(--blue);
+    color: var(--blue);
+    transform: translateY(-2px);
+  }
+
+  /* STATS */
+  .stats {
+    padding: 60px 5%;
+    border-top: 1px solid var(--border);
+    border-bottom: 1px solid var(--border);
+    background: var(--dark2);
+  }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 40px;
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 2.8rem;
+    font-weight: 900;
+    color: var(--blue);
+    display: block;
+  }
+
+  .stat-label {
+    font-size: 0.9rem;
+    color: var(--gray);
+    margin-top: 6px;
+    font-weight: 400;
+  }
+
+  /* SERVICES */
+  .section {
+    padding: 100px 5%;
+  }
+
+  .section-header {
+    text-align: center;
+    margin-bottom: 60px;
+  }
+
+  .section-tag {
+    display: inline-block;
+    background: rgba(0,170,255,0.1);
+    color: var(--blue);
+    border: 1px solid rgba(0,170,255,0.25);
+    padding: 6px 18px;
+    border-radius: 50px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3rem);
+    font-weight: 900;
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .section-sub {
+    color: var(--gray);
+    font-size: 1.05rem;
+    font-weight: 300;
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.7;
+  }
+
+  .services-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 24px;
+  }
+
+  .service-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 36px 28px;
+    transition: all 0.4s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .service-card::before {
+    content: '';
+    position: absolute;
+    top: 0; right: 0;
+    width: 100%; height: 2px;
+    background: linear-gradient(90deg, transparent, var(--blue), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .service-card:hover {
+    border-color: rgba(0,170,255,0.4);
+    transform: translateY(-6px);
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  .service-card:hover::before { opacity: 1; }
+
+  .service-icon {
+    font-size: 2.4rem;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .service-title {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--white);
+  }
+
+  .service-desc {
+    color: var(--gray);
+    font-size: 0.92rem;
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  /* WHY US */
+  .why-section {
+    background: var(--dark2);
+    padding: 100px 5%;
+  }
+
+  .why-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    align-items: center;
+  }
+
+  .why-list { list-style: none; }
+
+  .why-item {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    padding: 24px 0;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .why-item:last-child { border-bottom: none; }
+
+  .why-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--blue);
+    opacity: 0.4;
+    min-width: 44px;
+    line-height: 1;
+  }
+
+  .why-text h3 {
+    font-size: 1.05rem;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+
+  .why-text p {
+    color: var(--gray);
+    font-size: 0.92rem;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  .why-visual {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px;
+    text-align: center;
+  }
+
+  .big-stat {
+    font-family: 'Playfair Display', serif;
+    font-size: 5rem;
+    font-weight: 900;
+    color: var(--blue);
+    line-height: 1;
+    margin-bottom: 12px;
+  }
+
+  .big-stat-label {
+    font-size: 1rem;
+    color: var(--gray);
+    margin-bottom: 40px;
+    font-weight: 300;
+  }
+
+  .mini-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    margin-top: 20px;
+  }
+
+  .mini-stat {
+    background: rgba(0,170,255,0.06);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px;
+  }
+
+  .mini-stat-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--gold);
+  }
+
+  .mini-stat-label {
+    font-size: 0.8rem;
+    color: var(--gray);
+    margin-top: 4px;
+  }
+
+  /* PROCESS */
+  .process-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+    position: relative;
+  }
+
+  .process-card {
+    text-align: center;
+    padding: 36px 24px;
+    position: relative;
+  }
+
+  .process-num {
+    width: 56px; height: 56px;
+    background: rgba(0,170,255,0.12);
+    border: 2px solid rgba(0,170,255,0.3);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 900;
+    color: var(--blue);
+    margin: 0 auto 24px;
+  }
+
+  .process-title {
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 12px;
+  }
+
+  .process-desc {
+    color: var(--gray);
+    font-size: 0.88rem;
+    line-height: 1.6;
+    font-weight: 300;
+  }
+
+  /* CTA */
+  .cta-section {
+    padding: 100px 5%;
+    text-align: center;
+    background: var(--dark2);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute;
+    top: 50%; left: 50%;
+    transform: translate(-50%, -50%);
+    width: 800px; height: 400px;
+    background: radial-gradient(ellipse, rgba(0,120,255,0.12) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  .cta-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 4vw, 3.2rem);
+    font-weight: 900;
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  .cta-sub {
+    color: var(--gray);
+    font-size: 1.1rem;
+    margin-bottom: 48px;
+    font-weight: 300;
+    position: relative;
+  }
+
+  .cta-btns {
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    flex-wrap: wrap;
+    position: relative;
+  }
+
+  .btn-whatsapp {
+    background: #25D366;
+    color: var(--white);
+    padding: 18px 40px;
+    border-radius: 8px;
+    font-size: 1.05rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.3s;
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .btn-whatsapp:hover {
+    background: #1da851;
+    transform: translateY(-2px);
+    box-shadow: 0 12px 40px rgba(37,211,102,0.3);
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 48px 5%;
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .footer-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.4rem;
+    font-weight: 900;
+  }
+
+  .footer-logo span { color: var(--blue); }
+
+  .footer-links {
+    display: flex;
+    gap: 28px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    color: var(--gray);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--blue); }
+
+  .footer-copy {
+    color: var(--gray);
+    font-size: 0.85rem;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .fade-up {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+
+  .fade-up.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ===== RESPONSIVE ===== */
+
+  /* Tablet */
+  @media (max-width: 900px) {
+    .nav-links { display: none; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+    .services-grid { grid-template-columns: 1fr 1fr; }
+    .why-grid { grid-template-columns: 1fr; gap: 40px; }
+    .process-grid { grid-template-columns: 1fr 1fr; }
+    .section { padding: 70px 5%; }
+    .why-section { padding: 70px 5%; }
+    .cta-section { padding: 70px 5%; }
+    footer { flex-direction: column; text-align: center; gap: 16px; }
+    .footer-links { flex-wrap: wrap; justify-content: center; gap: 16px; }
+  }
+
+  /* Mobile */
+  @media (max-width: 600px) {
+    /* NAV */
+    nav { padding: 14px 5%; }
+    .nav-logo { font-size: 1.3rem; }
+
+    /* HERO */
+    .hero {
+      padding: 100px 5% 60px;
+      flex-direction: column;
+      justify-content: center;
+      text-align: center;
+      min-height: auto;
+    }
+    .hero-content { max-width: 100%; }
+    .hero h1 { font-size: clamp(2rem, 8vw, 2.8rem); }
+    .hero-sub { font-size: 1rem; margin-bottom: 28px; }
+    .hero-btns { flex-direction: column; align-items: center; }
+    .btn-primary, .btn-secondary { width: 100%; justify-content: center; text-align: center; }
+    .hero-badge { font-size: 0.78rem; }
+    .hero-visual { display: none; }
+
+    /* STATS */
+    .stats { padding: 40px 5%; }
+    .stats-grid { grid-template-columns: repeat(2, 1fr); gap: 20px; }
+    .stat-num { font-size: 2rem; }
+    .stat-label { font-size: 0.8rem; }
+
+    /* SECTIONS */
+    .section { padding: 60px 5%; }
+    .why-section { padding: 60px 5%; }
+    .cta-section { padding: 60px 5%; }
+    .section-title { font-size: clamp(1.6rem, 5vw, 2.2rem); }
+    .section-sub { font-size: 0.95rem; }
+
+    /* SERVICES */
+    .services-grid { grid-template-columns: 1fr; gap: 16px; }
+    .service-card { padding: 28px 20px; }
+
+    /* WHY */
+    .why-grid { grid-template-columns: 1fr; gap: 32px; }
+    .why-section .section-header { text-align: center; }
+    .big-stat { font-size: 3.5rem; }
+    .mini-stats { grid-template-columns: 1fr 1fr; gap: 12px; }
+    .why-visual { padding: 28px 20px; }
+    .why-item { gap: 14px; padding: 18px 0; }
+    .why-num { font-size: 1.4rem; min-width: 34px; }
+
+    /* PROCESS */
+    .process-grid { grid-template-columns: 1fr; gap: 8px; }
+    .process-card { padding: 24px 16px; }
+
+    /* CTA */
+    .cta-title { font-size: clamp(1.6rem, 5vw, 2.2rem); }
+    .cta-sub { font-size: 0.95rem; }
+    .cta-btns { flex-direction: column; align-items: center; }
+    .btn-whatsapp { width: 100%; justify-content: center; }
+    .btn-secondary { width: 100%; text-align: center; }
+
+    /* FOOTER */
+    footer { flex-direction: column; text-align: center; gap: 16px; padding: 36px 5%; }
+    .footer-links { flex-wrap: wrap; justify-content: center; gap: 12px; }
+    .footer-copy { font-size: 0.78rem; }
+
+    /* ACCESSIBILITY BTN */
+    #access-btn { bottom: 20px; right: 16px; width: 44px; height: 44px; font-size: 1.2rem; }
+    /* WHATSAPP FLOAT BTN */
+    #whatsapp-float { bottom: 20px; left: 16px; width: 44px; height: 44px; }
+    #whatsapp-float svg { width: 24px; height: 24px; }
+  }
+  /* Portfolio Mobile */
+  @media(max-width:768px){
+    #portfolio .lp-grid{grid-template-columns:1fr !important;}
+    #portfolio .sites-grid{grid-template-columns:1fr 1fr !important;}
+    #portfolio{padding:60px 4% !important;}
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">Buildy <span>IL</span></div>
+  <ul class="nav-links">
+    <li><a href="javascript:void(0)" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">שירותים</a></li>
+    <li><a href="javascript:void(0)" onclick="document.getElementById('pricing').scrollIntoView({behavior:'smooth'})">מחירון</a></li>
+    <li><a href="javascript:void(0)" onclick="document.getElementById('portfolio').scrollIntoView({behavior:'smooth'})">עבודות</a></li>
+    <li><a href="javascript:void(0)" onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})">למה אנחנו</a></li>
+    <li><a href="javascript:void(0)" onclick="document.getElementById('process').scrollIntoView({behavior:'smooth'})">תהליך</a></li>
+    <li><a href="javascript:void(0)" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})" class="nav-cta">צור קשר</a></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="תפריט">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobile-menu">
+  <a href="javascript:void(0)" onclick="menuNav('services')">🛠️ שירותים</a>
+  <a href="javascript:void(0)" onclick="menuNav('pricing')">💰 מחירון</a>
+  <a href="javascript:void(0)" onclick="menuNav('why')">⭐ למה אנחנו</a>
+  <a href="javascript:void(0)" onclick="menuNav('process')">📋 תהליך</a>
+  <a href="javascript:void(0)" onclick="menuNav('contact')">💬 צור קשר</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-grid"></div>
+  <div class="hero-content">
+    <div class="hero-badge">
+      <span class="badge-dot"></span>
+      מבוסס בינה מלאכותית · AI Powered
+    </div>
+    <h1>
+      הנוכחות הדיגיטלית שלך<br>
+      <span class="accent">מהירה. חכמה.</span><br>
+      <span class="gold">מרשימה.</span>
+    </h1>
+    <p class="hero-sub">
+      אתרים, דפי נחיתה, מצגות משקיעים ותוכן שיווקי – הכל בידיים אחת, מבוסס על הטכנולוגיה המתקדמת ביותר. 
+      מסירה תוך ימים, לא שבועות.
+    </p>
+    <div class="hero-btns">
+      <a href="https://wa.me/972542603160" class="btn-primary">🚀 בואו נתחיל</a>
+      <a href="javascript:void(0)" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})" class="btn-secondary">הכירו את השירותים ←</a>
+    </div>
+  </div>
+
+  <!-- FLOATING MOCKUPS -->
+  <div class="hero-visual" id="hero-visual">
+    <div class="glow-orb orb-blue"></div>
+    <div class="glow-orb orb-cyan"></div>
+
+    <!-- Badge: AI -->
+    <div class="tech-badge badge-ai">✦ Claude AI</div>
+    <!-- Badge: Speed -->
+    <div class="tech-badge badge-speed">⚡ 48h Delivery</div>
+    <!-- Badge: React -->
+    <div class="tech-badge badge-react">🎨 Premium Design</div>
+
+    <!-- Mockup 1: Landing Page -->
+    <div class="mockup mockup-1">
+      <div class="mockup-bar">
+        <span class="mdot" style="background:#FF5F57"></span>
+        <span class="mdot" style="background:#FFBD2E"></span>
+        <span class="mdot" style="background:#28C840"></span>
+        <div class="mockup-url">buildyil.net</div>
+      </div>
+      <div class="mockup-body">
+        <div class="m1-nav"></div>
+        <div class="m1-hero">
+          <div class="m1-title"></div>
+          <div class="m1-sub"></div>
+          <div class="m1-sub" style="width:70%"></div>
+          <div class="m1-btn"></div>
+        </div>
+        <div class="m1-cards">
+          <div class="m1-card"></div>
+          <div class="m1-card"></div>
+          <div class="m1-card"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mockup 2: Dashboard -->
+    <div class="mockup mockup-2">
+      <div class="mockup-bar">
+        <span class="mdot" style="background:#FF5F57"></span>
+        <span class="mdot" style="background:#FFBD2E"></span>
+        <span class="mdot" style="background:#28C840"></span>
+        <div class="mockup-url">dashboard.app</div>
+      </div>
+      <div class="mockup-body">
+        <div class="m2-sidebar">
+          <div class="m2-side-item active"></div>
+          <div class="m2-side-item"></div>
+          <div class="m2-side-item"></div>
+          <div class="m2-side-item"></div>
+        </div>
+        <div class="m2-main">
+          <div class="m2-stat-row">
+            <div class="m2-stat"></div>
+            <div class="m2-stat"></div>
+            <div class="m2-stat"></div>
+          </div>
+          <div class="m2-chart">
+            <div class="m2-bar" style="height:40%;left:10px;"></div>
+            <div class="m2-bar" style="height:65%;left:28px;"></div>
+            <div class="m2-bar" style="height:45%;left:46px;"></div>
+            <div class="m2-bar" style="height:80%;left:64px;"></div>
+            <div class="m2-bar" style="height:55%;left:82px;"></div>
+            <div class="m2-bar" style="height:90%;left:100px;background:linear-gradient(to top,#FFD700,rgba(255,215,0,0.3))"></div>
+            <div class="m2-bar" style="height:70%;left:118px;"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mockup 3: E-commerce -->
+    <div class="mockup mockup-3">
+      <div class="mockup-bar" style="background:#f0f0f8; border-bottom:1px solid #e0e0f0;">
+        <span class="mdot" style="background:#FF5F57"></span>
+        <span class="mdot" style="background:#FFBD2E"></span>
+        <span class="mdot" style="background:#28C840"></span>
+        <div class="mockup-url" style="background:#e8e8f8; color:#888;">shop.store</div>
+      </div>
+      <div class="mockup-body">
+        <div class="m3-search"></div>
+        <div class="m3-grid">
+          <div class="m3-item"><div class="m3-item-img" style="background:linear-gradient(135deg,#667eea,#764ba2)"></div><div class="m3-item-txt"></div></div>
+          <div class="m3-item"><div class="m3-item-img" style="background:linear-gradient(135deg,#f093fb,#f5576c)"></div><div class="m3-item-txt"></div></div>
+          <div class="m3-item"><div class="m3-item-img" style="background:linear-gradient(135deg,#4facfe,#00f2fe)"></div><div class="m3-item-txt"></div></div>
+          <div class="m3-item"><div class="m3-item-img" style="background:linear-gradient(135deg,#43e97b,#38f9d7)"></div><div class="m3-item-txt"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<section class="stats">
+  <div class="stats-grid">
+    <div class="fade-up">
+      <span class="stat-num">48h</span>
+      <span class="stat-label">זמן מסירה ממוצע</span>
+    </div>
+    <div class="fade-up">
+      <span class="stat-num">8+</span>
+      <span class="stat-label">סוגי שירותים</span>
+    </div>
+    <div class="fade-up">
+      <span class="stat-num">AI</span>
+      <span class="stat-label">טכנולוגיה מתקדמת</span>
+    </div>
+    <div class="fade-up">
+      <span class="stat-num">100%</span>
+      <span class="stat-label">מותאם אישית</span>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="section" id="services">
+  <div class="section-header fade-up">
+    <span class="section-tag">השירותים שלנו</span>
+    <h2 class="section-title">כל מה שהעסק שלך צריך</h2>
+    <p class="section-sub">פתרון דיגיטלי מלא תחת קורת גג אחת – בלי לרוץ בין ספקים שונים</p>
+  </div>
+
+  <div class="services-grid">
+    <div class="service-card fade-up">
+      <span class="service-icon">🌐</span>
+      <h3 class="service-title">אתרי תדמית</h3>
+      <p class="service-desc">אתר מקצועי ומעוצב שמייצג את העסק שלך 24/7. מותאם לנייד, מהיר וממיר מבקרים ללקוחות.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-icon">🎯</span>
+      <h3 class="service-title">דפי נחיתה</h3>
+      <p class="service-desc">דפי נחיתה ממוקדים שמייצרים לידים. כל דף בנוי לפי קמפיין ספציפי עם קריאה ברורה לפעולה.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-icon">📊</span>
+      <h3 class="service-title">מצגות עסקיות</h3>
+      <p class="service-desc">מצגות מקצועיות לפגישות, הצגות מוצר ועדכוני צוות. עיצוב מרשים שמדבר בשם העסק שלך.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-icon">💼</span>
+      <h3 class="service-title">מצגות משקיעים</h3>
+      <p class="service-desc">Pitch Deck מנצח שמספר את הסיפור של הסטארטאפ שלך בצורה שמשקיעים רוצים לשמוע.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-icon">📖</span>
+      <h3 class="service-title">ספרים דיגיטליים</h3>
+      <p class="service-desc">eBooks ומדריכים דיגיטליים שמציבים אותך כמומחה בתחום ומייצרים לידים איכותיים.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-icon">✍️</span>
+      <h3 class="service-title">תוכן שיווקי</h3>
+      <p class="service-desc">קופירייטינג, פוסטים לרשתות חברתיות, ניוזלטרים וסקריפטים לסרטונים שמדברים לקהל שלך.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-icon">🎨</span>
+      <h3 class="service-title">מיתוג דיגיטלי</h3>
+      <p class="service-desc">שם עסק, סלוגן, לוגו, פלטת צבעים וזהות ויזואלית שנשארת בזכרון ומבדלת אותך מהמתחרים.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-icon">🤖</span>
+      <h3 class="service-title">בוטים ואוטומציות</h3>
+      <p class="service-desc">צ'אטבוט חכם לאתר שלך, מענה אוטומטי ותהליכי עבודה שחוסכים שעות בשבוע.</p>
+    </div>
+    <div class="service-card fade-up">
+      <span class="service-icon">📦</span>
+      <h3 class="service-title">חבילת ניהול חודשית</h3>
+      <p class="service-desc">ניהול שוטף של התוכן הדיגיטלי שלך – עדכוני אתר, פוסטים שבועיים ודוחות ביצועים.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PRICING SECTION ===== -->
+<style>
+  #pricing {
+    padding: 100px 6%;
+    background: linear-gradient(180deg, var(--dark) 0%, #0A1018 100%);
+    position: relative;
+    overflow: hidden;
+  }
+  #pricing::before {
+    content: '';
+    position: absolute;
+    top: -200px;
+    right: -100px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(0,170,255,0.05), transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  #pricing::after {
+    content: '';
+    position: absolute;
+    bottom: -200px;
+    left: -100px;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(255,215,0,0.04), transparent 60%);
+    border-radius: 50%;
+    pointer-events: none;
+  }
+  .pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    z-index: 1;
+  }
+  .price-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 28px 24px;
+    transition: all 0.3s ease;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+  }
+  .price-card:hover {
+    transform: translateY(-6px);
+    border-color: var(--blue);
+    box-shadow: 0 16px 48px rgba(0,170,255,0.15);
+  }
+  .price-card.featured {
+    background: linear-gradient(180deg, rgba(0,170,255,0.08), rgba(0,170,255,0.02));
+    border-color: var(--blue);
+  }
+  .price-card.featured::before {
+    content: 'הכי פופולרי';
+    position: absolute;
+    top: -12px;
+    right: 20px;
+    background: linear-gradient(135deg, var(--gold), #FFA500);
+    color: #080C14;
+    font-size: 0.7rem;
+    font-weight: 900;
+    padding: 5px 12px;
+    border-radius: 20px;
+    letter-spacing: 1px;
+  }
+  .price-icon {
+    font-size: 2.4rem;
+    margin-bottom: 14px;
+    display: block;
+  }
+  .price-name {
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--white);
+    margin-bottom: 8px;
+  }
+  .price-desc {
+    font-size: 0.85rem;
+    color: var(--gray);
+    line-height: 1.6;
+    margin-bottom: 18px;
+    min-height: 40px;
+  }
+  .price-value {
+    font-size: 1.8rem;
+    font-weight: 900;
+    color: var(--blue);
+    margin-bottom: 4px;
+    font-family: 'Playfair Display', serif;
+  }
+  .price-value .currency {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-left: 2px;
+  }
+  .price-monthly {
+    font-size: 0.78rem;
+    color: var(--gold);
+    margin-bottom: 18px;
+    font-weight: 600;
+  }
+  .price-features {
+    list-style: none;
+    padding: 0;
+    margin-bottom: 22px;
+    flex: 1;
+  }
+  .price-features li {
+    font-size: 0.84rem;
+    color: rgba(240,248,255,0.7);
+    padding: 6px 0;
+    padding-right: 22px;
+    position: relative;
+    line-height: 1.4;
+  }
+  .price-features li::before {
+    content: '✓';
+    position: absolute;
+    right: 0;
+    color: var(--blue);
+    font-weight: 900;
+  }
+  .price-cta {
+    display: block;
+    text-align: center;
+    background: rgba(0,170,255,0.1);
+    border: 1px solid var(--blue);
+    color: var(--blue);
+    padding: 12px;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 0.9rem;
+    transition: all 0.2s;
+  }
+  .price-cta:hover {
+    background: var(--blue);
+    color: var(--white);
+  }
+  .price-card.featured .price-cta {
+    background: linear-gradient(135deg, var(--blue), var(--blue2));
+    color: var(--white);
+  }
+  .price-card.featured .price-cta:hover {
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(0,170,255,0.4);
+  }
+  .pricing-note {
+    text-align: center;
+    margin-top: 50px;
+    padding: 24px;
+    background: rgba(255,215,0,0.05);
+    border: 1px solid rgba(255,215,0,0.2);
+    border-radius: 14px;
+    max-width: 800px;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+    z-index: 1;
+  }
+  .pricing-note h4 {
+    color: var(--gold);
+    font-size: 1rem;
+    font-weight: 700;
+    margin-bottom: 10px;
+  }
+  .pricing-note p {
+    color: rgba(240,248,255,0.7);
+    font-size: 0.88rem;
+    line-height: 1.7;
+  }
+  @media (max-width: 768px) {
+    #pricing { padding: 60px 4%; }
+    .pricing-grid { grid-template-columns: 1fr; gap: 16px; }
+    .price-card { padding: 24px 20px; }
+    .price-desc { min-height: auto; }
+  }
+</style>
+
+<section id="pricing">
+  <div class="section-header fade-up">
+    <span class="section-tag">המחירון שלנו</span>
+    <h2 class="section-title">מחירים שקופים<br>בלי הפתעות</h2>
+    <p class="section-sub">המחיר שאתה רואה הוא המחיר שאתה משלם – ללא עלויות נסתרות, עם תיקונים ללא הגבלה</p>
+  </div>
+
+  <div class="pricing-grid">
+
+    <!-- 1 -->
+    <div class="price-card fade-up">
+      <span class="price-icon">🎯</span>
+      <div class="price-name">דף נחיתה פשוט</div>
+      <p class="price-desc">דף ממיר ממוקד מטרה אחת</p>
+      <div class="price-value">800<span class="currency">₪</span></div>
+      <ul class="price-features">
+        <li>עיצוב מותאם אישית</li>
+        <li>מותאם לנייד 100%</li>
+        <li>טופס יצירת קשר</li>
+        <li>מסירה תוך 48 שעות</li>
+      </ul>
+      <a href="https://wa.me/972542603160?text=שלום, מעוניין בדף נחיתה פשוט" class="price-cta">הזמן עכשיו ←</a>
+    </div>
+
+    <!-- 2 - Featured -->
+    <div class="price-card featured fade-up">
+      <span class="price-icon">🚀</span>
+      <div class="price-name">דף נחיתה מתקדם</div>
+      <p class="price-desc">עם אנימציות, חיבור לוואטסאפ ועיצוב פרימיום</p>
+      <div class="price-value">1,200-1,500<span class="currency">₪</span></div>
+      <ul class="price-features">
+        <li>אנימציות מתקדמות</li>
+        <li>חיבור ישיר לוואטסאפ</li>
+        <li>SEO בסיסי</li>
+        <li>אנליטיקס + פיקסל</li>
+        <li>מסירה תוך 48 שעות</li>
+      </ul>
+      <a href="https://wa.me/972542603160?text=שלום, מעוניין בדף נחיתה מתקדם" class="price-cta">הזמן עכשיו ←</a>
+    </div>
+
+    <!-- 3 -->
+    <div class="price-card fade-up">
+      <span class="price-icon">🌐</span>
+      <div class="price-name">אתר תדמית בסיסי</div>
+      <p class="price-desc">עד 5 עמודים – לעסקים קטנים</p>
+      <div class="price-value">2,000-2,500<span class="currency">₪</span></div>
+      <ul class="price-features">
+        <li>עד 5 עמודים</li>
+        <li>עיצוב מודרני ומותאם אישית</li>
+        <li>תפריט ניווט וטופס יצירת קשר</li>
+        <li>מסירה תוך 3-5 ימים</li>
+      </ul>
+      <a href="https://wa.me/972542603160?text=שלום, מעוניין באתר תדמית בסיסי" class="price-cta">הזמן עכשיו ←</a>
+    </div>
+
+    <!-- 4 - Featured -->
+    <div class="price-card featured fade-up">
+      <span class="price-icon">💎</span>
+      <div class="price-name">אתר תדמית מלא</div>
+      <p class="price-desc">עד 10 עמודים – עיצוב פרימיום מלא</p>
+      <div class="price-value">3,000-4,000<span class="currency">₪</span></div>
+      <ul class="price-features">
+        <li>עד 10 עמודים</li>
+        <li>עיצוב פרימיום + אנימציות</li>
+        <li>בלוג / גלריה / סקשנים מתקדמים</li>
+        <li>SEO מתקדם</li>
+        <li>מסירה תוך 3-5 ימים</li>
+      </ul>
+      <a href="https://wa.me/972542603160?text=שלום, מעוניין באתר תדמית מלא" class="price-cta">הזמן עכשיו ←</a>
+    </div>
+
+    <!-- 5 -->
+    <div class="price-card fade-up">
+      <span class="price-icon">📊</span>
+      <div class="price-name">מצגת עסקית</div>
+      <p class="price-desc">למוצרים, שירותים והצגות לקוח</p>
+      <div class="price-value">800-1,200<span class="currency">₪</span></div>
+      <ul class="price-features">
+        <li>עיצוב מקצועי</li>
+        <li>עד 20 שקפים</li>
+        <li>גרפיקות והדמיות</li>
+        <li>מסירה תוך 24-48 שעות</li>
+      </ul>
+      <a href="https://wa.me/972542603160?text=שלום, מעוניין במצגת עסקית" class="price-cta">הזמן עכשיו ←</a>
+    </div>
+
+    <!-- 6 -->
+    <div class="price-card fade-up">
+      <span class="price-icon">💼</span>
+      <div class="price-name">מצגת משקיעים</div>
+      <p class="price-desc">Pitch Deck לגיוס הון</p>
+      <div class="price-value">1,500-2,000<span class="currency">₪</span></div>
+      <ul class="price-features">
+        <li>סטוריטלינג אסטרטגי</li>
+        <li>גרפים ונתונים פיננסיים</li>
+        <li>עיצוב ברמת משקיעים</li>
+        <li>תבנית לעדכונים עתידיים</li>
+      </ul>
+      <a href="https://wa.me/972542603160?text=שלום, מעוניין במצגת משקיעים" class="price-cta">הזמן עכשיו ←</a>
+    </div>
+
+    <!-- 7 -->
+    <div class="price-card fade-up">
+      <span class="price-icon">📖</span>
+      <div class="price-name">ספר דיגיטלי / eBook</div>
+      <p class="price-desc">מדריך מעוצב להובלת קהל</p>
+      <div class="price-value">500-1,200<span class="currency">₪</span></div>
+      <ul class="price-features">
+        <li>עיצוב פרימיום</li>
+        <li>אינטראקטיביות</li>
+        <li>PDF מותאם להורדה</li>
+        <li>תוכן + עיצוב</li>
+      </ul>
+      <a href="https://wa.me/972542603160?text=שלום, מעוניין בספר דיגיטלי" class="price-cta">הזמן עכשיו ←</a>
+    </div>
+
+    <!-- 8 -->
+    <div class="price-card fade-up">
+      <span class="price-icon">✍️</span>
+      <div class="price-name">תוכן שיווקי</div>
+      <p class="price-desc">פוסטים לרשתות וקופירייטינג</p>
+      <div class="price-value">300-800<span class="currency">₪</span></div>
+      <ul class="price-features">
+        <li>פוסטים לאינסטגרם / פייסבוק</li>
+        <li>קופי שמייצר תוצאות</li>
+        <li>סקריפטים לסרטונים</li>
+        <li>מסירה תוך 24 שעות</li>
+      </ul>
+      <a href="https://wa.me/972542603160?text=שלום, מעוניין בתוכן שיווקי" class="price-cta">הזמן עכשיו ←</a>
+    </div>
+
+    <!-- 9 -->
+    <div class="price-card fade-up">
+      <span class="price-icon">🎨</span>
+      <div class="price-name">מיתוג דיגיטלי</div>
+      <p class="price-desc">לוגו + זהות ויזואלית מלאה</p>
+      <div class="price-value">500-1,500<span class="currency">₪</span></div>
+      <ul class="price-features">
+        <li>לוגו ב-3 וריאציות</li>
+        <li>פלטת צבעים</li>
+        <li>טיפוגרפיה</li>
+        <li>מדריך מותג</li>
+      </ul>
+      <a href="https://wa.me/972542603160?text=שלום, מעוניין במיתוג דיגיטלי" class="price-cta">הזמן עכשיו ←</a>
+    </div>
+
+    <!-- 10 -->
+    <div class="price-card fade-up">
+      <span class="price-icon">🤖</span>
+      <div class="price-name">בוט AI לאתר</div>
+      <p class="price-desc">מענה אוטומטי 24/7 מבוסס בינה מלאכותית</p>
+      <div class="price-value">500-1,000<span class="currency">₪</span></div>
+      <div class="price-monthly">+ 100-200 ₪ לחודש</div>
+      <ul class="price-features">
+        <li>אינטגרציה מלאה עם האתר</li>
+        <li>אימון לפי המידע של העסק</li>
+        <li>תמיכה רב-לשונית</li>
+        <li>אנליטיקס שיחות</li>
+      </ul>
+      <a href="https://wa.me/972542603160?text=שלום, מעוניין בבוט AI לאתר" class="price-cta">הזמן עכשיו ←</a>
+    </div>
+
+    <!-- 11 -->
+    <div class="price-card fade-up">
+      <span class="price-icon">📦</span>
+      <div class="price-name">חבילת ניהול חודשית</div>
+      <p class="price-desc">ניהול שוטף של הדיגיטל שלך</p>
+      <div class="price-value">800-2,000<span class="currency">₪</span></div>
+      <div class="price-monthly">לחודש</div>
+      <ul class="price-features">
+        <li>עדכוני אתר שוטפים</li>
+        <li>פוסטים שבועיים</li>
+        <li>דוחות ביצועים</li>
+        <li>תמיכה רציפה</li>
+      </ul>
+      <a href="https://wa.me/972542603160?text=שלום, מעוניין בחבילת ניהול חודשית" class="price-cta">הזמן עכשיו ←</a>
+    </div>
+
+    <!-- 12 -->
+    <div class="price-card fade-up">
+      <span class="price-icon">📈</span>
+      <div class="price-name">SEO ואופטימיזציה</div>
+      <p class="price-desc">קידום אורגני בגוגל</p>
+      <div class="price-value">500-1,500<span class="currency">₪</span></div>
+      <div class="price-monthly">לחודש</div>
+      <ul class="price-features">
+        <li>מחקר מילות מפתח</li>
+        <li>אופטימיזציה טכנית</li>
+        <li>בניית קישורים</li>
+        <li>דוחות חודשיים</li>
+      </ul>
+      <a href="https://wa.me/972542603160?text=שלום, מעוניין בקידום SEO" class="price-cta">הזמן עכשיו ←</a>
+    </div>
+
+  </div>
+
+  <div class="pricing-note fade-up">
+    <h4>✨ מה כלול בכל חבילה?</h4>
+    <p>שיחת ייעוץ ראשונה <strong>חינם לגמרי</strong> · תיקונים <strong>ללא הגבלה</strong> עד שאתם מרוצים · תשלום מחצית מראש, מחצית במסירה · ליווי מלא לאחר המסירה</p>
+  </div>
+</section>
+
+<!-- WHY US -->
+<section class="why-section" id="why">
+  <div class="why-grid">
+    <div class="fade-up">
+      <div class="section-header" style="text-align:right; margin-bottom:40px;">
+        <span class="section-tag">למה Buildy IL</span>
+        <h2 class="section-title">הפתרון שסוכנויות<br>רגילות לא יכולות לתת</h2>
+      </div>
+      <ul class="why-list">
+        <li class="why-item">
+          <span class="why-num">01</span>
+          <div class="why-text">
+            <h3>מהירות שאין כמותה</h3>
+            <p>בזמן שסוכנות רגילה מסיימת את הבריף, אנחנו כבר מסרנו את המוצר הסופי. 48 שעות מרגע ההזמנה.</p>
+          </div>
+        </li>
+        <li class="why-item">
+          <span class="why-num">02</span>
+          <div class="why-text">
+            <h3>AI + יצירתיות אנושית</h3>
+            <p>משתמשים בטכנולוגיה הכי מתקדמת בשוק בשילוב עם חשיבה אסטרטגית ועיצוב שנראה כמו בוטיק יוקרה.</p>
+          </div>
+        </li>
+        <li class="why-item">
+          <span class="why-num">03</span>
+          <div class="why-text">
+            <h3>מחירים שמתאימים לכל עסק</h3>
+            <p>חבילות גמישות לעסקים קטנים וגדולים. תשלמו על ערך אמיתי, לא על שעות ישיבות מיותרות.</p>
+          </div>
+        </li>
+        <li class="why-item">
+          <span class="why-num">04</span>
+          <div class="why-text">
+            <h3>ליווי מלא מהרגע הראשון</h3>
+            <p>לא נעלמים אחרי המסירה. אנחנו שותפים לדרך של העסק שלך לטווח ארוך.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="why-visual fade-up">
+      <div class="big-stat">95%</div>
+      <div class="big-stat-label">מהלקוחות חוזרים לפרויקט נוסף</div>
+      <div class="mini-stats">
+        <div class="mini-stat">
+          <div class="mini-stat-num">48h</div>
+          <div class="mini-stat-label">זמן מסירה ממוצע</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-num">∞</div>
+          <div class="mini-stat-label">תיקונים עד שמרוצים</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-num">24/7</div>
+          <div class="mini-stat-label">זמינות לשאלות</div>
+        </div>
+        <div class="mini-stat">
+          <div class="mini-stat-num">100%</div>
+          <div class="mini-stat-label">מותאם אישית</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="section" id="process">
+  <div class="section-header fade-up">
+    <span class="section-tag">איך זה עובד</span>
+    <h2 class="section-title">4 צעדים פשוטים</h2>
+    <p class="section-sub">מבריף ועד מוצר מוגמר – תהליך שקוף, פשוט וללא הפתעות</p>
+  </div>
+
+  <div class="process-grid">
+    <div class="process-card fade-up">
+      <div class="process-num">1</div>
+      <h3 class="process-title">שיחת בריף</h3>
+      <p class="process-desc">מדברים על הצורך שלך, הקהל, המטרות. שיחה קצרה שמייצרת תוצאה מדויקת.</p>
+    </div>
+    <div class="process-card fade-up">
+      <div class="process-num">2</div>
+      <h3 class="process-title">ייצור ועיצוב</h3>
+      <p class="process-desc">הצוות שלנו עובד. אתה לא מחכה שבועות – אנחנו מסיימים תוך 48 שעות.</p>
+    </div>
+    <div class="process-card fade-up">
+      <div class="process-num">3</div>
+      <h3 class="process-title">סקירה ותיקונים</h3>
+      <p class="process-desc">שולחים לך לאישור. תיקונים ושינויים עד שאתה מרוצה 100% – ללא עלות נוספת.</p>
+    </div>
+    <div class="process-card fade-up">
+      <div class="process-num">4</div>
+      <h3 class="process-title">מסירה ועלייה לאוויר</h3>
+      <p class="process-desc">המוצר שלך חי! ואנחנו ממשיכים לתמוך ולשפר לאורך זמן.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta-section" id="contact">
+  <h2 class="cta-title fade-up">מוכנים להפוך את החזון<br>למציאות דיגיטלית?</h2>
+  <p class="cta-sub fade-up">שיחה ראשונה חינם · ללא התחייבות · תוצאות תוך 48 שעות</p>
+  <div class="cta-btns fade-up">
+    <a href="https://wa.me/972542603160" class="btn-whatsapp">
+      💬 שלחו הודעה בוואטסאפ
+    </a>
+    <a href="mailto:info.buildyil@gmail.com" class="btn-secondary" style="padding: 18px 40px;">
+      ✉️ info.buildyil@gmail.com
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<!-- ══════════════ PORTFOLIO SECTION ══════════════ -->
+<section id="portfolio" style="padding:100px 6%;background:#080C14;position:relative;overflow:hidden;">
+
+  <!-- BG decoration -->
+  <div style="position:absolute;top:-200px;right:-150px;width:600px;height:600px;background:radial-gradient(circle,rgba(0,170,255,.06),transparent 60%);border-radius:50%;pointer-events:none;"></div>
+  <div style="position:absolute;bottom:-150px;left:-100px;width:500px;height:500px;background:radial-gradient(circle,rgba(0,170,255,.04),transparent 60%);border-radius:50%;pointer-events:none;"></div>
+
+  <!-- Header -->
+  <div style="text-align:center;margin-bottom:64px;" class="reveal">
+    <span style="font-size:.7rem;letter-spacing:4px;color:#00AAFF;font-weight:700;text-transform:uppercase;display:block;margin-bottom:12px;">● תיק עבודות</span>
+    <h2 style="font-family:'Frank Ruhl Libre',serif;font-size:clamp(2rem,4vw,3.2rem);font-weight:900;letter-spacing:-1px;margin-bottom:12px;color:#F0F8FF;">העבודות <span style="color:#00AAFF;">שלנו</span></h2>
+    <p style="color:rgba(240,248,255,0.4);font-size:.95rem;font-weight:300;max-width:440px;margin:0 auto;line-height:1.8;">כל פרויקט בנוי מאפס, מותאם אישית 100% לעסק</p>
+  </div>
+
+  <!-- LANDING PAGES LABEL -->
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;" class="reveal">
+    <div style="font-size:.7rem;letter-spacing:3px;color:rgba(240,248,255,.3);font-weight:700;text-transform:uppercase;">🎯 דפי נחיתה</div>
+    <div style="flex:1;height:1px;background:rgba(255,255,255,.06);"></div>
+  </div>
+
+  <!-- LANDING PAGES GRID -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px;margin-bottom:48px;">
+
+    <!-- Card 1 – FireMaster -->
+    <div class="portfolio-card reveal" style="background:#0E1117;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;transition:all .5s cubic-bezier(.16,1,.3,1);cursor:pointer;" onmouseenter="this.style.transform='translateY(-8px)';this.style.borderColor='rgba(232,82,10,.4)';this.style.boxShadow='0 24px 64px rgba(0,0,0,.5)'" onmouseleave="this.style.transform='';this.style.borderColor='rgba(255,255,255,.07)';this.style.boxShadow=''">
+      <div style="height:220px;background:linear-gradient(135deg,#0A1628,#1A2A4A);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+        <div style="position:absolute;top:-40px;right:-40px;width:200px;height:200px;background:radial-gradient(circle,rgba(232,82,10,.3),transparent 60%);border-radius:50%;"></div>
+        <div style="position:absolute;bottom:-40px;left:-40px;width:180px;height:180px;background:radial-gradient(circle,rgba(232,82,10,.2),transparent 60%);border-radius:50%;"></div>
+        <div style="text-align:center;position:relative;z-index:2;">
+          <div style="font-size:2.5rem;margin-bottom:8px;">🔥</div>
+          <div style="font-size:1.8rem;font-weight:900;color:#fff;">Fire<span style="color:#E8520A;">Master</span></div>
+          <div style="font-size:.8rem;color:rgba(255,255,255,.4);margin-top:6px;">גרילים · טאבונים · מטבחי חוץ</div>
+          <div style="margin-top:14px;background:#E8520A;color:#fff;padding:7px 18px;border-radius:50px;font-size:.75rem;font-weight:700;display:inline-block;">💬 לרכישה בוואטסאפ</div>
+        </div>
+      </div>
+      <div style="padding:20px 22px;">
+        <span style="font-size:.65rem;letter-spacing:2px;font-weight:700;text-transform:uppercase;padding:3px 10px;border-radius:50px;background:rgba(232,82,10,.12);color:#E8520A;border:1px solid rgba(232,82,10,.25);">🔥 גרילים ומטבחי חוץ</span>
+        <div style="font-size:1.05rem;font-weight:700;margin:10px 0 6px;color:#F0F8FF;">FireMaster – דף נחיתה</div>
+        <div style="font-size:.82rem;color:rgba(240,248,255,.4);line-height:1.6;margin-bottom:14px;">דף נחיתה עם כפתורי וואטסאפ לכל מוצר. עיצוב כהה ומרשים שממיר לקוחות.</div>
+        <div style="display:flex;gap:6px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06);">
+          <span style="font-size:.68rem;color:rgba(240,248,255,.35);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:3px;border:1px solid rgba(255,255,255,.07);">HTML</span>
+          <span style="font-size:.68rem;color:rgba(240,248,255,.35);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:3px;border:1px solid rgba(255,255,255,.07);">CSS</span>
+          <span style="font-size:.68rem;color:rgba(240,248,255,.35);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:3px;border:1px solid rgba(255,255,255,.07);">וואטסאפ</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 – Fitness -->
+    <div class="portfolio-card reveal" style="background:#0E1117;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;transition:all .5s cubic-bezier(.16,1,.3,1);cursor:pointer;" onmouseenter="this.style.transform='translateY(-8px)';this.style.borderColor='rgba(0,200,80,.4)';this.style.boxShadow='0 24px 64px rgba(0,0,0,.5)'" onmouseleave="this.style.transform='';this.style.borderColor='rgba(255,255,255,.07)';this.style.boxShadow=''">
+      <div style="height:220px;background:linear-gradient(135deg,#0A1F0A,#1A3A1A);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 70% 30%,rgba(0,255,100,.1),transparent 50%);"></div>
+        <div style="text-align:center;z-index:2;position:relative;">
+          <div style="font-size:2.5rem;margin-bottom:8px;">💪</div>
+          <div style="font-size:1.8rem;font-weight:900;color:#fff;">אורי שחר</div>
+          <div style="font-size:.85rem;color:rgba(255,255,255,.4);margin-bottom:14px;">מאמן כושר אישי</div>
+          <div style="display:flex;gap:8px;justify-content:center;">
+            <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:5px 12px;border-radius:50px;font-size:.72rem;color:#fff;">🏆 10+ שנות ניסיון</div>
+            <div style="background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);padding:5px 12px;border-radius:50px;font-size:.72rem;color:#fff;">500+ לקוחות</div>
+          </div>
+        </div>
+      </div>
+      <div style="padding:20px 22px;">
+        <span style="font-size:.65rem;letter-spacing:2px;font-weight:700;text-transform:uppercase;padding:3px 10px;border-radius:50px;background:rgba(0,200,80,.1);color:#00C850;border:1px solid rgba(0,200,80,.25);">💪 כושר ואימונים</span>
+        <div style="font-size:1.05rem;font-weight:700;margin:10px 0 6px;color:#F0F8FF;">אורי שחר – מאמן כושר</div>
+        <div style="font-size:.82rem;color:rgba(240,248,255,.4);line-height:1.6;margin-bottom:14px;">אתר תדמית למאמן כושר עם תוכניות אימון, ביקורות ולוח זמנים.</div>
+        <div style="display:flex;gap:6px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06);">
+          <span style="font-size:.68rem;color:rgba(240,248,255,.35);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:3px;border:1px solid rgba(255,255,255,.07);">HTML</span>
+          <span style="font-size:.68rem;color:rgba(240,248,255,.35);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:3px;border:1px solid rgba(255,255,255,.07);">CSS</span>
+          <span style="font-size:.68rem;color:rgba(240,248,255,.35);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:3px;border:1px solid rgba(255,255,255,.07);">אנימציות</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 – Pitch Deck -->
+    <div class="portfolio-card reveal" style="background:#0E1117;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;transition:all .5s cubic-bezier(.16,1,.3,1);cursor:pointer;" onmouseenter="this.style.transform='translateY(-8px)';this.style.borderColor='rgba(139,92,246,.4)';this.style.boxShadow='0 24px 64px rgba(0,0,0,.5)'" onmouseleave="this.style.transform='';this.style.borderColor='rgba(255,255,255,.07)';this.style.boxShadow=''">
+      <div style="height:220px;background:linear-gradient(135deg,#0D0A20,#1A1535);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 50% 50%,rgba(139,92,246,.15),transparent 60%);"></div>
+        <div style="text-align:center;z-index:2;position:relative;">
+          <div style="font-size:2rem;font-weight:900;background:linear-gradient(135deg,#8B5CF6,#06B6D4);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">PayFlow</div>
+          <div style="font-size:.75rem;color:rgba(255,255,255,.35);margin:4px 0 16px;letter-spacing:2px;">FINTECH · PITCH DECK</div>
+          <div style="background:rgba(139,92,246,.15);border:1px solid rgba(139,92,246,.3);padding:9px 18px;border-radius:8px;font-size:.8rem;color:#fff;">📊 גיוס $1M ממשקיעים</div>
+        </div>
+      </div>
+      <div style="padding:20px 22px;">
+        <span style="font-size:.65rem;letter-spacing:2px;font-weight:700;text-transform:uppercase;padding:3px 10px;border-radius:50px;background:rgba(139,92,246,.1);color:#8B5CF6;border:1px solid rgba(139,92,246,.25);">📊 Pitch Deck</span>
+        <div style="font-size:1.05rem;font-weight:700;margin:10px 0 6px;color:#F0F8FF;">PayFlow – מצגת משקיעים</div>
+        <div style="font-size:.82rem;color:rgba(240,248,255,.4);line-height:1.6;margin-bottom:14px;">מצגת Pitch Deck מרשימה לחברת פינטק לגיוס הון ממשקיעים.</div>
+        <div style="display:flex;gap:6px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06);">
+          <span style="font-size:.68rem;color:rgba(240,248,255,.35);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:3px;border:1px solid rgba(255,255,255,.07);">HTML</span>
+          <span style="font-size:.68rem;color:rgba(240,248,255,.35);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:3px;border:1px solid rgba(255,255,255,.07);">אנימציות</span>
+          <span style="font-size:.68rem;color:rgba(240,248,255,.35);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:3px;border:1px solid rgba(255,255,255,.07);">AI</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 – Restaurant -->
+    <div class="portfolio-card reveal" style="background:#0E1117;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;transition:all .5s cubic-bezier(.16,1,.3,1);cursor:pointer;" onmouseenter="this.style.transform='translateY(-8px)';this.style.borderColor='rgba(212,175,55,.4)';this.style.boxShadow='0 24px 64px rgba(0,0,0,.5)'" onmouseleave="this.style.transform='';this.style.borderColor='rgba(255,255,255,.07)';this.style.boxShadow=''">
+      <div style="height:220px;background:linear-gradient(135deg,#1A0A0A,#2A1515);display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;">
+        <div style="position:absolute;inset:0;background:radial-gradient(circle at 30% 70%,rgba(212,175,55,.1),transparent 50%);"></div>
+        <div style="text-align:center;z-index:2;position:relative;">
+          <div style="font-size:2.5rem;margin-bottom:8px;">🍽️</div>
+          <div style="font-size:1.8rem;font-weight:900;color:#fff;">ביסטרו לבנת</div>
+          <div style="font-size:.8rem;color:rgba(255,255,255,.35);margin-bottom:14px;letter-spacing:2px;">RESTAURANT</div>
+          <div style="background:rgba(212,175,55,.15);border:1px solid rgba(212,175,55,.3);padding:7px 16px;border-radius:50px;font-size:.75rem;color:#D4AF37;font-weight:700;">🥂 הזמן שולחן עכשיו</div>
+        </div>
+      </div>
+      <div style="padding:20px 22px;">
+        <span style="font-size:.65rem;letter-spacing:2px;font-weight:700;text-transform:uppercase;padding:3px 10px;border-radius:50px;background:rgba(212,175,55,.08);color:#D4AF37;border:1px solid rgba(212,175,55,.25);">🍽️ מסעדות ואוכל</span>
+        <div style="font-size:1.05rem;font-weight:700;margin:10px 0 6px;color:#F0F8FF;">ביסטרו לבנת – מסעדה</div>
+        <div style="font-size:.82rem;color:rgba(240,248,255,.4);line-height:1.6;margin-bottom:14px;">דף נחיתה למסעדה עם תפריט, הזמנות ואווירה יוקרתית.</div>
+        <div style="display:flex;gap:6px;padding-top:12px;border-top:1px solid rgba(255,255,255,.06);">
+          <span style="font-size:.68rem;color:rgba(240,248,255,.35);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:3px;border:1px solid rgba(255,255,255,.07);">HTML</span>
+          <span style="font-size:.68rem;color:rgba(240,248,255,.35);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:3px;border:1px solid rgba(255,255,255,.07);">CSS</span>
+          <span style="font-size:.68rem;color:rgba(240,248,255,.35);background:rgba(255,255,255,.05);padding:3px 8px;border-radius:3px;border:1px solid rgba(255,255,255,.07);">הזמנות</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- SITES LABEL -->
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;" class="reveal">
+    <div style="font-size:.7rem;letter-spacing:3px;color:rgba(240,248,255,.3);font-weight:700;text-transform:uppercase;">🌐 אתרי תדמית</div>
+    <div style="flex:1;height:1px;background:rgba(255,255,255,.06);"></div>
+  </div>
+
+  <!-- SITES GRID -->
+  <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:16px;margin-bottom:48px;">
+
+    <div style="background:#0E1117;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;transition:all .4s;cursor:pointer;" class="reveal" onmouseenter="this.style.transform='translateY(-6px) scale(1.02)';this.style.borderColor='rgba(79,142,247,.3)';this.style.boxShadow='0 20px 50px rgba(0,0,0,.5)'" onmouseleave="this.style.transform='';this.style.borderColor='rgba(255,255,255,.07)';this.style.boxShadow=''">
+      <div style="height:160px;background:linear-gradient(135deg,#0A0818,#1A1035);display:flex;align-items:center;justify-content:center;font-size:3rem;position:relative;">
+        🏗️
+        <div style="position:absolute;inset:0;background:radial-gradient(circle,rgba(79,142,247,.12),transparent 60%);opacity:0;transition:opacity .3s;"></div>
+      </div>
+      <div style="padding:14px;">
+        <div style="font-size:.65rem;letter-spacing:1.5px;color:#4F8EF7;font-weight:700;margin-bottom:5px;">● קבלן בנייה</div>
+        <div style="font-size:.92rem;font-weight:700;color:#F0F8FF;margin-bottom:4px;">חברת בנייה פרו</div>
+        <div style="font-size:.75rem;color:rgba(240,248,255,.35);line-height:1.5;">אתר עם גלריה, פרויקטים ויצירת קשר</div>
+      </div>
+    </div>
+
+    <div style="background:#0E1117;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;transition:all .4s;cursor:pointer;" class="reveal" onmouseenter="this.style.transform='translateY(-6px) scale(1.02)';this.style.borderColor='rgba(0,200,80,.3)';this.style.boxShadow='0 20px 50px rgba(0,0,0,.5)'" onmouseleave="this.style.transform='';this.style.borderColor='rgba(255,255,255,.07)';this.style.boxShadow=''">
+      <div style="height:160px;background:linear-gradient(135deg,#0A1808,#1A3010);display:flex;align-items:center;justify-content:center;font-size:3rem;">🦷</div>
+      <div style="padding:14px;">
+        <div style="font-size:.65rem;letter-spacing:1.5px;color:#00C850;font-weight:700;margin-bottom:5px;">● קליניקה רפואית</div>
+        <div style="font-size:.92rem;font-weight:700;color:#F0F8FF;margin-bottom:4px;">מרפאת שיניים VIP</div>
+        <div style="font-size:.75rem;color:rgba(240,248,255,.35);line-height:1.5;">תיאום תורים אונליין ומידע על הצוות</div>
+      </div>
+    </div>
+
+    <div style="background:#0E1117;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;transition:all .4s;cursor:pointer;" class="reveal" onmouseenter="this.style.transform='translateY(-6px) scale(1.02)';this.style.borderColor='rgba(212,175,55,.3)';this.style.boxShadow='0 20px 50px rgba(0,0,0,.5)'" onmouseleave="this.style.transform='';this.style.borderColor='rgba(255,255,255,.07)';this.style.boxShadow=''">
+      <div style="height:160px;background:linear-gradient(135deg,#180A0A,#301818);display:flex;align-items:center;justify-content:center;font-size:3rem;">⚖️</div>
+      <div style="padding:14px;">
+        <div style="font-size:.65rem;letter-spacing:1.5px;color:#D4AF37;font-weight:700;margin-bottom:5px;">● עורך דין</div>
+        <div style="font-size:.92rem;font-weight:700;color:#F0F8FF;margin-bottom:4px;">משרד עורכי דין</div>
+        <div style="font-size:.75rem;color:rgba(240,248,255,.35);line-height:1.5;">אתר יוקרתי עם תחומי התמחות</div>
+      </div>
+    </div>
+
+    <div style="background:#0E1117;border:1px solid rgba(255,255,255,.07);border-radius:12px;overflow:hidden;transition:all .4s;cursor:pointer;" class="reveal" onmouseenter="this.style.transform='translateY(-6px) scale(1.02)';this.style.borderColor='rgba(155,89,245,.3)';this.style.boxShadow='0 20px 50px rgba(0,0,0,.5)'" onmouseleave="this.style.transform='';this.style.borderColor='rgba(255,255,255,.07)';this.style.boxShadow=''">
+      <div style="height:160px;background:linear-gradient(135deg,#08101A,#102030);display:flex;align-items:center;justify-content:center;font-size:3rem;">💆</div>
+      <div style="padding:14px;">
+        <div style="font-size:.65rem;letter-spacing:1.5px;color:#9B59F5;font-weight:700;margin-bottom:5px;">● ספא ויוגה</div>
+        <div style="font-size:.92rem;font-weight:700;color:#F0F8FF;margin-bottom:4px;">ספא Zen</div>
+        <div style="font-size:.75rem;color:rgba(240,248,255,.35);line-height:1.5;">הזמנות טיפולים ומחירון מלא</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- CTA -->
+  <div style="text-align:center;" class="reveal">
+    <p style="font-size:1rem;color:rgba(240,248,255,.4);margin-bottom:20px;font-weight:300;">רוצה שנבנה משהו כזה לעסק שלך?</p>
+    <a href="https://wa.me/972542603160?text=היי! ראיתי את תיק העבודות שלכם ואשמח לשמוע פרטים 🔥" style="display:inline-flex;align-items:center;gap:10px;background:#25D366;color:#fff;padding:15px 36px;border-radius:4px;font-size:1rem;font-weight:800;text-decoration:none;transition:all .3s;" onmouseenter="this.style.background='#1da851';this.style.transform='translateY(-2px)';this.style.boxShadow='0 14px 40px rgba(37,211,102,.35)'" onmouseleave="this.style.background='#25D366';this.style.transform='';this.style.boxShadow=''">💬 בואו נדבר</a>
+  </div>
+
+</section>
+<!-- ══════════════ END PORTFOLIO ══════════════ -->
+
+<footer>
+  <div class="footer-logo">Buildy <span>IL</span></div>
+  <ul class="footer-links">
+    <li><a href="javascript:void(0)" onclick="window.scrollTo({top:0,behavior:'smooth'})">אודותינו</a></li>
+    <li><a href="javascript:void(0)" onclick="document.getElementById('services').scrollIntoView({behavior:'smooth'})">שירותים</a></li>
+    <li><a href="javascript:void(0)" onclick="document.getElementById('why').scrollIntoView({behavior:'smooth'})">למה אנחנו</a></li>
+    <li><a href="javascript:void(0)" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">צור קשר</a></li>
+    <li><a href="javascript:void(0)" onclick="openModal('privacy-modal')">מדיניות פרטיות</a></li>
+    <li><a href="javascript:void(0)" onclick="openModal('terms-modal')">תנאי שימוש</a></li>
+    <li><a href="javascript:void(0)" onclick="openModal('accessibility-modal')">נגישות</a></li>
+  </ul>
+  <div style="width:100%; border-top:1px solid rgba(0,170,255,0.1); margin-top:20px; padding-top:20px; display:flex; flex-wrap:wrap; gap:12px; justify-content:space-between; align-items:center;">
+    <p class="footer-copy">© 2026 Buildy IL · buildyil.net · כל הזכויות שמורות</p>
+    <p class="footer-copy">עוסק מורשה: 209013945 · רעננה, ישראל · <a href="mailto:info.buildyil@gmail.com" style="color:var(--gray);">info.buildyil@gmail.com</a></p>
+  </div>
+</footer>
+
+<!-- ===== COOKIE BANNER ===== -->
+<style>
+  #cookie-banner {
+    position: fixed;
+    bottom: 0; left: 0; right: 0;
+    background: #0D1420;
+    border-top: 1px solid rgba(0,170,255,0.25);
+    padding: 16px 5%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    z-index: 9999;
+    font-family: 'Heebo', sans-serif;
+    direction: rtl;
+  }
+  #cookie-banner p { color: #8899AA; font-size: 0.88rem; margin: 0; flex: 1; min-width: 200px; }
+  #cookie-banner p a { color: #00AAFF; text-decoration: underline; cursor: pointer; }
+  .cookie-btns { display: flex; gap: 10px; flex-shrink: 0; }
+  .cookie-accept {
+    background: #00AAFF; color: #080C14;
+    border: none; padding: 10px 24px;
+    border-radius: 6px; font-weight: 700;
+    font-size: 0.88rem; cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+  }
+  .cookie-decline {
+    background: transparent; color: #8899AA;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 10px 18px; border-radius: 6px;
+    font-size: 0.88rem; cursor: pointer;
+    font-family: 'Heebo', sans-serif;
+  }
+
+  /* MODALS */
+  .legal-modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.75);
+    z-index: 9998;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+  }
+  .legal-modal-overlay.open { display: flex; }
+  .legal-modal {
+    background: #0D1420;
+    border: 1px solid rgba(0,170,255,0.25);
+    border-radius: 20px;
+    max-width: 640px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 40px;
+    position: relative;
+    direction: rtl;
+    font-family: 'Heebo', sans-serif;
+  }
+  .legal-modal h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 900;
+    color: #fff; margin-bottom: 24px;
+  }
+  .legal-modal h3 { font-size: 1rem; font-weight: 700; color: #00AAFF; margin: 20px 0 8px; }
+  .legal-modal p, .legal-modal li { color: #8899AA; font-size: 0.92rem; line-height: 1.7; margin-bottom: 8px; }
+  .legal-modal ul { padding-right: 20px; }
+  .modal-close {
+    position: absolute; top: 16px; left: 16px;
+    background: rgba(255,255,255,0.08);
+    border: none; color: #fff;
+    width: 36px; height: 36px;
+    border-radius: 50%; font-size: 1.1rem;
+    cursor: pointer; display: flex;
+    align-items: center; justify-content: center;
+  }
+  .modal-close:hover { background: rgba(255,255,255,0.15); }
+
+  /* ACCESSIBILITY BUTTON */
+  #access-btn {
+    position: fixed;
+    bottom: 28px; right: 28px;
+    width: 48px; height: 48px;
+    background: #0077CC;
+    border: none; border-radius: 50%;
+    color: white; font-size: 1.4rem;
+    cursor: pointer; z-index: 1000;
+    box-shadow: 0 4px 16px rgba(0,119,204,0.4);
+    transition: all 0.3s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  #access-btn:hover { transform: scale(1.1); background: #0055AA; }
+  #access-btn title { display: none; }
+
+  /* WHATSAPP FLOATING BUTTON */
+  #whatsapp-float {
+    position: fixed;
+    bottom: 28px; left: 28px;
+    width: 56px; height: 56px;
+    background: #25D366;
+    border: none; border-radius: 50%;
+    cursor: pointer; z-index: 1000;
+    box-shadow: 0 6px 24px rgba(37,211,102,0.5);
+    transition: all 0.3s;
+    display: flex; align-items: center; justify-content: center;
+    text-decoration: none;
+    animation: waPulse 2.5s infinite;
+  }
+  #whatsapp-float:hover {
+    transform: scale(1.1);
+    background: #1FAE54;
+    box-shadow: 0 8px 32px rgba(37,211,102,0.7);
+  }
+  #whatsapp-float svg { width: 30px; height: 30px; fill: white; }
+  @keyframes waPulse {
+    0%,100% { box-shadow: 0 6px 24px rgba(37,211,102,0.5); }
+    50% { box-shadow: 0 6px 24px rgba(37,211,102,0.5), 0 0 0 12px rgba(37,211,102,0); }
+    25% { box-shadow: 0 6px 24px rgba(37,211,102,0.5), 0 0 0 0 rgba(37,211,102,0.4); }
+  }
+  #whatsapp-tooltip {
+    position: absolute;
+    right: calc(100% + 12px);
+    top: 50%;
+    transform: translateY(-50%);
+    background: #0D1420;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 8px;
+    font-size: 0.82rem;
+    font-weight: 600;
+    white-space: nowrap;
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.25s, transform 0.25s;
+    border: 1px solid rgba(37,211,102,0.4);
+    font-family: 'Heebo', sans-serif;
+  }
+  #whatsapp-tooltip::after {
+    content: '';
+    position: absolute;
+    right: -6px;
+    top: 50%;
+    transform: translateY(-50%);
+    border-width: 6px 0 6px 6px;
+    border-style: solid;
+    border-color: transparent transparent transparent #0D1420;
+  }
+  #whatsapp-float:hover #whatsapp-tooltip {
+    opacity: 1;
+    transform: translateY(-50%) translateX(-4px);
+  }
+
+  /* Portfolio Mobile */
+  @media(max-width:768px){
+    #portfolio .lp-grid{grid-template-columns:1fr !important;}
+    #portfolio .sites-grid{grid-template-columns:1fr 1fr !important;}
+    #portfolio{padding:60px 4% !important;}
+  }
+</style>
+
+<!-- Cookie Banner -->
+<div id="cookie-banner">
+  <p>🍪 האתר משתמש בעוגיות לצורך שיפור חוויית המשתמש. המשך הגלישה מהווה הסכמה למדיניות ה<a onclick="openModal('privacy-modal')">פרטיות</a>.</p>
+  <div class="cookie-btns">
+    <button class="cookie-accept" onclick="acceptCookies()">אישור</button>
+    <button class="cookie-decline" onclick="declineCookies()">דחייה</button>
+  </div>
+</div>
+
+<!-- Accessibility Button -->
+<button id="access-btn" onclick="openModal('accessibility-modal')" aria-label="הצהרת נגישות">♿</button>
+
+<!-- WhatsApp Floating Button -->
+<a id="whatsapp-float" href="https://wa.me/972542603160?text=שלום, הגעתי מהאתר ואשמח לקבל פרטים" target="_blank" rel="noopener" aria-label="שלח הודעה בוואטסאפ">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+  </svg>
+  <span id="whatsapp-tooltip">דבר איתנו בוואטסאפ</span>
+</a>
+
+<!-- PRIVACY POLICY MODAL -->
+<div class="legal-modal-overlay" id="privacy-modal">
+  <div class="legal-modal" role="dialog" aria-labelledby="privacy-title">
+    <button class="modal-close" onclick="closeModal('privacy-modal')" aria-label="סגור">✕</button>
+    <h2 id="privacy-title">מדיניות פרטיות</h2>
+    <p>עדכון אחרון: ינואר 2026</p>
+
+    <h3>מי אנחנו</h3>
+    <p>Buildy IL, עוסק מורשה 209013945, רעננה, ישראל. אתר: buildyil.net, מייל: info.buildyil@gmail.com</p>
+
+    <h3>איזה מידע אנחנו אוספים</h3>
+    <ul>
+      <li>פרטי קשר שנמסרים מרצון (שם, טלפון, מייל) דרך WhatsApp או מייל</li>
+      <li>מידע טכני בסיסי (סוג דפדפן, עמוד שנצפה) לצורכי שיפור השירות</li>
+      <li>נתוני שימוש בצ'אטבוט — שיחות עם הבוט לצורך מתן מענה בלבד</li>
+    </ul>
+
+    <h3>שימוש במידע</h3>
+    <ul>
+      <li>יצירת קשר חוזרת בנוגע לשירותים שנשאלתם עליהם</li>
+      <li>שיפור השירות והאתר</li>
+      <li>לא נמכור, לא נשתף ולא נעביר את פרטיכם לצדדים שלישיים</li>
+    </ul>
+
+    <h3>עוגיות (Cookies)</h3>
+    <p>האתר עשוי להשתמש בעוגיות טכניות בסיסיות לשיפור חוויית הגלישה. אין שימוש בעוגיות פרסומיות.</p>
+
+    <h3>זכויותיכם</h3>
+    <ul>
+      <li>עיון, תיקון ומחיקה של המידע שנמסר</li>
+      <li>ביטול הסכמה בכל עת</li>
+    </ul>
+    <p>לפנייה בנושא פרטיות: <a href="mailto:info.buildyil@gmail.com" style="color:#00AAFF;">info.buildyil@gmail.com</a></p>
+
+    <h3>חוקי חלים</h3>
+    <p>מדיניות זו כפופה לחוק הגנת הפרטיות, תשמ"א-1981 ותקנותיו.</p>
+  </div>
+</div>
+
+<!-- TERMS OF USE MODAL -->
+<div class="legal-modal-overlay" id="terms-modal">
+  <div class="legal-modal" role="dialog" aria-labelledby="terms-title">
+    <button class="modal-close" onclick="closeModal('terms-modal')" aria-label="סגור">✕</button>
+    <h2 id="terms-title">תנאי שימוש</h2>
+    <p>עדכון אחרון: ינואר 2026</p>
+
+    <h3>כללי</h3>
+    <p>השימוש באתר buildyil.net מהווה הסכמה לתנאים המפורטים להלן. Buildy IL שומרת לעצמה את הזכות לעדכן תנאים אלה בכל עת.</p>
+
+    <h3>השירותים</h3>
+    <ul>
+      <li>Buildy IL מספקת שירותי בניית אתרים, דפי נחיתה, מצגות ותוכן שיווקי</li>
+      <li>זמני מסירה המצוינים באתר הם הערכה ואינם מחייבים בכתב אלא לאחר חתימת הסכם</li>
+      <li>תיקונים ללא הגבלה הינם בגדר שינויים סבירים בפרויקט המקורי</li>
+    </ul>
+
+    <h3>תשלומים</h3>
+    <ul>
+      <li>50% מקדמה בתחילת הפרויקט, 50% במסירה</li>
+      <li>ביטול לאחר תחילת עבודה — המקדמה אינה מוחזרת</li>
+    </ul>
+
+    <h3>קניין רוחני</h3>
+    <p>עם השלמת התשלום המלא, הזכויות על התוצרים עוברות ללקוח. Buildy IL שומרת את הזכות להציג את העבודה בתיק עבודות.</p>
+
+    <h3>הגבלת אחריות</h3>
+    <p>Buildy IL אינה אחראית לנזקים עקיפים הנובעים משימוש בתוצרים. האחריות המקסימלית מוגבלת לסכום ששולם עבור הפרויקט.</p>
+
+    <h3>יצירת קשר</h3>
+    <p><a href="mailto:info.buildyil@gmail.com" style="color:#00AAFF;">info.buildyil@gmail.com</a> · 054-2603160</p>
+  </div>
+</div>
+
+<!-- ACCESSIBILITY MODAL -->
+<div class="legal-modal-overlay" id="accessibility-modal">
+  <div class="legal-modal" role="dialog" aria-labelledby="access-title">
+    <button class="modal-close" onclick="closeModal('accessibility-modal')" aria-label="סגור">✕</button>
+    <h2 id="access-title">הצהרת נגישות</h2>
+    <p>עדכון אחרון: ינואר 2026</p>
+
+    <h3>מחויבות לנגישות</h3>
+    <p>Buildy IL מחויבת לנגישות דיגיטלית עבור אנשים עם מוגבלויות, בהתאם לחוק שוויון זכויות לאנשים עם מוגבלות, תשנ"ח-1998, ותקן ישראלי 5568.</p>
+
+    <h3>רמת הנגישות</h3>
+    <p>אנו שואפים לעמוד בדרישות תקן WCAG 2.1 ברמה AA. האתר כולל:</p>
+    <ul>
+      <li>טקסט חלופי לתמונות</li>
+      <li>ניווט מקלדת מלא</li>
+      <li>ניגודיות צבעים עומדת בתקן</li>
+      <li>תמיכה בקוראי מסך</li>
+      <li>גודל טקסט ניתן להגדלה</li>
+      <li>כיוון קריאה מימין לשמאל (RTL)</li>
+    </ul>
+
+    <h3>פניות בנושא נגישות</h3>
+    <p>נתקלתם בבעיית נגישות? נשמח לשמוע ולתקן:</p>
+    <ul>
+      <li>מייל: <a href="mailto:info.buildyil@gmail.com" style="color:#00AAFF;">info.buildyil@gmail.com</a></li>
+      <li>טלפון: 054-2603160</li>
+    </ul>
+    <p>נטפל בפנייה תוך 5 ימי עסקים.</p>
+
+    <h3>מגבלות ידועות</h3>
+    <p>הצ'אטבוט AI עשוי להיות מוגבל עבור משתמשי קוראי מסך. אנו עובדים על שיפור זה.</p>
+  </div>
+</div>
+
+<script>
+  // Mobile Menu
+  function toggleMenu() {
+    const menu = document.getElementById('mobile-menu');
+    menu.classList.toggle('open');
+  }
+  function menuNav(id) {
+    document.getElementById('mobile-menu').classList.remove('open');
+    document.getElementById(id).scrollIntoView({ behavior: 'smooth' });
+  }
+  // Close menu on outside click
+  document.addEventListener('click', e => {
+    const menu = document.getElementById('mobile-menu');
+    if (!e.target.closest('nav') && !e.target.closest('#mobile-menu')) {
+      menu.classList.remove('open');
+    }
+  });
+
+  // Cookie Banner
+  if (localStorage.getItem('cookiesAccepted')) {
+    document.getElementById('cookie-banner').style.display = 'none';
+  }
+  function acceptCookies() {
+    localStorage.setItem('cookiesAccepted', 'true');
+    document.getElementById('cookie-banner').style.display = 'none';
+  }
+  function declineCookies() {
+    document.getElementById('cookie-banner').style.display = 'none';
+  }
+
+  // Modals
+  function openModal(id) {
+    document.getElementById(id).classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeModal(id) {
+    document.getElementById(id).classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Close on overlay click
+  document.querySelectorAll('.legal-modal-overlay').forEach(el => {
+    el.addEventListener('click', function(e) {
+      if (e.target === this) closeModal(this.id);
+    });
+  });
+  // Close on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      document.querySelectorAll('.legal-modal-overlay.open').forEach(el => closeModal(el.id));
+    }
+  });
+</script>
+
+<script>
+  // Scroll animations
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up, .reveal').forEach(el => observer.observe(el));
+  // Add visible class immediately for reveal elements in viewport
+  document.querySelectorAll('.reveal').forEach(el => {
+    el.style.opacity = '1';
+    el.style.transform = 'none';
+  });
+</script>
+
+<!-- ===== PARTICLE CANVAS ===== -->
+<canvas id="particles-canvas" style="position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0;opacity:0.5;"></canvas>
+
+<!-- ===== CURSOR SPOTLIGHT ===== -->
+<div id="spotlight"></div>
+
+<script>
+// ── PARTICLES ──────────────────────────────────────────────
+(function() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, particles = [];
+
+  function resize() {
+    W = canvas.width = window.innerWidth;
+    H = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  function Particle() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.size = Math.random() * 1.5 + 0.3;
+    this.speedX = (Math.random() - 0.5) * 0.3;
+    this.speedY = (Math.random() - 0.5) * 0.3;
+    this.opacity = Math.random() * 0.5 + 0.1;
+    this.color = Math.random() > 0.7 ? '#FFD700' : '#00AAFF';
+  }
+
+  for (let i = 0; i < 120; i++) particles.push(new Particle());
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    particles.forEach(p => {
+      p.x += p.speedX;
+      p.y += p.speedY;
+      if (p.x < 0) p.x = W;
+      if (p.x > W) p.x = 0;
+      if (p.y < 0) p.y = H;
+      if (p.y > H) p.y = 0;
+      ctx.beginPath();
+      ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+      ctx.fillStyle = p.color;
+      ctx.globalAlpha = p.opacity;
+      ctx.fill();
+    });
+    // Draw connecting lines between close particles
+    ctx.globalAlpha = 1;
+    for (let i = 0; i < particles.length; i++) {
+      for (let j = i + 1; j < particles.length; j++) {
+        const dx = particles[i].x - particles[j].x;
+        const dy = particles[i].y - particles[j].y;
+        const dist = Math.sqrt(dx*dx + dy*dy);
+        if (dist < 80) {
+          ctx.beginPath();
+          ctx.moveTo(particles[i].x, particles[i].y);
+          ctx.lineTo(particles[j].x, particles[j].y);
+          ctx.strokeStyle = '#00AAFF';
+          ctx.globalAlpha = (1 - dist / 80) * 0.08;
+          ctx.lineWidth = 0.5;
+          ctx.stroke();
+        }
+      }
+    }
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── CURSOR SPOTLIGHT ───────────────────────────────────────
+const spotlight = document.getElementById('spotlight');
+document.addEventListener('mousemove', e => {
+  spotlight.style.left = e.clientX + 'px';
+  spotlight.style.top  = e.clientY + 'px';
+});
+
+// ── 3D TILT ON CARDS ───────────────────────────────────────
+document.querySelectorAll('.service-card, .process-card, .why-visual').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    const cx = r.width / 2, cy = r.height / 2;
+    const rotX = ((y - cy) / cy) * -8;
+    const rotY = ((x - cx) / cx) * 8;
+    card.style.transform = `perspective(800px) rotateX(${rotX}deg) rotateY(${rotY}deg) translateZ(8px) translateY(-6px)`;
+    card.style.transition = 'transform 0.05s ease';
+    // Glow follow
+    card.style.background = `radial-gradient(circle at ${x}px ${y}px, rgba(0,170,255,0.08), var(--card-bg) 60%)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+    card.style.background = '';
+    card.style.transition = 'transform 0.6s ease, background 0.6s ease';
+  });
+});
+
+// ── MOCKUP PARALLAX ON MOUSE ───────────────────────────────
+const heroVisual = document.getElementById('hero-visual');
+if (heroVisual) {
+  document.addEventListener('mousemove', e => {
+    const mx = (e.clientX / window.innerWidth - 0.5) * 12;
+    const my = (e.clientY / window.innerHeight - 0.5) * 8;
+    const m1 = heroVisual.querySelector('.mockup-1');
+    const m2 = heroVisual.querySelector('.mockup-2');
+    const m3 = heroVisual.querySelector('.mockup-3');
+    if (m1) m1.style.transform = `perspective(1200px) rotateY(${-12 + mx * 0.5}deg) rotateX(${4 - my * 0.3}deg) translateY(0)`;
+    if (m2) m2.style.transform = `perspective(1200px) rotateY(${8 + mx * 0.3}deg) rotateX(${-3 - my * 0.2}deg) translateY(0)`;
+    if (m3) m3.style.transform = `perspective(1200px) rotateY(${5 + mx * 0.4}deg) rotateX(${6 - my * 0.3}deg) translateY(0)`;
+  });
+}
+
+// ── COUNTER ANIMATION ──────────────────────────────────────
+function animateCount(el) {
+  const text = el.textContent.trim();
+  const match = text.match(/^(\d+)/);
+  if (!match) return;
+  const target = parseInt(match[1]);
+  const suffix = text.replace(match[1], '');
+  let start = null;
+  const duration = 1800;
+  function step(ts) {
+    if (!start) start = ts;
+    const prog = Math.min((ts - start) / duration, 1);
+    const eased = 1 - Math.pow(1 - prog, 3);
+    el.textContent = Math.round(target * eased) + suffix;
+    if (prog < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      animateCount(e.target);
+      counterObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.stat-num, .big-stat').forEach(el => {
+  counterObserver.observe(el);
+});
+</script>
+
+<!-- ===== PORTFOLIO MOBILE ===== -->
+<style>
+  @media(max-width:768px){
+    #portfolio .lp-grid{grid-template-columns:1fr !important;}
+    #portfolio .sites-grid{grid-template-columns:1fr 1fr !important;}
+    #portfolio{padding:60px 4% !important;}
+  }
+</style>
+
+</body>
+</html>
