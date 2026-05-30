@@ -91,11 +91,11 @@ src="https://www.facebook.com/tr?id=1004740478556733&ev=PageView&noscript=1"
 
   /* HERO */
   .hero{align-items:center;text-align:center;padding-top:80px}
-  .hero .eyebrow{font-size:11px;letter-spacing:.6em;color:var(--blue-bright);margin-bottom:30px;text-transform:uppercase}
+  .hero .eyebrow{font-size:12px;letter-spacing:.35em;color:var(--gold);margin-bottom:30px;text-transform:uppercase;font-weight:500;text-shadow:0 0 30px rgba(255,215,0,.4)}
   .hero h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(60px,11vw,180px);line-height:.95;letter-spacing:-.02em;color:#fff;text-shadow:0 4px 60px rgba(0,0,0,.8)}
   .hero h1 em{font-style:italic;color:var(--blue-bright);font-weight:400}
-  .hero .sub{margin-top:40px;font-size:14px;letter-spacing:.4em;color:rgba(239,246,255,.85);text-transform:uppercase}
-  .scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.5em;color:rgba(239,246,255,.6);text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:14px}
+  .hero .sub{margin-top:40px;font-size:15px;letter-spacing:.28em;color:rgba(255,248,238,.92);text-transform:uppercase;text-shadow:0 2px 20px rgba(0,0,0,.6)}
+  .scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);font-size:10px;letter-spacing:.4em;color:rgba(255,248,238,.65);text-transform:uppercase;display:flex;flex-direction:column;align-items:center;gap:14px}
   .scroll-hint .line{width:1px;height:60px;background:linear-gradient(180deg,transparent,var(--blue));animation:drop 2.4s ease-in-out infinite}
   @keyframes drop{0%,100%{transform:scaleY(.3);transform-origin:top}50%{transform:scaleY(1)}}
 
@@ -906,8 +906,8 @@ if(typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined'){
   const htl = gsap.timeline({delay:1.15, defaults:{ease:'power3.out'}});
   htl
     .fromTo('.hero .eyebrow',
-      {opacity:0, y:20, letterSpacing:'1em'},
-      {opacity:1, y:0, letterSpacing:'.6em', duration:1.1})
+      {opacity:0, y:20, letterSpacing:'.7em'},
+      {opacity:1, y:0, letterSpacing:'.35em', duration:1.1})
     .fromTo('.hero h1',
       {opacity:0, y:90, filter:'blur(22px)'},
       {opacity:1, y:0, filter:'blur(0px)', duration:1.7}, '-=.55')
