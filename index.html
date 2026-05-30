@@ -69,8 +69,8 @@ src="https://www.facebook.com/tr?id=1004740478556733&ev=PageView&noscript=1"
     background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9'/></filter><rect width='100%25' height='100%25' filter='url(%23n)' opacity='0.6'/></svg>")}
 
   /* === Nav === */
-  nav.top{position:fixed;top:0;right:0;left:0;z-index:50;padding:22px 48px;display:flex;justify-content:space-between;align-items:center;transition:background .4s,backdrop-filter .4s,padding .4s}
-  nav.top.scrolled{background:rgba(6,11,20,.75);backdrop-filter:blur(14px);padding:14px 48px;border-bottom:1px solid var(--line)}
+  nav.top{position:fixed;top:0;right:0;left:0;z-index:50;padding:22px 48px;display:flex;justify-content:space-between;align-items:center;transition:background .4s,backdrop-filter .4s,padding .4s,border-color .4s;background:rgba(8,6,4,.82);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid transparent}
+  nav.top.scrolled{background:rgba(8,6,4,.95);padding:14px 48px;border-bottom-color:var(--line)}
   .brand{font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:.5em;color:#fff}
   .brand span{background:linear-gradient(90deg,var(--blue),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
   .nav-links{display:flex;gap:38px;font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:#fff}
@@ -90,7 +90,7 @@ src="https://www.facebook.com/tr?id=1004740478556733&ev=PageView&noscript=1"
   .reveal.visible{opacity:1}
 
   /* HERO */
-  .hero{align-items:center;text-align:center;padding-top:0}
+  .hero{align-items:center;text-align:center;padding-top:80px}
   .hero .eyebrow{font-size:11px;letter-spacing:.6em;color:var(--blue-bright);margin-bottom:30px;text-transform:uppercase}
   .hero h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(60px,11vw,180px);line-height:.95;letter-spacing:-.02em;color:#fff;text-shadow:0 4px 60px rgba(0,0,0,.8)}
   .hero h1 em{font-style:italic;color:var(--blue-bright);font-weight:400}
