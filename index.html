@@ -85,8 +85,8 @@ src="https://www.facebook.com/tr?id=1004740478556733&ev=PageView&noscript=1"
 
   .chapter{position:absolute;top:50%;left:48px;transform:translateY(-50%) rotate(-90deg);transform-origin:left;font-size:10px;letter-spacing:.5em;color:rgba(239,246,255,.55);text-transform:uppercase}
 
-  .reveal{opacity:0;transform:translateY(40px);transition:opacity 1.2s cubic-bezier(.2,.7,.2,1),transform 1.2s cubic-bezier(.2,.7,.2,1)}
-  .reveal.visible{opacity:1;transform:translateY(0)}
+  .reveal{opacity:0}
+  .reveal.visible{opacity:1}
 
   /* HERO */
   .hero{align-items:center;text-align:center;padding-top:0}
@@ -218,6 +218,16 @@ src="https://www.facebook.com/tr?id=1004740478556733&ev=PageView&noscript=1"
   #cookie .accept{background:var(--blue);color:var(--ink);border-color:var(--blue)}
   #cookie.hide{display:none}
 
+  /* === Scroll Progress Bar === */
+  #scr-progress{position:fixed;top:0;left:0;right:0;height:2px;z-index:9999;pointer-events:none;background:rgba(0,170,255,.08)}
+  #scr-bar{height:100%;width:0;background:linear-gradient(90deg,var(--blue-deep),var(--blue),var(--blue-bright));will-change:width}
+
+  /* === Initial hidden state for GSAP animated elements === */
+  .price-card,.pillar,.step{opacity:0}
+
+  /* === Word reveal spans === */
+  .wrd{display:inline-block;will-change:transform,opacity}
+
   /* Responsive */
   @media (max-width:900px){
     nav.top{padding:16px 20px}
@@ -240,6 +250,9 @@ src="https://www.facebook.com/tr?id=1004740478556733&ev=PageView&noscript=1"
 </style>
 </head>
 <body>
+
+<!-- Scroll progress -->
+<div id="scr-progress"><div id="scr-bar"></div></div>
 
 <!-- LOADER -->
 <div id="loader">
@@ -760,6 +773,9 @@ src="https://www.facebook.com/tr?id=1004740478556733&ev=PageView&noscript=1"
 <!-- ACCESSIBILITY BUTTON -->
 <button id="access-btn" data-modal="access" aria-label="הצהרת נגישות">♿</button>
 
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
 <script>
 // ====== LOADER ======
 window.addEventListener('load', () => {
@@ -809,18 +825,15 @@ document.querySelectorAll('[data-go]').forEach(a=>{
   });
 });
 
-// ====== REVEAL ON SCROLL ======
-const io = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
-},{threshold:.15});
-document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
-
-// ====== NAV BACKGROUND ON SCROLL ======
+// ====== NAV + SCROLL PROGRESS ======
 const nav = document.querySelector('nav.top');
+const scrBar = document.getElementById('scr-bar');
 window.addEventListener('scroll',()=>{
   if(window.scrollY > 80) nav.classList.add('scrolled');
   else nav.classList.remove('scrolled');
-});
+  const pct = window.scrollY / Math.max(1, document.body.scrollHeight - window.innerHeight);
+  scrBar.style.width = (pct * 100) + '%';
+},{ passive:true });
 
 // ====== CINEMATIC BACKGROUND SWAP ======
 const bgLayers = document.querySelectorAll('.bg-layer');
@@ -883,6 +896,121 @@ document.addEventListener('click', function(e) {
     }
   }
 });
+
+// ====== GSAP CINEMATIC SCROLL ANIMATIONS ======
+if(typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined'){
+  gsap.registerPlugin(ScrollTrigger);
+
+  // ── Hero entrance sequence (after loader clears)
+  const htl = gsap.timeline({delay:1.15, defaults:{ease:'power3.out'}});
+  htl
+    .fromTo('.hero .eyebrow',
+      {opacity:0, y:20, letterSpacing:'1em'},
+      {opacity:1, y:0, letterSpacing:'.6em', duration:1.1})
+    .fromTo('.hero h1',
+      {opacity:0, y:90, filter:'blur(22px)'},
+      {opacity:1, y:0, filter:'blur(0px)', duration:1.7}, '-=.55')
+    .fromTo('.hero .sub',
+      {opacity:0, y:18},
+      {opacity:1, y:0, duration:.9}, '-=.5')
+    .fromTo('.scroll-hint',
+      {opacity:0},
+      {opacity:1, duration:.8}, '-=.3');
+
+  // ── Generic reveals (all .reveal elements not inside hero, not cards)
+  document.querySelectorAll('.reveal').forEach(el => {
+    if(el.closest('.hero')) return;
+    if(el.matches('.service,.price-card')) return;
+    gsap.fromTo(el,
+      {opacity:0, y:48},
+      {opacity:1, y:0, duration:1.15, ease:'power3.out',
+       scrollTrigger:{trigger:el, start:'top 84%', once:true}}
+    );
+  });
+
+  // ── Section h2 — blur sweep (Apple-style)
+  document.querySelectorAll('section:not(.hero) h2').forEach(h2 => {
+    gsap.fromTo(h2,
+      {opacity:0, y:70, filter:'blur(16px)'},
+      {opacity:1, y:0, filter:'blur(0px)', duration:1.6, ease:'power3.out',
+       scrollTrigger:{trigger:h2, start:'top 83%', once:true}}
+    );
+  });
+
+  // ── Panel (stats block in essence)
+  gsap.fromTo('.panel',
+    {opacity:0, scale:.92, filter:'blur(10px)'},
+    {opacity:1, scale:1, filter:'blur(0px)', duration:1.4, ease:'power3.out',
+     scrollTrigger:{trigger:'.panel', start:'top 78%', once:true}}
+  );
+
+  // ── Service cards — stagger cascade
+  gsap.fromTo('.service',
+    {opacity:0, y:60, scale:.95},
+    {opacity:1, y:0, scale:1, stagger:.1, duration:.9, ease:'power3.out',
+     scrollTrigger:{trigger:'.services', start:'top 76%', once:true}}
+  );
+
+  // ── Pricing cards — stagger
+  gsap.fromTo('.price-card',
+    {opacity:0, y:60, scale:.95},
+    {opacity:1, y:0, scale:1, stagger:.15, duration:.9, ease:'power3.out',
+     scrollTrigger:{trigger:'.pricing', start:'top 76%', once:true}}
+  );
+
+  // ── Why pillars — slide in alternating
+  gsap.fromTo('.pillar',
+    {opacity:0, x:60},
+    {opacity:1, x:0, stagger:.2, duration:1, ease:'power3.out',
+     scrollTrigger:{trigger:'.pillars', start:'top 76%', once:true}}
+  );
+
+  // ── Process steps — left-to-right cascade
+  gsap.fromTo('.step',
+    {opacity:0, y:54},
+    {opacity:1, y:0, stagger:.18, duration:.9, ease:'power3.out',
+     scrollTrigger:{trigger:'.process', start:'top 77%', once:true}}
+  );
+
+  // ── Quote — scale in
+  const quoteEl = document.querySelector('.quote');
+  if(quoteEl) gsap.fromTo(quoteEl,
+    {opacity:0, scale:.94},
+    {opacity:1, scale:1, duration:1.4, ease:'power3.out',
+     scrollTrigger:{trigger:quoteEl, start:'top 78%', once:true}}
+  );
+
+  // ── Stat counters (count up animation)
+  document.querySelectorAll('.stat .num').forEach(num => {
+    const orig = num.textContent.trim();
+    const m = orig.match(/(\d+)/);
+    if(!m) return;
+    const target = +m[1];
+    const pre = orig.slice(0, m.index);
+    const suf = orig.slice(m.index + m[1].length);
+    num.textContent = pre + '0' + suf;
+    ScrollTrigger.create({
+      trigger: num, start:'top 88%', once:true,
+      onEnter(){
+        gsap.fromTo({n:0},{n:target},{
+          duration:2.4, ease:'power2.out',
+          onUpdate(){ num.textContent = pre + Math.round(this.targets()[0].n) + suf; }
+        });
+      }
+    });
+  });
+
+  // ── Subtle parallax on section headings while scrolling
+  document.querySelectorAll('section:not(.hero)').forEach(sec => {
+    const h = sec.querySelector('h2');
+    if(!h) return;
+    gsap.fromTo(h,
+      {y:0},
+      {y:-30, ease:'none',
+       scrollTrigger:{trigger:sec, start:'top bottom', end:'bottom top', scrub:1.5}}
+    );
+  });
+}
 </script>
 </body>
 </html>
