@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buildy IL · הדגמה חיה</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Heebo:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--o:#FF6B00;--ob:#FF9A40;--g:#FFD700;--dark:#070508;--line:rgba(255,107,0,.2)}
+html{scroll-behavior:smooth}
+body{background:var(--dark);color:#FFF8EE;font-family:'Heebo',sans-serif;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* ══ NAV ══ */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:20px 6%;display:flex;justify-content:space-between;align-items:center;background:rgba(7,5,8,.85);backdrop-filter:blur(14px);border-bottom:1px solid var(--line)}
+.nav-logo{font-family:'Cormorant Garamond',serif;font-size:20px;letter-spacing:.4em;color:#fff}.nav-logo em{color:var(--ob);font-style:normal}
+.nav-cta{padding:10px 22px;background:linear-gradient(135deg,var(--o),var(--g));color:#0A0600;font-size:11px;letter-spacing:.3em;font-weight:700;text-transform:uppercase;cursor:pointer;border:none}
+
+/* ══ HERO ══ */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;padding:80px 24px}
+canvas{position:absolute;inset:0;z-index:0}
+.hero-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:700px;height:500px;background:radial-gradient(ellipse,rgba(255,107,0,.1),transparent 70%);pointer-events:none}
+.hero-content{position:relative;z-index:2}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;font-size:11px;letter-spacing:.35em;text-transform:uppercase;color:var(--o);border:1px solid rgba(255,107,0,.3);padding:8px 20px;border-radius:40px;margin-bottom:36px;background:rgba(255,107,0,.07)}
+.bdot{width:7px;height:7px;background:var(--o);border-radius:50%;animation:blink 2s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:.3}}
+.hero h1{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(56px,11vw,150px);line-height:.92;letter-spacing:-.02em;color:#fff;margin-bottom:32px}
+.hero h1 em{font-style:italic;color:var(--ob)}
+.hero-sub{font-size:14px;letter-spacing:.4em;color:rgba(255,248,238,.55);text-transform:uppercase;margin-bottom:64px}
+.scroll-cue{display:flex;flex-direction:column;align-items:center;gap:12px;font-size:10px;letter-spacing:.5em;color:rgba(255,248,238,.35);text-transform:uppercase}
+.scue-line{width:1px;height:60px;background:linear-gradient(180deg,transparent,var(--o));animation:drip 2.5s ease-in-out infinite}
+@keyframes drip{0%,100%{transform:scaleY(.3);transform-origin:top}50%{transform:scaleY(1)}}
+
+/* ══ SHARED ══ */
+.eyebrow{font-size:11px;letter-spacing:.5em;color:var(--o);text-transform:uppercase;display:block;margin-bottom:20px}
+.sec-h2{font-family:'Cormorant Garamond',serif;font-size:clamp(38px,5.5vw,72px);font-weight:300;line-height:1.05;color:#fff;margin-bottom:24px}
+.sec-h2 em{font-style:italic;color:var(--ob)}
+.sec-p{font-size:16px;line-height:1.8;color:rgba(255,248,238,.68)}
+.divbar{width:56px;height:1px;background:linear-gradient(90deg,var(--o),var(--g));margin:0 0 36px}
+
+/* ══ SWORD SECTION ══ */
+.sword-section{min-height:100vh;display:flex;align-items:center;justify-content:center;gap:100px;padding:80px 8%;flex-wrap:wrap;position:relative}
+.sword-text{max-width:420px}
+.sword-stage{position:relative;width:100px;height:520px;flex-shrink:0}
+
+/* Sheath body (covers blade inside) */
+.s-sheath{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:32px;height:300px;border-radius:3px 3px 6px 6px;background:linear-gradient(90deg,#5C3A00,#B8860B 25%,#FFD700 50%,#B8860B 75%,#5C3A00);box-shadow:0 0 24px rgba(184,134,11,.3),inset 1px 0 3px rgba(255,255,255,.15);z-index:3}
+.s-sheath-mouth{position:absolute;top:-14px;left:50%;transform:translateX(-50%);width:40px;height:18px;background:linear-gradient(180deg,#2A1500,#3D2000);border-radius:4px 4px 2px 2px;z-index:3}
+.s-sheath-slot{position:absolute;top:0;left:50%;transform:translateX(-50%);width:12px;height:100%;background:#1A0A00;border-radius:1px;z-index:2}
+.s-sheath-tip{position:absolute;bottom:-14px;left:50%;transform:translateX(-50%);width:20px;height:18px;background:#B8860B;clip-path:polygon(50% 100%,0 0,100% 0);z-index:3}
+
+/* The sword element (moves down on scroll) */
+.s-sword{position:absolute;top:0;left:50%;transform:translateX(-50%) translateY(-460px);width:80px;height:440px;z-index:4}
+/* Pommel */
+.s-pommel{position:absolute;top:0;left:50%;transform:translateX(-50%);width:26px;height:26px;background:radial-gradient(circle at 35% 35%,#FFD700,#8B6914);border-radius:50%;box-shadow:0 0 14px rgba(255,215,0,.5)}
+/* Handle */
+.s-handle{position:absolute;top:26px;left:50%;transform:translateX(-50%);width:14px;height:80px;background:repeating-linear-gradient(45deg,#3D2200,#3D2200 4px,#5C3300 4px,#5C3300 8px);border-radius:3px}
+/* Crossguard */
+.s-guard{position:absolute;top:106px;left:50%;transform:translateX(-50%);width:70px;height:10px;background:linear-gradient(90deg,#6B4E0A,#FFD700,#B8860B,#FFD700,#6B4E0A);border-radius:3px;box-shadow:0 0 14px rgba(255,215,0,.4)}
+/* Blade wrapper (overflow hidden to clip blade inside sheath) */
+.s-blade-wrap{position:absolute;top:116px;left:50%;transform:translateX(-50%);width:10px;height:300px;overflow:visible}
+.s-blade{width:10px;height:300px;background:linear-gradient(90deg,#777,#ddd,#f0f0f0,#ddd,#777);clip-path:polygon(30% 0,70% 0,55% 90%,50% 100%,45% 90%);box-shadow:0 0 20px rgba(200,210,255,.35)}
+.s-blade-shine{position:absolute;top:0;left:50%;transform:translateX(-50%);width:2px;height:260px;background:linear-gradient(180deg,rgba(255,255,255,.8),transparent);animation:shine 3s ease-in-out infinite}
+@keyframes shine{0%,100%{opacity:.3}50%{opacity:.9}}
+.s-shadow{position:absolute;bottom:-8px;left:50%;transform:translateX(-50%);width:50px;height:8px;background:radial-gradient(ellipse,rgba(255,107,0,.5),transparent 70%);filter:blur(3px)}
+
+/* ══ GARAGE SECTION ══ */
+.garage-section{min-height:100vh;display:flex;align-items:center;justify-content:space-between;padding:80px 8%;gap:60px;flex-wrap:wrap;background:rgba(0,0,0,.2);position:relative;overflow:hidden}
+.garage-text{max-width:420px}
+.garage-stage{position:relative;width:440px;height:260px;flex-shrink:0}
+/* Ground */
+.g-ground{position:absolute;bottom:0;left:0;right:0;height:3px;background:linear-gradient(90deg,rgba(255,107,0,.05),rgba(255,107,0,.3),rgba(255,107,0,.05))}
+/* Road marks */
+.g-mark{position:absolute;bottom:-10px;height:3px;width:36px;background:rgba(255,107,0,.15);border-radius:2px}
+/* Garage building */
+.g-garage{position:absolute;bottom:3px;right:0;width:200px;height:210px;background:linear-gradient(180deg,#180E04,#0D0600);border:1px solid rgba(255,107,0,.25);border-bottom:none;border-radius:3px 3px 0 0}
+.g-wall-detail{position:absolute;top:0;left:0;right:0;height:100%;background:repeating-linear-gradient(180deg,transparent,transparent 29px,rgba(255,107,0,.04) 30px)}
+.g-sign{position:absolute;top:14px;left:50%;transform:translateX(-50%);font-size:9px;letter-spacing:.3em;color:var(--o);text-transform:uppercase;white-space:nowrap;font-family:'Heebo',sans-serif}
+.g-lamp{position:absolute;top:36px;left:50%;transform:translateX(-50%);width:8px;height:8px;background:#FFD700;border-radius:50%;box-shadow:0 0 16px rgba(255,215,0,.6),0 20px 60px rgba(255,215,0,.1)}
+/* Garage door opening */
+.g-door{position:absolute;bottom:0;left:50%;transform:translateX(-50%);width:130px;height:160px;background:#07050A;border:1px solid rgba(255,107,0,.15);border-bottom:none;border-radius:3px 3px 0 0}
+.g-door-frame{position:absolute;inset:-4px;inset-block-end:-4px;border:2px solid rgba(255,107,0,.3);border-bottom:none;border-radius:5px 5px 0 0;pointer-events:none}
+/* CSS Car */
+.g-car{position:absolute;bottom:3px;left:-180px;width:155px;height:72px}
+.g-car-body{position:absolute;bottom:16px;left:0;right:0;height:38px;background:linear-gradient(180deg,#FF7A10,#CC5200);border-radius:6px 6px 3px 3px}
+.g-car-roof{position:absolute;bottom:40px;left:22px;right:22px;height:26px;background:linear-gradient(180deg,#FF9A40,#FF7010);border-radius:6px 6px 0 0}
+.g-car-wl{position:absolute;bottom:44px;left:26px;width:34px;height:18px;background:rgba(120,200,255,.45);border-radius:3px 3px 0 0;border:1px solid rgba(255,255,255,.2)}
+.g-car-wr{position:absolute;bottom:44px;right:26px;width:34px;height:18px;background:rgba(120,200,255,.45);border-radius:3px 3px 0 0;border:1px solid rgba(255,255,255,.2)}
+.g-wheel{position:absolute;bottom:0;width:26px;height:26px;background:#1A1A1A;border-radius:50%;border:3px solid #444}
+.g-wheel::after{content:'';position:absolute;inset:4px;background:#2A2A2A;border-radius:50%;border:2px solid #3A3A3A}
+.g-wl{left:14px}.g-wr{right:14px}
+.g-headlight{position:absolute;top:50%;right:2px;transform:translateY(-50%);width:10px;height:10px;background:#FFE066;border-radius:2px;box-shadow:0 0 18px rgba(255,224,102,.9),0 0 40px rgba(255,224,102,.4)}
+.g-taillight{position:absolute;top:50%;left:2px;transform:translateY(-50%);width:8px;height:12px;background:#FF2200;border-radius:1px;box-shadow:0 0 6px rgba(255,34,0,.6)}
+
+/* ══ STATS ══ */
+.stats-section{padding:120px 8%;text-align:center}
+.stats-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;max-width:960px;margin:60px auto 0;border:1px solid var(--line)}
+.scard{padding:44px 20px;border-left:1px solid var(--line);background:rgba(8,5,2,.6)}
+.scard:last-child{border-left:none}
+.snum{font-family:'Cormorant Garamond',serif;font-size:62px;font-weight:300;color:var(--ob);line-height:1;display:block}
+.slbl{font-size:10px;letter-spacing:.4em;color:rgba(255,248,238,.45);text-transform:uppercase;margin-top:10px;display:block}
+
+/* ══ MARQUEE ══ */
+.marquee-section{padding:100px 0;overflow:hidden}
+.marquee-row{display:flex;gap:0;white-space:nowrap;margin-bottom:14px}
+.marquee-inner{display:flex;gap:48px;animation:march 14s linear infinite;flex-shrink:0}
+.marquee-row:nth-child(2) .marquee-inner{animation-direction:reverse;animation-duration:18s}
+.marquee-inner span{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,6vw,72px);font-weight:300;color:transparent;-webkit-text-stroke:1px rgba(255,107,0,.35);white-space:nowrap;flex-shrink:0;letter-spacing:.02em}
+.marquee-inner span.lit{-webkit-text-stroke:0;color:var(--ob)}
+@keyframes march{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ══ CAPABILITIES GRID ══ */
+.caps-section{padding:120px 8%}
+.caps-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;max-width:1300px;margin:60px auto 0}
+.cap-card{padding:36px 30px;border:1px solid var(--line);background:rgba(10,6,2,.7);position:relative;overflow:hidden;transition:border-color .4s,transform .4s;cursor:default}
+.cap-card:hover{border-color:rgba(255,107,0,.5);transform:translateY(-4px)}
+.cap-card::before{content:'';position:absolute;inset:0;background:radial-gradient(400px circle at var(--mx,50%) var(--my,50%),rgba(255,107,0,.07),transparent 50%);opacity:0;transition:opacity .5s;pointer-events:none}
+.cap-card:hover::before{opacity:1}
+.cap-icon{font-size:28px;margin-bottom:16px;display:block}
+.cap-card h4{font-family:'Cormorant Garamond',serif;font-size:22px;color:#fff;font-weight:400;margin-bottom:9px}
+.cap-card p{font-size:13px;color:rgba(255,248,238,.58);line-height:1.65}
+
+/* ══ CTA ══ */
+.cta-section{min-height:80vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:80px 24px;position:relative;overflow:hidden}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:400px;background:radial-gradient(ellipse,rgba(255,107,0,.14),transparent 70%);pointer-events:none}
+.cta-section .sec-h2{font-size:clamp(44px,8vw,110px)}
+.cta-section p{font-size:15px;color:rgba(255,248,238,.6);margin-bottom:48px;max-width:480px}
+.cta-btn{display:inline-flex;align-items:center;gap:12px;padding:20px 42px;background:linear-gradient(135deg,var(--o),var(--g));color:#080400;font-weight:700;font-size:13px;letter-spacing:.3em;text-transform:uppercase;box-shadow:0 8px 32px rgba(255,107,0,.4);transition:all .3s}
+.cta-btn:hover{transform:translateY(-3px);box-shadow:0 16px 48px rgba(255,107,0,.6)}
+
+/* ══ RESPONSIVE ══ */
+@media(max-width:900px){
+  .sword-section{flex-direction:column;gap:50px;padding:80px 24px}
+  .garage-section{flex-direction:column-reverse;padding:80px 24px}
+  .garage-stage{width:100%;max-width:340px}
+  .g-garage{width:160px}.g-door{width:104px}
+  .stats-grid{grid-template-columns:repeat(2,1fr)}.scard:nth-child(2){border-left:none}.scard:nth-child(3){border-top:1px solid var(--line)}
+  .caps-grid{grid-template-columns:1fr 1fr}
+}
+@media(max-width:600px){
+  .caps-grid{grid-template-columns:1fr}
+  .nav-cta{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">BUILDY <em>·</em> IL</div>
+  <a href="https://wa.me/972542603160" class="nav-cta">קבל הצעת מחיר</a>
+</nav>
+
+<!-- ════ HERO ════ -->
+<section class="hero">
+  <canvas id="pcv"></canvas>
+  <div class="hero-glow"></div>
+  <div class="hero-content">
+    <div class="hero-badge"><div class="bdot"></div>Buildy IL · הדגמה חיה</div>
+    <h1 id="htitle">מה שנראה<br/><em>בלתי אפשרי</em><br/>אנחנו בונים</h1>
+    <div class="hero-sub">עיצוב · אנימציה · חוויה · AI</div>
+    <div class="scroll-cue">
+      <span>גלול וראה</span>
+      <div class="scue-line"></div>
+      <span>SCROLL</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SWORD ════ -->
+<section class="sword-section" id="swordSec">
+  <div class="sword-text">
+    <span class="eyebrow">דיוק. מהירות. כוח.</span>
+    <h2 class="sec-h2">כשנכנסים<br/>נכנסים <em>כמו מקצוענים</em></h2>
+    <div class="divbar"></div>
+    <p class="sec-p">כל פרויקט שלנו נכנס למקומו בדיוק — כמו חרב לנרתיקה. כל עיצוב, כל שורת קוד, כל אנימציה — מחושבת ומדויקת. אנחנו לא מחפשים. אנחנו יודעים.</p>
+  </div>
+
+  <div class="sword-stage" id="swordStage">
+    <div class="s-sword" id="swordEl">
+      <div class="s-pommel"></div>
+      <div class="s-handle"></div>
+      <div class="s-guard"></div>
+      <div class="s-blade-wrap">
+        <div class="s-blade" id="sBlade"></div>
+        <div class="s-blade-shine"></div>
+      </div>
+    </div>
+    <div class="s-sheath-mouth"></div>
+    <div class="s-sheath">
+      <div class="s-sheath-slot"></div>
+    </div>
+    <div class="s-sheath-tip"></div>
+    <div class="s-shadow"></div>
+  </div>
+</section>
+
+<!-- ════ CAR / GARAGE ════ -->
+<section class="garage-section" id="garageSec">
+  <div class="garage-text">
+    <span class="eyebrow">עד הסוף ולא פחות</span>
+    <h2 class="sec-h2">אנחנו מביאים<br/>אותך <em>עד הפנים</em></h2>
+    <div class="divbar"></div>
+    <p class="sec-p">מהקליק הראשון עד האישור הסופי — אנחנו מלווים אותך עד שהמוצר חנה בדיוק במקום הנכון. תוך 48 שעות — אתר מנצח ביד.</p>
+  </div>
+
+  <div class="garage-stage" id="garageStage">
+    <div class="g-ground"></div>
+    <div class="g-mark" style="right:210px"></div>
+    <div class="g-mark" style="right:260px"></div>
+    <div class="g-mark" style="right:310px"></div>
+    <div class="g-garage">
+      <div class="g-wall-detail"></div>
+      <div class="g-sign">Buildy IL</div>
+      <div class="g-lamp"></div>
+      <div class="g-door"><div class="g-door-frame"></div></div>
+    </div>
+    <div class="g-car" id="carEl">
+      <div class="g-car-roof"></div>
+      <div class="g-car-wl"></div>
+      <div class="g-car-wr"></div>
+      <div class="g-car-body"></div>
+      <div class="g-wheel g-wl"></div>
+      <div class="g-wheel g-wr"></div>
+      <div class="g-headlight"></div>
+      <div class="g-taillight"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ STATS ════ -->
+<section class="stats-section">
+  <span class="eyebrow" style="text-align:center">במספרים</span>
+  <h2 class="sec-h2" style="text-align:center;max-width:700px;margin:0 auto">תוצאות <em>שמדברות</em><br/>בעד עצמן</h2>
+  <div class="stats-grid">
+    <div class="scard"><span class="snum" data-t="48">0</span><span class="slbl">שעות מסירה</span></div>
+    <div class="scard"><span class="snum" data-t="95">0</span><span class="slbl">% לקוחות חוזרים</span></div>
+    <div class="scard"><span class="snum" data-t="12">0</span><span class="slbl">שירותים</span></div>
+    <div class="scard"><span class="snum" data-t="100">0</span><span class="slbl">% אחד על אחד</span></div>
+  </div>
+</section>
+
+<!-- ════ MARQUEE ════ -->
+<section class="marquee-section">
+  <div class="marquee-row">
+    <div class="marquee-inner">
+      <span>אתרי תדמית</span><span class="lit">·</span><span>דפי נחיתה</span><span class="lit">·</span><span>מצגות</span><span class="lit">·</span><span>מיתוג</span><span class="lit">·</span><span>אוטומציות</span><span class="lit">·</span><span>אתרי תדמית</span><span class="lit">·</span><span>דפי נחיתה</span><span class="lit">·</span><span>מצגות</span><span class="lit">·</span><span>מיתוג</span><span class="lit">·</span><span>אוטומציות</span><span class="lit">·</span>
+    </div>
+    <div class="marquee-inner" aria-hidden="true">
+      <span>אתרי תדמית</span><span class="lit">·</span><span>דפי נחיתה</span><span class="lit">·</span><span>מצגות</span><span class="lit">·</span><span>מיתוג</span><span class="lit">·</span><span>אוטומציות</span><span class="lit">·</span><span>אתרי תדמית</span><span class="lit">·</span><span>דפי נחיתה</span><span class="lit">·</span><span>מצגות</span><span class="lit">·</span><span>מיתוג</span><span class="lit">·</span><span>אוטומציות</span><span class="lit">·</span>
+    </div>
+  </div>
+  <div class="marquee-row">
+    <div class="marquee-inner">
+      <span>WEBSITES</span><span class="lit">·</span><span>LANDING PAGES</span><span class="lit">·</span><span>BRANDING</span><span class="lit">·</span><span>AI TOOLS</span><span class="lit">·</span><span>AUTOMATION</span><span class="lit">·</span><span>WEBSITES</span><span class="lit">·</span><span>LANDING PAGES</span><span class="lit">·</span><span>BRANDING</span><span class="lit">·</span><span>AI TOOLS</span><span class="lit">·</span><span>AUTOMATION</span><span class="lit">·</span>
+    </div>
+    <div class="marquee-inner" aria-hidden="true">
+      <span>WEBSITES</span><span class="lit">·</span><span>LANDING PAGES</span><span class="lit">·</span><span>BRANDING</span><span class="lit">·</span><span>AI TOOLS</span><span class="lit">·</span><span>AUTOMATION</span><span class="lit">·</span><span>WEBSITES</span><span class="lit">·</span><span>LANDING PAGES</span><span class="lit">·</span><span>BRANDING</span><span class="lit">·</span><span>AI TOOLS</span><span class="lit">·</span><span>AUTOMATION</span><span class="lit">·</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CAPABILITIES ════ -->
+<section class="caps-section">
+  <div style="text-align:center;max-width:700px;margin:0 auto">
+    <span class="eyebrow">מה אנחנו בונים</span>
+    <h2 class="sec-h2">עיצוב ברמת <em>$10,000</em>.<br/>מחיר שמפתיע.</h2>
+  </div>
+  <div class="caps-grid">
+    <div class="cap-card"><span class="cap-icon">🌐</span><h4>אתרי תדמית</h4><p>אתר מקצועי שמייצג את העסק שלך 24/7. מהיר, מותאם לנייד, ממיר.</p></div>
+    <div class="cap-card"><span class="cap-icon">🎯</span><h4>דפי נחיתה</h4><p>דפים ממוקדים שמייצרים לידים לכל קמפיין עם CTA חד ומדויק.</p></div>
+    <div class="cap-card"><span class="cap-icon">📊</span><h4>מצגות עסקיות</h4><p>עיצוב מרשים לפגישות, Pitch Decks ועדכוני משקיעים.</p></div>
+    <div class="cap-card"><span class="cap-icon">🎨</span><h4>מיתוג דיגיטלי</h4><p>לוגו, צבעים, זהות ויזואלית שנשארת בזיכרון ומבדלת אותך.</p></div>
+    <div class="cap-card"><span class="cap-icon">🤖</span><h4>בוטים ואוטומציות</h4><p>צ'אטבוט חכם ותהליכי עבודה שחוסכים שעות בשבוע.</p></div>
+    <div class="cap-card"><span class="cap-icon">✍️</span><h4>תוכן שיווקי</h4><p>קופירייטינג, פוסטים וסקריפטים שמדברים ישר לקהל שלך.</p></div>
+  </div>
+</section>
+
+<!-- ════ CTA ════ -->
+<section class="cta-section">
+  <div class="cta-glow"></div>
+  <span class="eyebrow">בואו נבנה</span>
+  <h2 class="sec-h2">רוצה <em>כזה</em><br/>בשבילך?</h2>
+  <p>פגישת ייעוץ ראשונה חינם לגמרי.<br/>תוך 48 שעות — מוצר מלא ביד.</p>
+  <a href="https://wa.me/972542603160?text=ראיתי את ההדגמה ואשמח לשמוע פרטים" class="cta-btn">← דבר איתנו עכשיו</a>
+</section>
+
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// ── Particles ──
+const cv = document.getElementById('pcv');
+const cx = cv.getContext('2d');
+let W, H, pts = [];
+function rsz(){ W = cv.width = innerWidth; H = cv.height = innerHeight; }
+rsz(); window.addEventListener('resize', rsz);
+for(let i=0;i<70;i++) pts.push({x:Math.random()*2000,y:Math.random()*1000,r:Math.random()*1.8+.4,vx:(Math.random()-.5)*.25,vy:(Math.random()-.5)*.25,a:Math.random()*.4+.08});
+(function loop(){
+  cx.clearRect(0,0,W,H);
+  pts.forEach(p=>{cx.beginPath();cx.arc(p.x%W,p.y%H,p.r,0,Math.PI*2);cx.fillStyle=`rgba(255,107,0,${p.a})`;cx.fill();p.x+=p.vx;p.y+=p.vy;if(p.x<0)p.x+=W;if(p.x>W)p.x-=W;if(p.y<0)p.y+=H;if(p.y>H)p.y-=H;});
+  requestAnimationFrame(loop);
+})();
+
+// ── Hero ──
+gsap.timeline({defaults:{ease:'power3.out'},delay:.3})
+  .fromTo('.hero-badge',{opacity:0,y:18},{opacity:1,y:0,duration:.9})
+  .fromTo('#htitle',{opacity:0,y:70,filter:'blur(18px)'},{opacity:1,y:0,filter:'blur(0px)',duration:1.5},'-=.5')
+  .fromTo('.hero-sub',{opacity:0,y:14},{opacity:1,y:0,duration:.8},'-=.6')
+  .fromTo('.scroll-cue',{opacity:0},{opacity:1,duration:.8},'-=.3');
+
+// ── SWORD: scroll-driven entry into sheath ──
+// Layout: sword-stage 100px×520px
+// Sheath: bottom 0, height 300px → mouth at 520-300=220px from stage top
+// Sword-el: height 440px (pommel 0-26, handle 26-106, guard 106-116, blade 116-416)
+// For guard (at 106px in sword) to stop at sheath mouth (220px):
+//   sword-el top = 220 - 106 = 114px from stage top
+// Initial sword position: sword-el translateY = -460px (fully above stage)
+// Final sword position: translateY = 114px
+// Blade inside sheath: blade starts at 116px in sword-el, sheath mouth at 220px in stage
+//   At final pos: blade starts at 114+116=230px in stage → 10px below mouth → starts entering
+//   Blade tip at 114+416=530 → 310px inside sheath ✓
+
+const sEl = document.getElementById('swordEl');
+const sBlade = document.getElementById('sBlade');
+const SHEATH_MOUTH_Y = 220; // px from stage top
+const BLADE_IN_SWORD = 116; // blade starts 116px into sword-el
+
+ScrollTrigger.create({
+  trigger:'#swordSec',
+  start:'top 60%',
+  end:'bottom 20%',
+  scrub:1.8,
+  onUpdate(self){
+    const p = self.progress;
+    // sword-el moves from translateY(-460) to translateY(114)
+    const sY = -460 + 574 * p; // 574 = 460+114
+    sEl.style.transform = `translateX(-50%) translateY(${sY}px)`;
+
+    // blade clipping: hide portion inside sheath
+    const bladeTopInStage = sY + BLADE_IN_SWORD; // where blade starts in stage coords
+    const insideSheath = Math.max(0, bladeTopInStage - SHEATH_MOUTH_Y); // px of blade inside sheath
+    const clipBottom = Math.min(300, insideSheath); // max blade height 300px
+    sBlade.style.clipPath = `inset(0 0 ${clipBottom}px 0)`;
+
+    // Blade glow intensifies as it enters
+    const gl = Math.round(20 + p*60);
+    sBlade.style.boxShadow = `0 0 ${gl}px rgba(200,210,255,${.3+p*.5}), 0 0 ${gl*2}px rgba(255,107,0,${p*.2})`;
+  }
+});
+
+// Sword text reveal
+gsap.fromTo('.sword-text',{opacity:0,x:50},{opacity:1,x:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:'#swordSec',start:'top 70%',once:true}});
+
+// ── CAR: drives into garage ──
+const carEl = document.getElementById('carEl');
+// Stage: 440px wide. Garage: right:0, 200px wide, door 130px wide centered → door left at (200-130)/2=35px from garage left = 440-200+35=275px from stage left
+// Car: 155px wide. Starts at left:-155px (offscreen left). Final: left ≈ 275px (aligned with garage door)
+// But car should ENTER garage and disappear, so go to left≈300px then fade
+
+ScrollTrigger.create({
+  trigger:'#garageSec',
+  start:'top 60%',
+  end:'bottom 20%',
+  scrub:2,
+  onUpdate(self){
+    const p = self.progress;
+    const startX = -20; // just off left edge, starting visible
+    const endX = 290;   // deep into garage
+    const x = startX + (endX - startX) * p;
+    carEl.style.left = x + 'px';
+
+    // Fade as it enters garage (after 70% progress)
+    if(p > 0.65){
+      carEl.style.opacity = 1 - (p - 0.65) / 0.35;
+    } else {
+      carEl.style.opacity = 1;
+    }
+
+    // Headlight glow increases as it approaches
+    const hl = carEl.querySelector('.g-headlight');
+    if(hl){ const g = 18+p*24; hl.style.boxShadow=`0 0 ${g}px rgba(255,224,102,${.7+p*.3}),0 0 ${g*2}px rgba(255,224,102,.3)`; }
+  }
+});
+
+gsap.fromTo('.garage-text',{opacity:0,x:-50},{opacity:1,x:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:'#garageSec',start:'top 70%',once:true}});
+gsap.fromTo('.garage-stage',{opacity:0,y:40},{opacity:1,y:0,duration:1,ease:'power3.out',scrollTrigger:{trigger:'#garageSec',start:'top 65%',once:true}});
+
+// ── Stats counter ──
+document.querySelectorAll('.snum').forEach(el=>{
+  const target = +el.dataset.t;
+  const suffix = target===95||target===100?'%':'';
+  ScrollTrigger.create({trigger:el,start:'top 85%',once:true,onEnter(){
+    gsap.fromTo({n:0},{n:target},{duration:2.2,ease:'power2.out',onUpdate(){el.textContent=Math.round(this.targets()[0].n)+suffix}});
+  }});
+});
+gsap.fromTo('.scard',{opacity:0,y:36,scale:.96},{opacity:1,y:0,scale:1,stagger:.1,duration:.85,ease:'power3.out',scrollTrigger:{trigger:'.stats-grid',start:'top 80%',once:true}});
+
+// ── Caps grid spotlight ──
+document.querySelectorAll('.cap-card').forEach(c=>{
+  c.addEventListener('mousemove',e=>{const r=c.getBoundingClientRect();c.style.setProperty('--mx',(e.clientX-r.left)+'px');c.style.setProperty('--my',(e.clientY-r.top)+'px');});
+});
+gsap.fromTo('.cap-card',{opacity:0,y:44,scale:.95},{opacity:1,y:0,scale:1,stagger:.08,duration:.85,ease:'power3.out',scrollTrigger:{trigger:'.caps-grid',start:'top 78%',once:true}});
+
+// ── CTA ──
+gsap.fromTo('.cta-section .sec-h2',{opacity:0,y:60,filter:'blur(12px)'},{opacity:1,y:0,filter:'blur(0px)',duration:1.4,ease:'power3.out',scrollTrigger:{trigger:'.cta-section',start:'top 75%',once:true}});
+gsap.fromTo('.cta-btn',{opacity:0,y:30},{opacity:1,y:0,duration:.8,ease:'power3.out',scrollTrigger:{trigger:'.cta-section',start:'top 65%',once:true}});
+</script>
+</body>
+</html>
