@@ -30,15 +30,13 @@ nav.sol{background:rgba(5,3,10,.94);backdrop-filter:blur(20px);border-bottom:1px
 #hv{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
 /* Gradient overlay */
 .hv-over{position:absolute;inset:0;background:linear-gradient(180deg,rgba(5,3,10,.2) 0%,rgba(5,3,10,.45) 40%,rgba(5,3,10,.98) 100%)}
-.h-content{position:relative;z-index:2;max-width:900px}
-.h-tag{font-size:9px;letter-spacing:.85em;text-transform:uppercase;color:var(--gld);display:block;margin-bottom:28px;opacity:0;transform:translateY(20px)}
-.h-title{font-family:'Cormorant Garamond',serif;font-weight:200;line-height:.88;overflow:hidden}
-.h-line{display:block;overflow:hidden}
-.hw{display:inline-block;transform:translateY(110%);font-size:clamp(70px,14vw,220px);letter-spacing:-.03em;color:var(--crm)}
-.hw em{font-style:italic;color:var(--gld)}
-.h-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(16px,2.2vw,28px);color:rgba(240,230,204,.45);margin-top:28px;letter-spacing:.1em;opacity:0}
-.h-scroll{display:flex;align-items:center;gap:18px;margin-top:52px;opacity:0}
-.hs-line{width:60px;height:1px;background:linear-gradient(90deg,var(--gld),transparent)}
+/* Hero minimal content */
+.h-brand{position:absolute;bottom:12vh;right:8%;z-index:2;text-align:right}
+.h-brand-logo{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(28px,4vw,52px);letter-spacing:.55em;color:var(--crm);display:block;opacity:0}
+.h-brand-logo em{color:var(--gld);font-style:normal}
+.h-brand-tag{font-size:9px;letter-spacing:.6em;text-transform:uppercase;color:rgba(201,168,76,.55);display:block;margin-top:10px;opacity:0}
+.h-scroll{position:absolute;bottom:10vh;left:8%;z-index:2;display:flex;align-items:center;gap:18px;opacity:0}
+.hs-line{width:56px;height:1px;background:linear-gradient(90deg,var(--gld),transparent)}
 .hs-txt{font-size:9px;letter-spacing:.6em;text-transform:uppercase;color:rgba(240,230,204,.35)}
 
 /* ══════════════════
@@ -154,22 +152,18 @@ footer{padding:52px 7%;border-top:1px solid rgba(201,168,76,.1);display:flex;jus
   <video id="hv" autoplay muted loop playsinline preload="auto"
     poster="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=1200&q=80&auto=format&fit=crop">
     <source src="https://cdn.pixabay.com/video/2020/01/29/31893-388020753_large.mp4" type="video/mp4">
-    <!-- Fallback if video can't load -->
-    <source src="https://www.pexels.com/video/3214441/download/" type="video/mp4">
+    <source src="https://cdn.pixabay.com/video/2021/09/27/90667-616789296_large.mp4" type="video/mp4">
   </video>
   <div class="hv-over"></div>
-  <div class="h-content">
-    <span class="h-tag" id="htag">שעוני יוקרה · מאז 1908 · ישראל</span>
-    <h1 class="h-title">
-      <span class="h-line"><span class="hw" id="hw1">זמן</span></span>
-      <span class="h-line"><span class="hw" id="hw2"><em>שנוגע</em></span></span>
-      <span class="h-line"><span class="hw" id="hw3">בנצח</span></span>
-    </h1>
-    <p class="h-sub" id="hsub">Precision · Heritage · Exclusivity</p>
-    <div class="h-scroll" id="hscroll">
-      <div class="hs-line"></div>
-      <span class="hs-txt">גלול לחוות</span>
-    </div>
+  <!-- Logo bottom-right -->
+  <div class="h-brand">
+    <span class="h-brand-logo" id="hlogo">AURUM <em>·</em> ORO</span>
+    <span class="h-brand-tag" id="htag">שעוני יוקרה · Precision · Heritage</span>
+  </div>
+  <!-- Scroll hint bottom-left -->
+  <div class="h-scroll" id="hscroll">
+    <div class="hs-line"></div>
+    <span class="hs-txt">גלול לחוות</span>
   </div>
 </section>
 
@@ -284,10 +278,9 @@ document.querySelectorAll('a,button,.ci').forEach(el=>{
 ScrollTrigger.create({start:100,onToggle:s=>document.getElementById('nav').classList.toggle('sol',s.isActive)});
 
 // ══ HERO ENTRANCE ══
-const htl=gsap.timeline({delay:.3,defaults:{ease:'power4.out'}});
-htl.to([document.getElementById('hw1'),document.getElementById('hw2'),document.getElementById('hw3')],{y:0,stagger:.24,duration:1.5})
-   .to('#htag',{opacity:1,y:0,duration:1},'-=.8')
-   .to('#hsub',{opacity:1,duration:.9},'-=.6')
+const htl=gsap.timeline({delay:.6,defaults:{ease:'power3.out'}});
+htl.to('#hlogo',{opacity:1,duration:1.2})
+   .to('#htag',{opacity:1,duration:1},'-=.5')
    .to('#hscroll',{opacity:1,duration:.8},'-=.4');
 
 // ══ THREE.JS — LUXURY WATCH ══
@@ -301,8 +294,8 @@ renderer.setSize(W(),H());
 renderer.shadowMap.enabled=true;
 renderer.shadowMap.type=THREE.PCFSoftShadowMap;
 renderer.toneMapping=THREE.ACESFilmicToneMapping;
-renderer.toneMappingExposure=1.2;
-renderer.setClearColor(0x05030A,1);
+renderer.toneMappingExposure=1.8;
+renderer.setClearColor(0x08060E,1);
 
 const scene=new THREE.Scene();
 scene.fog=new THREE.Fog(0x05030A,20,60);
@@ -312,22 +305,28 @@ camera.position.set(0,2,14);
 camera.lookAt(0,0,0);
 
 // ── Lighting ──
-const ambient=new THREE.AmbientLight(0xfff8e7,0.4);
+const ambient=new THREE.AmbientLight(0xfff8e7,1.8);
 scene.add(ambient);
 // Key light (warm, from top-right)
-const key=new THREE.SpotLight(0xfff5d0,3.5);
-key.position.set(8,12,8);key.angle=.35;key.penumbra=.5;
+const key=new THREE.SpotLight(0xfff5d0,8);
+key.position.set(8,14,10);key.angle=.4;key.penumbra=.5;
 key.castShadow=true;key.shadow.bias=-0.001;
 scene.add(key);scene.add(key.target);
-// Fill light (cool, from left)
-const fill=new THREE.PointLight(0x8899cc,1.2,40);
-fill.position.set(-10,4,6);scene.add(fill);
+// Fill light (from left)
+const fill=new THREE.PointLight(0xddeeff,3.5,60);
+fill.position.set(-12,4,8);scene.add(fill);
+// Front fill (directly toward camera)
+const front=new THREE.PointLight(0xfff8f0,2.5,40);
+front.position.set(0,2,18);scene.add(front);
 // Rim light (gold, from behind)
-const rim=new THREE.PointLight(0xc9a84c,2.0,30);
-rim.position.set(-4,6,-12);scene.add(rim);
+const rim=new THREE.PointLight(0xc9a84c,4.0,40);
+rim.position.set(-4,8,-14);scene.add(rim);
 // Bottom reflect
-const bot=new THREE.PointLight(0xfff8e7,0.6,20);
-bot.position.set(0,-8,4);scene.add(bot);
+const bot=new THREE.PointLight(0xfff8e7,1.8,30);
+bot.position.set(0,-6,6);scene.add(bot);
+// Top fill
+const top=new THREE.PointLight(0xffffff,2.0,30);
+top.position.set(0,16,2);scene.add(top);
 
 // ── Materials ──
 const steelMat=new THREE.MeshStandardMaterial({color:0xB8B8C8,metalness:.97,roughness:.06});
