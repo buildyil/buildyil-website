@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AURUM · שעוני יוקרה</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,200;0,300;0,400;1,200;1,300;1,400&family=Heebo:wght@200;300;400&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --blk:#06040A;
+  --gld:#C9A84C;
+  --gld2:#E8D195;
+  --crm:#F2E8D5;
+  --line:rgba(201,168,76,.18);
+}
+html{background:var(--blk);overflow-x:hidden}
+body{background:var(--blk);color:var(--crm);font-family:'Heebo',sans-serif;overflow-x:hidden;cursor:none}
+
+/* ── Cursor ── */
+.cur{position:fixed;width:8px;height:8px;background:var(--gld);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform .08s;will-change:transform}
+.cur-o{position:fixed;width:36px;height:36px;border:1px solid rgba(201,168,76,.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all .42s cubic-bezier(.2,.7,.2,1);will-change:transform}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:28px 7%;display:flex;justify-content:space-between;align-items:center;mix-blend-mode:normal;transition:all .6s}
+nav.bg{background:rgba(6,4,10,.92);backdrop-filter:blur(20px);border-bottom:1px solid var(--line);padding:18px 7%}
+.n-logo{font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:.7em;color:var(--crm);text-decoration:none;font-weight:200}
+.n-logo em{color:var(--gld);font-style:normal}
+.n-links{display:flex;gap:48px}
+.n-links a{font-size:10px;letter-spacing:.5em;text-transform:uppercase;color:rgba(242,232,213,.5);text-decoration:none;transition:color .3s}
+.n-links a:hover{color:var(--gld)}
+.n-cta{font-size:10px;letter-spacing:.4em;text-transform:uppercase;color:var(--gld);border:1px solid rgba(201,168,76,.4);padding:11px 24px;text-decoration:none;transition:all .3s}
+.n-cta:hover{background:var(--gld);color:var(--blk)}
+
+/* ── HERO ── */
+#hero{height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.h-img{position:absolute;inset:-5%;background-image:url('https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=2800&q=92&auto=format&fit=crop');background-size:cover;background-position:center;transform-origin:center;will-change:transform}
+.h-veil{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,4,10,.3) 0%,rgba(6,4,10,.5) 50%,rgba(6,4,10,.95) 100%)}
+.h-content{position:relative;z-index:2;text-align:center;padding:0 24px}
+.h-micro{font-size:9px;letter-spacing:.9em;text-transform:uppercase;color:var(--gld);margin-bottom:44px;opacity:0}
+.h-title{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(80px,16vw,260px);line-height:.85;letter-spacing:-.02em;color:var(--crm);overflow:hidden}
+.h-title .line{display:block;overflow:hidden}
+.h-title .word{display:inline-block;transform:translateY(120%)}
+.h-title em{font-style:italic;color:var(--gld)}
+.h-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(18px,2.5vw,32px);color:rgba(242,232,213,.55);margin-top:32px;opacity:0;letter-spacing:.08em}
+.h-scroll{position:absolute;bottom:44px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:16px;opacity:0}
+.h-scroll span{font-size:9px;letter-spacing:.7em;text-transform:uppercase;color:rgba(242,232,213,.3)}
+.h-scroll-line{width:1px;height:80px;background:linear-gradient(180deg,transparent,var(--gld));animation:drip 3s ease-in-out infinite}
+@keyframes drip{0%,100%{transform:scaleY(0);transform-origin:top;opacity:0}40%{opacity:1}100%{transform:scaleY(1);transform-origin:top}}
+
+/* ── STATEMENT ── */
+#statement{padding:160px 10%;display:flex;align-items:center;justify-content:space-between;gap:80px;max-width:1400px;margin:0 auto}
+.st-bar{width:1px;height:120px;background:linear-gradient(180deg,transparent,var(--gld),transparent);flex-shrink:0}
+.st-text h2{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(36px,4.5vw,64px);line-height:1.1;color:var(--crm)}
+.st-text h2 em{font-style:italic;color:var(--gld)}
+.st-text p{margin-top:28px;font-size:15px;line-height:1.9;color:rgba(242,232,213,.55);font-weight:200;max-width:480px}
+.st-num{text-align:left;flex-shrink:0}
+.st-n{font-family:'Cormorant Garamond',serif;font-size:clamp(70px,10vw,140px);font-weight:200;color:transparent;-webkit-text-stroke:1px rgba(201,168,76,.35);line-height:1;display:block}
+.st-l{font-size:10px;letter-spacing:.5em;text-transform:uppercase;color:rgba(201,168,76,.5)}
+
+/* ── PINNED WATCH REVEAL ── */
+#reveal{position:relative}
+.rev-space{height:300vh}
+.rev-sticky{position:sticky;top:0;height:100vh;overflow:hidden;display:grid;grid-template-columns:1fr 1fr;align-items:center}
+/* left: changing text */
+.rev-left{padding:0 8% 0 10%;position:relative;z-index:2}
+.rpanel{position:absolute;inset:0;padding:0 8% 0 10%;display:flex;flex-direction:column;justify-content:center;opacity:0;transition:opacity .9s ease;pointer-events:none}
+.rpanel.on{opacity:1;pointer-events:auto}
+.rp-n{font-family:'Cormorant Garamond',serif;font-size:clamp(120px,18vw,220px);font-weight:200;color:transparent;-webkit-text-stroke:1px rgba(201,168,76,.08);line-height:.85;position:absolute;top:50%;transform:translateY(-55%);right:-5%;pointer-events:none}
+.rp-tag{font-size:9px;letter-spacing:.7em;text-transform:uppercase;color:var(--gld);display:block;margin-bottom:24px}
+.rp-h{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(36px,4vw,58px);line-height:1.1;color:var(--crm);margin-bottom:28px}
+.rp-h em{font-style:italic;color:var(--gld)}
+.rp-p{font-size:14px;line-height:1.9;color:rgba(242,232,213,.52);font-weight:200;max-width:380px}
+.rp-divider{width:40px;height:1px;background:var(--gld);margin:32px 0;opacity:.4}
+/* right: full-bleed image cycling */
+.rev-right{height:100vh;position:relative;overflow:hidden}
+.rimg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;transition:opacity 1.2s ease;transform:scale(1.05);transition:opacity 1.2s ease,transform 1.2s ease}
+.rimg.on{opacity:1;transform:scale(1)}
+.rimg::after{content:'';position:absolute;inset:0;background:linear-gradient(270deg,rgba(6,4,10,0) 40%,rgba(6,4,10,.7) 100%)}
+
+/* ── WIDE IMAGE BREAK ── */
+#wide{height:90vh;position:relative;overflow:hidden}
+.w-img{position:absolute;inset:-8%;background-image:url('https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=2800&q=92&auto=format&fit=crop');background-size:cover;background-position:center 30%;will-change:transform}
+.w-over{position:absolute;inset:0;background:linear-gradient(180deg,rgba(6,4,10,.7),rgba(6,4,10,.4) 50%,rgba(6,4,10,.8))}
+.w-text{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:40px}
+.w-text blockquote{font-family:'Cormorant Garamond',serif;font-weight:200;font-style:italic;font-size:clamp(32px,5.5vw,80px);line-height:1.1;color:var(--crm);max-width:1000px}
+.w-text blockquote em{color:var(--gld);font-style:normal}
+.w-text cite{display:block;margin-top:36px;font-size:9px;letter-spacing:.8em;text-transform:uppercase;color:rgba(242,232,213,.3)}
+
+/* ── THREE PILLARS ── */
+#pillars{padding:160px 7%}
+.pil-head{text-align:center;margin-bottom:100px}
+.pil-label{font-size:9px;letter-spacing:.8em;text-transform:uppercase;color:var(--gld);display:block;margin-bottom:24px}
+.pil-h{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(40px,5vw,70px);color:var(--crm)}
+.pil-h em{font-style:italic;color:var(--gld)}
+.pil-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line);border:1px solid var(--line)}
+.pil{background:var(--blk);padding:64px 48px;position:relative;overflow:hidden;transition:background .5s}
+.pil:hover{background:rgba(201,168,76,.04)}
+.pil-img{width:100%;height:280px;object-fit:cover;object-position:center;margin-bottom:40px;filter:brightness(.85) contrast(1.05);transition:filter .5s}
+.pil:hover .pil-img{filter:brightness(1) contrast(1.05)}
+.pil-i{font-family:'Cormorant Garamond',serif;font-size:clamp(60px,8vw,100px);font-weight:200;color:transparent;-webkit-text-stroke:1px rgba(201,168,76,.2);line-height:.9;margin-bottom:32px;display:block}
+.pil h3{font-family:'Cormorant Garamond',serif;font-weight:300;font-size:clamp(24px,2.5vw,32px);color:var(--crm);margin-bottom:18px}
+.pil p{font-size:13px;line-height:1.85;color:rgba(242,232,213,.48);font-weight:200}
+.pil-line{position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(90deg,transparent,var(--gld),transparent);transform:scaleX(0);transition:transform .6s ease}
+.pil:hover .pil-line{transform:scaleX(1)}
+
+/* ── MARQUEE ── */
+#mq{padding:80px 0;overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.mqr{display:flex;margin-bottom:10px}
+.mqi{display:flex;gap:64px;animation:mrun 20s linear infinite;flex-shrink:0}
+.mqr:last-child .mqi{animation-direction:reverse;animation-duration:26s;margin-bottom:0}
+.mqi span{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,5vw,64px);font-weight:200;white-space:nowrap;color:transparent;-webkit-text-stroke:1px rgba(201,168,76,.25);letter-spacing:.06em}
+.mqi span.lit{-webkit-text-stroke:0;color:var(--gld);font-style:italic}
+@keyframes mrun{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+/* ── COLLECTION ── */
+#collection{padding:160px 7%}
+.col-head{text-align:center;margin-bottom:80px}
+.col-label{font-size:9px;letter-spacing:.8em;text-transform:uppercase;color:var(--gld);display:block;margin-bottom:22px}
+.col-h{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(36px,4.5vw,62px);color:var(--crm)}
+.col-h em{font-style:italic;color:var(--gld)}
+.col-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1300px;margin:0 auto}
+.col-item{position:relative;overflow:hidden;cursor:pointer}
+.col-img{width:100%;aspect-ratio:3/4;object-fit:cover;object-position:center;filter:brightness(.88) contrast(1.05) saturate(.92);transition:filter .7s,transform .7s}
+.col-item:hover .col-img{filter:brightness(1) contrast(1.05) saturate(1);transform:scale(1.03)}
+.col-over{position:absolute;bottom:0;left:0;right:0;padding:40px 32px;background:linear-gradient(0deg,rgba(6,4,10,.95) 0%,rgba(6,4,10,.6) 60%,transparent 100%)}
+.col-tag{font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:var(--gld);display:block;margin-bottom:10px}
+.col-name{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(22px,2.5vw,30px);color:var(--crm)}
+.col-name em{font-style:italic;color:var(--gld2)}
+.col-btn{display:inline-block;margin-top:16px;font-size:9px;letter-spacing:.5em;text-transform:uppercase;color:rgba(242,232,213,.5);border-bottom:1px solid rgba(201,168,76,.3);padding-bottom:4px;transition:color .3s,border-color .3s}
+.col-item:hover .col-btn{color:var(--gld);border-color:var(--gld)}
+
+/* ── CTA ── */
+#cta{height:100vh;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center}
+.cta-bg{position:absolute;inset:-8%;background-image:url('https://images.unsplash.com/photo-1613035529671-8f59f19cf7fb?w=2800&q=92&auto=format&fit=crop');background-size:cover;background-position:center 40%;filter:brightness(.25) saturate(.6)}
+.cta-glow{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:800px;height:600px;background:radial-gradient(ellipse,rgba(201,168,76,.12),transparent 70%);pointer-events:none}
+.cta-content{position:relative;z-index:2;text-align:center;padding:0 32px}
+.cta-label{font-size:9px;letter-spacing:.9em;text-transform:uppercase;color:var(--gld);display:block;margin-bottom:44px}
+#cta h2{font-family:'Cormorant Garamond',serif;font-weight:200;font-size:clamp(64px,12vw,180px);line-height:.88;color:var(--crm);margin-bottom:56px}
+#cta h2 em{font-style:italic;color:var(--gld)}
+.cta-btns{display:flex;gap:20px;justify-content:center;flex-wrap:wrap}
+.cta-a{display:inline-flex;align-items:center;gap:14px;padding:20px 44px;font-size:10px;letter-spacing:.45em;text-transform:uppercase;text-decoration:none;transition:all .4s}
+.cta-a.primary{background:var(--gld);color:var(--blk);font-weight:400}
+.cta-a.primary:hover{background:var(--gld2);transform:translateY(-3px);box-shadow:0 20px 50px rgba(201,168,76,.35)}
+.cta-a.secondary{border:1px solid rgba(201,168,76,.4);color:var(--gld)}
+.cta-a.secondary:hover{background:rgba(201,168,76,.08);border-color:var(--gld);transform:translateY(-3px)}
+
+/* ── FOOTER ── */
+footer{padding:60px 7%;border-top:1px solid var(--line);display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.ft-logo{font-family:'Cormorant Garamond',serif;font-size:18px;letter-spacing:.6em;color:var(--crm);font-weight:200}
+.ft-logo em{color:var(--gld);font-style:normal}
+.ft-copy{font-size:10px;letter-spacing:.3em;color:rgba(242,232,213,.3);text-transform:uppercase}
+.ft-tag{font-size:10px;letter-spacing:.35em;color:rgba(201,168,76,.5);text-transform:uppercase}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .n-links{display:none}.rev-sticky{grid-template-columns:1fr}.rev-right{display:none}
+  .pil-grid{grid-template-columns:1fr}.col-grid{grid-template-columns:1fr 1fr}
+  #statement{flex-direction:column;gap:48px}.st-num{text-align:right}
+  .cur,.cur-o{display:none}
+}
+@media(max-width:600px){.col-grid{grid-template-columns:1fr}.cta-btns{flex-direction:column;align-items:center}}
+</style>
+</head>
+<body>
+
+<div class="cur" id="cur"></div>
+<div class="cur-o" id="curO"></div>
+
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="n-logo">AURUM <em>·</em> ORO</a>
+  <div class="n-links">
+    <a href="#reveal">האוסף</a>
+    <a href="#pillars">מורשת</a>
+    <a href="#collection">קולקציות</a>
+  </div>
+  <a href="https://wa.me/972542603160" class="n-cta">הזמן פגישה</a>
+</nav>
+
+<!-- ════ HERO ════ -->
+<section id="hero">
+  <div class="h-img" id="hImg"></div>
+  <div class="h-veil"></div>
+  <div class="h-content">
+    <p class="h-micro" id="hmicro">שעוני יוקרה · מאז 1908 · ישראל</p>
+    <h1 class="h-title">
+      <span class="line"><span class="word" id="hw1">זמן</span></span>
+      <span class="line"><span class="word" id="hw2"><em>שנוגע</em></span></span>
+      <span class="line"><span class="word" id="hw3">בנצח</span></span>
+    </h1>
+    <p class="h-sub" id="hsub">Precision · Heritage · Exclusivity</p>
+    <div class="h-scroll" id="hscroll">
+      <span>גלול לגלות</span>
+      <div class="h-scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ STATEMENT ════ -->
+<section id="statement">
+  <div class="st-bar st-el"></div>
+  <div class="st-text st-el">
+    <h2>כל שעון הוא<br/><em>יצירת מופת</em><br/>של מכאניקה</h2>
+    <p>מאות חלקים זעירים, כל אחד מחושב בדיוק של אלפיות מילימטר. שעון אמיתי הוא לא מוצר — הוא מורשת שעוברת מדור לדור, עדות חיה לשיא האנושי ביצירה.</p>
+  </div>
+  <div class="st-num st-el">
+    <span class="st-n" id="n1">738</span>
+    <span class="st-l">חלקים במנגנון</span>
+    <div style="margin-top:44px">
+      <span class="st-n">0.001</span>
+      <span class="st-l">מ"מ · דיוק הרכבה</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PINNED REVEAL ════ -->
+<section id="reveal">
+  <div class="rev-space"></div>
+  <div class="rev-sticky">
+    <div class="rev-left">
+
+      <div class="rpanel on" data-i="0">
+        <div class="rp-n">01</div>
+        <div class="rp-content">
+          <span class="rp-tag">הנשמה של השעון</span>
+          <h3 class="rp-h">המנגנון שלא<br/><em>נראה — אבל נשמע</em></h3>
+          <div class="rp-divider"></div>
+          <p class="rp-p">הלב הפועם של כל שעון יוקרה — אלפי חלקים קטנטנים שמשתלבים לכדי תזמורת מכאנית. כל פעימה מדויקת. כל שנייה נמדדת.</p>
+        </div>
+      </div>
+
+      <div class="rpanel" data-i="1">
+        <div class="rp-n">02</div>
+        <div class="rp-content">
+          <span class="rp-tag">חומרים נדירים</span>
+          <h3 class="rp-h">פלדה, ספיר<br/><em>וזהב 18 קראט</em></h3>
+          <div class="rp-divider"></div>
+          <p class="rp-p">זכוכית ספיר שעמידה לשריטות כמו יהלום. מארז פלדה 904L עמיד לעומק ים. כתר זהב שנוגע בפרק היד כמו חיבוק.</p>
+        </div>
+      </div>
+
+      <div class="rpanel" data-i="2">
+        <div class="rp-n">03</div>
+        <div class="rp-content">
+          <span class="rp-tag">בלעדיות מוגבלת</span>
+          <h3 class="rp-h">רק <em>50 עותקים</em><br/>בעולם כולו</h3>
+          <div class="rp-divider"></div>
+          <p class="rp-p">לא כל אחד יכול להרכיש את השעון הזה — ולא רק בגלל המחיר. רשימת המתנה נסגרת. כל רוכש מקבל תעודת מקור ומספר סידורי ייחודי.</p>
+        </div>
+      </div>
+
+    </div>
+    <div class="rev-right">
+      <div class="rimg on" data-i="0" style="background-image:url('https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=1600&q=90&auto=format&fit=crop')"></div>
+      <div class="rimg" data-i="1" style="background-image:url('https://images.unsplash.com/photo-1495704907664-81f74a7efd9b?w=1600&q=90&auto=format&fit=crop')"></div>
+      <div class="rimg" data-i="2" style="background-image:url('https://images.unsplash.com/photo-1542496658-e33a6d0d46f6?w=1600&q=90&auto=format&fit=crop')"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ WIDE BREAK ════ -->
+<section id="wide">
+  <div class="w-img" id="wImg"></div>
+  <div class="w-over"></div>
+  <div class="w-text">
+    <blockquote id="wq">"שעון לא מספר לך<br/>מה השעה —<br/>הוא מספר לך <em>מי אתה</em>"</blockquote>
+    <cite>AURUM · ORO · Collections 2024</cite>
+  </div>
+</section>
+
+<!-- ════ PILLARS ════ -->
+<section id="pillars">
+  <div class="pil-head">
+    <span class="pil-label pil-el">שלושה עמודים</span>
+    <h2 class="pil-h pil-el">מה שהופך שעון<br/>ל<em>אגדה</em></h2>
+  </div>
+  <div class="pil-grid">
+    <div class="pil pil-el">
+      <div class="pil-line"></div>
+      <img class="pil-img" src="https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=900&q=85&auto=format&fit=crop" alt="דיוק" loading="lazy"/>
+      <span class="pil-i">I</span>
+      <h3>דיוק שחסר תקדים</h3>
+      <p>עצירת מנגנון לשנייה אחת ביום — המדד של שעון כרונומטר מוסמך. בתוך ה-AURUM, הדיוק מגיע לרבע שנייה ביום.</p>
+    </div>
+    <div class="pil pil-el">
+      <div class="pil-line"></div>
+      <img class="pil-img" src="https://images.unsplash.com/photo-1533139502658-0198f920d8e8?w=900&q=85&auto=format&fit=crop" alt="מורשת" loading="lazy"/>
+      <span class="pil-i">II</span>
+      <h3>מורשת של דורות</h3>
+      <p>יותר ממאה שנות ידע מועברות מאומן לאומן. הידיים שמרכיבות את השעון למדו מידיים שלמדו מידיים — שרשרת בלתי נפסקת של מצוינות.</p>
+    </div>
+    <div class="pil pil-el">
+      <div class="pil-line"></div>
+      <img class="pil-img" src="https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=900&q=85&auto=format&fit=crop" alt="בלעדיות" loading="lazy"/>
+      <span class="pil-i">III</span>
+      <h3>בלעדיות שאין שנייה לה</h3>
+      <p>כל שעון AURUM נבנה ידנית על פי הזמנה. ארבעה חודשי עבודה. 3,000 שעות ייצור. חתימה אישית של האומן על כל ברגית.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ════ MARQUEE ════ -->
+<section id="mq">
+  <div class="mqr">
+    <div class="mqi">
+      <span>Precision</span><span class="lit">·</span><span>Heritage</span><span class="lit">·</span><span>Exclusivity</span><span class="lit">·</span><span>Craftsmanship</span><span class="lit">·</span><span>דיוק</span><span class="lit">·</span>
+      <span>Precision</span><span class="lit">·</span><span>Heritage</span><span class="lit">·</span><span>Exclusivity</span><span class="lit">·</span><span>Craftsmanship</span><span class="lit">·</span><span>דיוק</span><span class="lit">·</span>
+    </div>
+    <div class="mqi" aria-hidden="true">
+      <span>Precision</span><span class="lit">·</span><span>Heritage</span><span class="lit">·</span><span>Exclusivity</span><span class="lit">·</span><span>Craftsmanship</span><span class="lit">·</span><span>דיוק</span><span class="lit">·</span>
+      <span>Precision</span><span class="lit">·</span><span>Heritage</span><span class="lit">·</span><span>Exclusivity</span><span class="lit">·</span><span>Craftsmanship</span><span class="lit">·</span><span>דיוק</span><span class="lit">·</span>
+    </div>
+  </div>
+  <div class="mqr" style="margin-top:10px">
+    <div class="mqi" style="animation-direction:reverse">
+      <span>מורשת</span><span class="lit">·</span><span>Geneva Seal</span><span class="lit">·</span><span>Chronometer</span><span class="lit">·</span><span>בלעדיות</span><span class="lit">·</span><span>Gold</span><span class="lit">·</span>
+      <span>מורשת</span><span class="lit">·</span><span>Geneva Seal</span><span class="lit">·</span><span>Chronometer</span><span class="lit">·</span><span>בלעדיות</span><span class="lit">·</span><span>Gold</span><span class="lit">·</span>
+    </div>
+    <div class="mqi" aria-hidden="true" style="animation-direction:reverse">
+      <span>מורשת</span><span class="lit">·</span><span>Geneva Seal</span><span class="lit">·</span><span>Chronometer</span><span class="lit">·</span><span>בלעדיות</span><span class="lit">·</span><span>Gold</span><span class="lit">·</span>
+      <span>מורשת</span><span class="lit">·</span><span>Geneva Seal</span><span class="lit">·</span><span>Chronometer</span><span class="lit">·</span><span>בלעדיות</span><span class="lit">·</span><span>Gold</span><span class="lit">·</span>
+    </div>
+  </div>
+</section>
+
+<!-- ════ COLLECTION ════ -->
+<section id="collection">
+  <div class="col-head">
+    <span class="col-label col-el">האוסף שלנו</span>
+    <h2 class="col-h col-el">בחר את <em>השעון שלך</em></h2>
+  </div>
+  <div class="col-grid">
+    <div class="col-item col-el">
+      <img class="col-img" src="https://images.unsplash.com/photo-1523170335258-f5ed11844a49?w=900&q=88&auto=format&fit=crop" alt="Classic" loading="lazy"/>
+      <div class="col-over">
+        <span class="col-tag">אוסף קלאסיק</span>
+        <div class="col-name">AURUM <em>Classic</em></div>
+        <a href="#" class="col-btn">גלה עוד ←</a>
+      </div>
+    </div>
+    <div class="col-item col-el">
+      <img class="col-img" src="https://images.unsplash.com/photo-1614164185128-e4ec99c436d7?w=900&q=88&auto=format&fit=crop" alt="Sport" loading="lazy"/>
+      <div class="col-over">
+        <span class="col-tag">אוסף ספורט</span>
+        <div class="col-name">AURUM <em>Sport</em></div>
+        <a href="#" class="col-btn">גלה עוד ←</a>
+      </div>
+    </div>
+    <div class="col-item col-el">
+      <img class="col-img" src="https://images.unsplash.com/photo-1495704907664-81f74a7efd9b?w=900&q=88&auto=format&fit=crop" alt="Grand" loading="lazy"/>
+      <div class="col-over">
+        <span class="col-tag">אוסף פרמיום</span>
+        <div class="col-name">AURUM <em>Grand</em></div>
+        <a href="#" class="col-btn">גלה עוד ←</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CTA ════ -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-glow"></div>
+  <div class="cta-content">
+    <span class="cta-label">הצעד הראשון</span>
+    <h2>הגיע <em>הזמן</em><br/>שלך</h2>
+    <div class="cta-btns">
+      <a href="https://wa.me/972542603160" class="cta-a primary">הזמן פגישה ←</a>
+      <a href="#collection" class="cta-a secondary">צפה באוסף</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="ft-logo">AURUM <em>·</em> ORO</div>
+  <div class="ft-copy">© 2024 · כל הזכויות שמורות</div>
+  <div class="ft-tag">בנוי על ידי Buildy IL</div>
+</footer>
+
+<!-- SCRIPTS -->
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// ══ CURSOR ══
+const cur=document.getElementById('cur');
+const curO=document.getElementById('curO');
+let mx=0,my=0,ox=0,oy=0;
+window.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px'});
+(function cl(){ox+=(mx-ox)*.1;oy+=(my-oy)*.1;curO.style.left=ox+'px';curO.style.top=oy+'px';requestAnimationFrame(cl)})();
+document.querySelectorAll('a,button,.col-item,.pil').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{curO.style.width='64px';curO.style.height='64px';cur.style.transform='translate(-50%,-50%) scale(0)';curO.style.borderColor='rgba(201,168,76,.8)'});
+  el.addEventListener('mouseleave',()=>{curO.style.width='36px';curO.style.height='36px';cur.style.transform='translate(-50%,-50%) scale(1)';curO.style.borderColor='rgba(201,168,76,.5)'});
+});
+
+// ══ NAV ══
+ScrollTrigger.create({start:120,onToggle:s=>document.getElementById('nav').classList.toggle('bg',s.isActive)});
+
+// ══ HERO ══
+const tl = gsap.timeline({defaults:{ease:'power4.out'},delay:.2});
+tl.to('.word',{y:0,stagger:.22,duration:1.4})
+  .to('#hmicro',{opacity:1,y:0,duration:1},'-=.6')
+  .to('#hsub',{opacity:1,duration:1},'-=.5')
+  .to('#hscroll',{opacity:1,duration:.8},'-=.3');
+
+// Hero parallax
+gsap.to('#hImg',{
+  yPercent:25,ease:'none',
+  scrollTrigger:{trigger:'#hero',start:'top top',end:'bottom top',scrub:true}
+});
+
+// ══ STATEMENT ══
+gsap.fromTo('.st-el',{opacity:0,y:60},{opacity:1,y:0,stagger:.2,duration:1.3,ease:'power3.out',scrollTrigger:{trigger:'#statement',start:'top 72%',once:true}});
+
+// ══ PINNED STORY ══
+const rpanels=document.querySelectorAll('.rpanel');
+const rimgs=document.querySelectorAll('.rimg');
+function showR(i){rpanels.forEach((p,j)=>p.classList.toggle('on',j===i));rimgs.forEach((im,j)=>im.classList.toggle('on',j===i));}
+ScrollTrigger.create({
+  trigger:'#reveal .rev-space',
+  start:'top top',end:'bottom bottom',
+  onUpdate(s){const i=s.progress<.33?0:s.progress<.66?1:2;showR(i);}
+});
+
+// ══ WIDE PARALLAX ══
+gsap.to('#wImg',{yPercent:22,ease:'none',scrollTrigger:{trigger:'#wide',start:'top bottom',end:'bottom top',scrub:true}});
+gsap.fromTo('#wq',{opacity:0,y:50,filter:'blur(12px)'},{opacity:1,y:0,filter:'blur(0px)',duration:1.5,ease:'power3.out',scrollTrigger:{trigger:'#wide',start:'top 65%',once:true}});
+
+// ══ PILLARS ══
+gsap.fromTo('.pil-el',{opacity:0,y:70},{opacity:1,y:0,stagger:.14,duration:1.2,ease:'power3.out',scrollTrigger:{trigger:'#pillars',start:'top 75%',once:true}});
+
+// ══ COLLECTION ══
+gsap.fromTo('.col-el',{opacity:0,y:60,scale:.97},{opacity:1,y:0,scale:1,stagger:.12,duration:1,ease:'power3.out',scrollTrigger:{trigger:'#collection',start:'top 76%',once:true}});
+
+// ══ CTA ══
+gsap.fromTo('#cta h2',{opacity:0,y:80,filter:'blur(16px)'},{opacity:1,y:0,filter:'blur(0px)',duration:1.7,ease:'power3.out',scrollTrigger:{trigger:'#cta',start:'top 72%',once:true}});
+gsap.fromTo('.cta-a',{opacity:0,y:30,scale:.95},{opacity:1,y:0,scale:1,stagger:.15,duration:1,ease:'power3.out',scrollTrigger:{trigger:'#cta',start:'top 62%',once:true}});
+</script>
+</body>
+</html>
