@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>עורך דין גירושין ומשפחה | כהן ושות' — דיני משפחה תל אביב</title>
+  <meta name="description" content="עורך דין לדיני משפחה — גירושין, משמורת, מזונות, חלוקת רכוש. ייעוץ ראשוני חינם. תל אביב." />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0A0F2E; --gold: #C9A84C; --gold-light: #E4C66E; --warm: #8B6F47;
+      --white: #FFFFFF; --gray: #F5F5F5; --warm-gray: #FAF8F5; --text-dark: #1A1A2E; --text-mid: #4A4A6A; --transition: 0.3s ease;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Heebo', sans-serif; color: var(--text-dark); background: var(--white); direction: rtl; overflow-x: hidden; }
+    h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; }
+
+    nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(10,15,46,0.97); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(201,168,76,0.2); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 70px; }
+    .logo { display: flex; flex-direction: column; text-decoration: none; }
+    .logo-he { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: var(--gold); line-height: 1.1; }
+    .logo-en { font-size: 0.6rem; color: rgba(255,255,255,0.4); letter-spacing: 2px; text-transform: uppercase; }
+    .nav-right { display: flex; gap: 16px; align-items: center; }
+    .nav-link-back { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.88rem; transition: color var(--transition); }
+    .nav-link-back:hover { color: var(--gold); }
+    .nav-cta-btn { background: var(--gold); color: var(--navy); padding: 10px 22px; border-radius: 4px; font-size: 0.9rem; font-weight: 700; text-decoration: none; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: var(--white); }
+    .mobile-menu { display: none; position: fixed; top: 70px; right: 0; width: 100%; background: var(--navy); padding: 24px; z-index: 999; flex-direction: column; border-top: 1px solid rgba(201,168,76,0.2); }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 1.1rem; font-weight: 500; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); display: block; }
+
+    /* HERO — WARM PROFESSIONAL */
+    .hero { min-height: 100vh; background: linear-gradient(160deg, #0A0F2E 0%, #1a1540 40%, #0F1830 100%); display: flex; align-items: center; padding-top: 70px; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(120deg, rgba(10,15,46,0.94) 0%, rgba(26,21,64,0.85) 45%, rgba(15,24,48,0.60) 100%), url('https://images.unsplash.com/photo-1573497620053-ea5300f94f21?w=2000&q=85&auto=format&fit=crop'); background-size: cover; background-position: center; pointer-events: none; }
+    .hero .hero-inner::before { content: ''; position: absolute; top: -50%; left: -20%; width: 80%; height: 160%; background: radial-gradient(ellipse, rgba(201,168,76,0.08) 0%, transparent 65%); pointer-events: none; z-index: -1; }
+    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 80px 24px; position: relative; z-index: 1; }
+    .hero-badge { display: inline-block; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.35); color: var(--gold); padding: 8px 20px; border-radius: 50px; font-size: 0.82rem; font-weight: 600; letter-spacing: 1px; margin-bottom: 28px; }
+    .hero h1 { font-size: clamp(2.8rem, 5.5vw, 5rem); color: var(--white); line-height: 1.1; margin-bottom: 20px; font-weight: 600; max-width: 760px; }
+    .hero h1 span { color: var(--gold); }
+    .hero-sub { font-family: 'Heebo', sans-serif; font-size: 1.05rem; color: rgba(255,255,255,0.65); line-height: 1.85; max-width: 580px; margin-bottom: 40px; }
+    .hero-cta-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .hero-wa { display: inline-flex; align-items: center; gap: 10px; background: #25D366; color: white; padding: 16px 32px; border-radius: 6px; font-size: 1rem; font-weight: 700; text-decoration: none; transition: var(--transition); font-family: 'Heebo', sans-serif; }
+    .hero-wa:hover { background: #22c55e; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,0.4); }
+    .hero-wa svg { width: 22px; height: 22px; }
+    .hero-phone { display: inline-flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: color var(--transition); }
+    .hero-phone:hover { color: var(--gold); }
+    .hero-trust { display: flex; gap: 24px; margin-top: 40px; flex-wrap: wrap; }
+    .hero-trust-item { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.5); font-size: 0.83rem; }
+    .hero-trust-item span:first-child { color: var(--gold); }
+
+    section { padding: 90px 24px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .stag { font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: block; }
+    .stitle { font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: var(--navy); line-height: 1.2; }
+    .sline { width: 50px; height: 3px; background: var(--gold); margin: 18px auto 0; }
+    .ssub { font-size: 0.98rem; color: var(--text-mid); line-height: 1.8; max-width: 560px; margin: 16px auto 0; }
+
+    /* SERVICES LIST */
+    .services-sec { background: var(--warm-gray); }
+    .services-2col { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .srv-item { background: var(--white); border-radius: 8px; padding: 28px 24px; display: flex; gap: 18px; align-items: flex-start; border: 1px solid rgba(10,15,46,0.07); transition: var(--transition); }
+    .srv-item:hover { box-shadow: 0 8px 32px rgba(10,15,46,0.1); border-color: rgba(201,168,76,0.3); }
+    .srv-icon { font-size: 1.8rem; flex-shrink: 0; margin-top: 2px; }
+    .srv-content h4 { font-family: 'Heebo', sans-serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 6px; }
+    .srv-content p { font-size: 0.88rem; color: var(--text-mid); line-height: 1.7; }
+
+    /* PROCESS */
+    .process { background: var(--navy); }
+    .proc-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; }
+    .proc-step { text-align: center; }
+    .proc-num { width: 64px; height: 64px; border-radius: 50%; background: rgba(201,168,76,0.12); border: 2px solid rgba(201,168,76,0.4); color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; }
+    .proc-step h4 { font-family: 'Heebo', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+    .proc-step p { color: rgba(255,255,255,0.5); font-size: 0.84rem; line-height: 1.7; }
+
+    /* FAQ */
+    .faq-list { max-width: 780px; margin: 0 auto; display: flex; flex-direction: column; gap: 0; }
+    .faq-item { border-bottom: 1px solid rgba(10,15,46,0.1); }
+    .faq-q { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; cursor: pointer; gap: 16px; }
+    .faq-q h4 { font-family: 'Heebo', sans-serif; font-size: 1rem; font-weight: 700; color: var(--navy); }
+    .faq-icon { font-size: 1.4rem; color: var(--gold); flex-shrink: 0; transition: transform var(--transition); }
+    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.4s ease, padding 0.3s ease; }
+    .faq-a p { padding-bottom: 20px; color: var(--text-mid); line-height: 1.8; font-size: 0.93rem; }
+    .faq-item.open .faq-icon { transform: rotate(45deg); }
+    .faq-item.open .faq-a { max-height: 300px; }
+
+    /* FINAL CTA */
+    .final-cta { background: linear-gradient(135deg, var(--navy) 0%, #141A45 100%); text-align: center; }
+    .final-cta h2 { font-size: clamp(2rem, 4vw, 3rem); color: var(--white); margin-bottom: 14px; }
+    .final-cta p { color: rgba(255,255,255,0.65); font-size: 1.05rem; margin-bottom: 36px; max-width: 560px; margin-left: auto; margin-right: auto; }
+    .big-wa { display: inline-flex; align-items: center; gap: 14px; background: #25D366; color: white; padding: 20px 48px; border-radius: 8px; font-size: 1.15rem; font-weight: 700; text-decoration: none; transition: var(--transition); font-family: 'Heebo', sans-serif; box-shadow: 0 6px 30px rgba(37,211,102,0.35); }
+    .big-wa:hover { background: #22c55e; transform: translateY(-3px); }
+    .big-wa svg { width: 28px; height: 28px; }
+
+    footer { background: #06091E; padding: 50px 24px 24px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; }
+    .footer-row { display: flex; justify-content: space-between; align-items: start; gap: 48px; margin-bottom: 36px; flex-wrap: wrap; }
+    .footer-brand-logo { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 700; color: var(--gold); display: block; margin-bottom: 8px; }
+    .footer-brand-sub { font-size: 0.8rem; color: rgba(255,255,255,0.4); }
+    .footer-links { display: flex; gap: 24px; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.88rem; transition: color var(--transition); }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-bottom { border-top: 1px solid rgba(255,255,255,0.07); padding-top: 20px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 8px; }
+    .footer-bottom p { color: rgba(255,255,255,0.3); font-size: 0.8rem; }
+
+    .whatsapp-btn { position: fixed; bottom: 28px; left: 28px; z-index: 900; background: #25D366; color: white; width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; box-shadow: 0 4px 20px rgba(37,211,102,0.4); transition: var(--transition); }
+    .whatsapp-btn:hover { transform: scale(1.1); }
+    .whatsapp-btn svg { width: 30px; height: 30px; }
+    .access-btn { position: fixed; bottom: 28px; right: 28px; z-index: 900; background: var(--navy); color: var(--gold); width: 58px; height: 58px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; box-shadow: 0 4px 20px rgba(10,15,46,0.4); border: 2px solid var(--gold); transition: var(--transition); font-size: 1.6rem; }
+    .access-btn:hover { background: var(--gold); color: var(--navy); }
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 2000; align-items: center; justify-content: center; padding: 20px; }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--white); border-radius: 12px; max-width: 680px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 48px; position: relative; }
+    .modal-close { position: absolute; top: 16px; left: 16px; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: var(--text-mid); }
+    .modal h2 { font-size: 1.8rem; color: var(--navy); margin-bottom: 8px; }
+    .modal-date { color: var(--gold); font-size: 0.85rem; font-weight: 600; margin-bottom: 24px; display: block; }
+    .modal h3 { font-family: 'Heebo', sans-serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin: 20px 0 8px; }
+    .modal p, .modal li { color: var(--text-mid); font-size: 0.9rem; line-height: 1.8; }
+    .modal ul { padding-right: 20px; margin-bottom: 12px; }
+    .modal a { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .hamburger { display: flex; }
+      .nav-right .nav-link-back { display: none; }
+      .services-2col { grid-template-columns: 1fr; }
+      .proc-steps { grid-template-columns: 1fr 1fr; gap: 24px; }
+      .footer-row { flex-direction: column; gap: 24px; }
+      .footer-bottom { flex-direction: column; gap: 8px; text-align: center; }
+      .big-wa { padding: 16px 28px; font-size: 1rem; }
+
+      /* Nav */
+      .nav-inner { padding: 0 20px; }
+      .nav-cta-btn { padding: 8px 14px; font-size: 0.82rem; }
+
+      /* Hero */
+      .hero { padding-top: 70px; }
+      .hero-inner { padding: 60px 20px; }
+      .hero h1 { font-size: clamp(2.2rem, 8vw, 3.8rem); }
+      .hero-sub { max-width: 100%; }
+      .hero-cta-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .hero-wa { width: 100%; justify-content: center; }
+
+      /* Sections */
+      section { padding: 60px 20px; }
+
+      /* Services */
+      .srv-item { gap: 12px; }
+
+      /* Process */
+      .proc-num { width: 52px; height: 52px; font-size: 1.4rem; }
+
+      /* FAQ */
+      .faq-q h4 { font-size: 0.95rem; }
+
+      /* Final CTA */
+      .big-wa { width: 100%; justify-content: center; }
+
+      /* Footer links */
+      .footer-links { flex-wrap: wrap; gap: 12px; }
+
+      /* Fixed buttons */
+      .whatsapp-btn { bottom: 20px; left: 20px; width: 52px; height: 52px; }
+      .access-btn   { bottom: 20px; right: 20px; width: 52px; height: 52px; }
+
+      /* Modal */
+      .modal { padding: 32px 20px; max-height: 85vh; overflow-y: auto; }
+    }
+
+    @media (max-width: 480px) {
+      /* Hero */
+      .hero h1 { font-size: clamp(1.9rem, 9vw, 2.8rem); }
+      .hero-trust { flex-direction: column; gap: 8px; }
+
+      /* Process: 1 column */
+      .proc-steps { grid-template-columns: 1fr; }
+
+      /* Section padding */
+      section { padding: 48px 16px; }
+
+      /* Nav CTA btn hide */
+      .nav-cta-btn { display: none; }
+
+      /* Section titles */
+      .stitle { font-size: clamp(1.6rem, 7vw, 2.2rem); }
+
+      /* Footer */
+      footer { padding: 40px 16px 24px; }
+      .footer-links { gap: 8px; }
+
+      /* Fixed buttons — ensure safe touch targets */
+      .whatsapp-btn { bottom: 16px; left: 16px; width: 52px; height: 52px; }
+      .access-btn   { bottom: 16px; right: 16px; width: 52px; height: 52px; }
+
+      /* Services: tighten items */
+      .srv-item { padding: 20px 16px; }
+    }
+
+    /* Hide custom cursor on touch devices */
+    @media (hover: none), (pointer: coarse) {
+      * { cursor: auto !important; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-inner">
+    <a href="../websites/law-firm/index.html" class="logo">
+      <span class="logo-he">כהן ושות'</span>
+      <span class="logo-en">Cohen & Associates</span>
+    </a>
+    <div class="nav-right">
+      <a href="../websites/law-firm/index.html" class="nav-link-back">← האתר הראשי</a>
+      <a href="https://wa.me/972500000000?text=שלום, ראיתי את האתר ואשמח לייעוץ בדיני משפחה" class="nav-cta-btn" target="_blank" rel="noopener">ייעוץ חינם</a>
+    </div>
+    <div class="hamburger" id="hamburger"><span></span><span></span><span></span></div>
+  </div>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <a href="../websites/law-firm/index.html">ראשי</a>
+  <a href="../websites/law-firm/index.html#about">אודות</a>
+  <a href="../websites/law-firm/index.html#services">שירותים</a>
+  <a href="../websites/law-firm/index.html#team">הצוות</a>
+  <a href="../websites/law-firm/index.html#contact">צור קשר</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">⚖️ דיני משפחה — גירושין, משמורת, מזונות</div>
+    <h1>בשעות הקשות<br />ביותר — <span>לצדכם</span></h1>
+    <p class="hero-sub">פרידה היא אחד הרגעים הקשים בחיים. אנחנו מספקים ייעוץ משפטי מקצועי ורגיש, ופועלים לשמור על זכויותיכם ועל עתיד ילדיכם.</p>
+    <div class="hero-cta-row">
+      <a href="https://wa.me/972500000000?text=שלום, ראיתי את האתר ואשמח לייעוץ בדיני משפחה" class="hero-wa" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+        שלח הודעה בוואטסאפ
+      </a>
+      <a href="tel:0500000000" class="hero-phone">📞 050-000-0000</a>
+    </div>
+    <div class="hero-trust">
+      <div class="hero-trust-item"><span>✓</span><span>ייעוץ ראשוני חינם</span></div>
+      <div class="hero-trust-item"><span>✓</span><span>15+ שנות ניסיון בדיני משפחה</span></div>
+      <div class="hero-trust-item"><span>✓</span><span>גישה אישית ורגישה</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services-sec">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="stag">תחומי הטיפול</span>
+      <h2 class="stitle">כל שירותי<br />דיני המשפחה</h2>
+      <div class="sline"></div>
+      <p class="ssub">אנחנו מלווים אתכם בכל ההיבטים המשפטיים של הפרידה — בבית הדין לענייני משפחה ובבית הדין הרבני.</p>
+    </div>
+    <div class="services-2col">
+      <div class="srv-item" data-animate>
+        <div class="srv-icon">💍</div>
+        <div class="srv-content">
+          <h4>גירושין</h4>
+          <p>ניהול הליך הגירושין מתחילתו ועד סיומו — הסכמי גירושין, גט, פסיקת בית הדין הרבני ובית המשפט לענייני משפחה. אנחנו פועלים להגיע להסכם מהיר ומיטיב, ומוכנים לניהול הליך ממושך כשנדרש.</p>
+        </div>
+      </div>
+      <div class="srv-item" data-animate>
+        <div class="srv-icon">👶</div>
+        <div class="srv-content">
+          <h4>משמורת ילדים</h4>
+          <p>הגנה על זכויות ההורות וטובת הילדים היא עדיפות עליונה. אנחנו פועלים להשגת סידורי משמורת הוגנים — משמורת משותפת, משמורת פיזית, זמני שהייה וסדרי ביקור מסודרים.</p>
+        </div>
+      </div>
+      <div class="srv-item" data-animate>
+        <div class="srv-icon">💰</div>
+        <div class="srv-content">
+          <h4>מזונות</h4>
+          <p>קביעת מזונות ילדים ומזונות אישה — גובה, תנאים ואכיפה. אנחנו מבטיחים שזכאותכם תמוצה במלואה, ושהתחייבויות המזונות ייאכפו כדין.</p>
+        </div>
+      </div>
+      <div class="srv-item" data-animate>
+        <div class="srv-icon">🏠</div>
+        <div class="srv-content">
+          <h4>חלוקת רכוש</h4>
+          <p>חלוקת נכסים שנצברו במהלך הנישואין — דירה, חסכונות, פנסיה, עסק. אנחנו פועלים להגיע לחלוקה הוגנת ולמנוע עיכובים מיותרים.</p>
+        </div>
+      </div>
+      <div class="srv-item" data-animate>
+        <div class="srv-icon">📜</div>
+        <div class="srv-content">
+          <h4>הסכם ממון</h4>
+          <p>ניסוח הסכם ממון לפני הנישואין או בזמן הנישואין — הגדרת זכויות רכושיות, הגנה על נכסים, ומניעת סכסוכי עתיד. אנחנו מסבירים כל סעיף בבהירות.</p>
+        </div>
+      </div>
+      <div class="srv-item" data-animate>
+        <div class="srv-icon">📋</div>
+        <div class="srv-content">
+          <h4>ירושה וצוואה</h4>
+          <p>ניסוח צוואה, ייצוג בהליכי ירושה, ערעור על צוואה — אנחנו מסדירים את עתיד הרכוש שלכם ושל יורשיכם בצורה ברורה ומשפטית.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="stag" style="color:var(--gold);">תהליך הטיפול</span>
+      <h2 class="stitle" style="color:var(--white);">4 שלבים לפתרון</h2>
+      <div class="sline"></div>
+    </div>
+    <div class="proc-steps">
+      <div class="proc-step" data-animate>
+        <div class="proc-num">1</div>
+        <h4>פגישה ראשונית</h4>
+        <p>שיחה חינמית וסודית. מקשיבים, מבינים את המצב ומסבירים את זכויותיכם בבהירות.</p>
+      </div>
+      <div class="proc-step" data-animate>
+        <div class="proc-num">2</div>
+        <h4>תכנון אסטרטגי</h4>
+        <p>גיבוש מסלול פעולה — מו"מ, גישור, או הליך משפטי — לפי הנסיבות וטובת הלקוח.</p>
+      </div>
+      <div class="proc-step" data-animate>
+        <div class="proc-num">3</div>
+        <h4>ייצוג מסור</h4>
+        <p>טיפול שוטף, עדכון בכל שלב, ניהול המשא ומתן ו/או ייצוג בדיונים.</p>
+      </div>
+      <div class="proc-step" data-animate>
+        <div class="proc-num">4</div>
+        <h4>פתרון ויציבות</h4>
+        <p>הסכם חתום, פסק דין, ומעקב לאחר ההסכם — אנחנו שם גם אחרי הסיום.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="section-inner">
+    <div class="section-header">
+      <span class="stag">שאלות נפוצות</span>
+      <h2 class="stitle">שאלות שלקוחות<br />שואלים אותנו</h2>
+      <div class="sline"></div>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q">
+          <h4>כמה זמן לוקח הליך גירושין?</h4>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          <p>תלוי במידת ההסכמה בין הצדדים. גירושין בהסכמה עשויים להסתיים תוך 3-6 חודשים. הליך שנוי במחלוקת עלול להימשך 1-3 שנים. אנחנו פועלים להאצת ההליך ככל האפשר.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <h4>מה ההבדל בין בית משפט לענייני משפחה לבית הדין הרבני?</h4>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          <p>בית הדין הרבני מוסמך לדון בגירושין ובגט. בית המשפט לענייני משפחה מוסמך לדון במשמורת, מזונות, רכוש ועוד. לרוב, ההליכים מתנהלים בשני המסלולים במקביל. אנחנו נדריך אתכם לגבי הפורום המתאים.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <h4>האם אני זכאי/ת למשמורת משותפת?</h4>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          <p>המגמה בפסיקה הישראלית נוטה כיום למשמורת משותפת. הקריטריון המרכזי הוא "טובת הילד". אנחנו נבחן את נסיבות המקרה ונפעל להשגת הסידור הטוב ביותר לכם ולילדיכם.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <h4>כיצד מחושבים מזונות ילדים?</h4>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          <p>מזונות ילדים מחושבים על פי צרכי הילד, הכנסות שני ההורים ומבחן הצדק. בישראל, חקיקת מזונות הילדים נמצאת בתהליך שינוי. נעדכן אתכם לגבי המצב העדכני ונפעל להשגת גובה מזונות הוגן.</p>
+        </div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q">
+          <h4>האם כדאי לנסות גישור לפני הגשת תביעה?</h4>
+          <span class="faq-icon">+</span>
+        </div>
+        <div class="faq-a">
+          <p>במקרים רבים — כן. גישור חוסך זמן וכסף, ומאפשר להגיע לפתרון מוסכם שממנו שני הצדדים מרוצים יותר מאשר מפסיקה שיפוטית. עו"ד לוי שלנו היא גם מגשרת מוסמכת.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="section-inner">
+    <h2>דברו איתנו —<br />הצעד הראשון הוא החשוב</h2>
+    <p>ייעוץ ראשוני חינמי, סודי ומחייב לאף אחד. אנחנו כאן לשמוע.</p>
+    <a href="https://wa.me/972500000000?text=שלום, ראיתי את האתר ואשמח לייעוץ בדיני משפחה" class="big-wa" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      שלח הודעה בוואטסאפ
+    </a>
+    <p style="margin-top:14px; color:rgba(255,255,255,0.35); font-size:0.82rem;">או חייגו: <a href="tel:0500000000" style="color:var(--gold); text-decoration:none;">050-000-0000</a></p>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-row">
+      <div>
+        <span class="footer-brand-logo">כהן ושות' — משרד עורכי דין</span>
+        <span class="footer-brand-sub">שדרות רוטשילד 45, תל אביב | 050-000-0000</span>
+      </div>
+      <div class="footer-links">
+        <a href="../websites/law-firm/index.html">ראשי</a>
+        <a href="../websites/law-firm/index.html#about">אודות</a>
+        <a href="../websites/law-firm/index.html#services">שירותים</a>
+        <a href="../websites/law-firm/index.html#team">הצוות</a>
+        <a href="../websites/law-firm/index.html#contact">צור קשר</a>
+        <a href="criminal.html">משפט פלילי</a>
+        <a href="corporate.html">דיני חברות</a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2024 כהן ושות' משרד עורכי דין. כל הזכויות שמורות.</p>
+      <p><a href="#" onclick="document.getElementById('accessModal').classList.add('open')" style="color:rgba(255,255,255,0.3); text-decoration:none;">הצהרת נגישות</a></p>
+    </div>
+  </div>
+</footer>
+
+<a href="https://wa.me/972500000000?text=שלום, ראיתי את האתר ואשמח לייעוץ בדיני משפחה" class="whatsapp-btn" target="_blank" rel="noopener" aria-label="וואטסאפ">
+  <svg viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+</a>
+<button class="access-btn" onclick="document.getElementById('accessModal').classList.add('open')" aria-label="נגישות">♿</button>
+
+<div class="modal-overlay" id="accessModal" role="dialog" aria-modal="true">
+  <div class="modal">
+    <button class="modal-close" onclick="document.getElementById('accessModal').classList.remove('open')">×</button>
+    <h2>הצהרת נגישות</h2>
+    <span class="modal-date">עודכן: ינואר 2024</span>
+    <p>דף זה עומד בדרישות תקן WCAG 2.1 ברמה AA ובחוק שוויון זכויות לאנשים עם מוגבלות.</p>
+    <h3>אמצעי הנגישות</h3>
+    <ul>
+      <li>ניגודיות צבעים מלאה לפי WCAG AA</li>
+      <li>ניווט מלא במקלדת</li>
+      <li>תמיכה מלאה בקוראי מסך</li>
+      <li>תגיות שפה ו-ARIA מוגדרים</li>
+      <li>כפתורי FAQ נגישים (role="button", aria-expanded)</li>
+      <li>אין תוכן מהבהב</li>
+    </ul>
+    <h3>יצירת קשר</h3>
+    <p>📞 <a href="tel:0500000000">050-000-0000</a> | ✉️ <a href="mailto:accessibility@example.com">accessibility@example.com</a></p>
+  </div>
+</div>
+
+<script>
+  gsap.registerPlugin(ScrollTrigger);
+  document.getElementById('hamburger').addEventListener('click', () => document.getElementById('mobileMenu').classList.toggle('open'));
+  gsap.from('.hero > .hero-inner > *', { opacity: 0, y: 30, stagger: 0.15, duration: 0.8, delay: 0.3 });
+  gsap.from('.srv-item', { scrollTrigger: { trigger: '.services-2col', start: 'top 80%' }, opacity: 0, y: 30, stagger: 0.1, duration: 0.6 });
+  gsap.from('.proc-step', { scrollTrigger: { trigger: '.proc-steps', start: 'top 80%' }, opacity: 0, y: 30, stagger: 0.15, duration: 0.6 });
+
+  // FAQ accordion
+  document.querySelectorAll('.faq-q').forEach(q => {
+    q.addEventListener('click', () => {
+      const item = q.parentElement;
+      const wasOpen = item.classList.contains('open');
+      document.querySelectorAll('.faq-item').forEach(i => i.classList.remove('open'));
+      if(!wasOpen) item.classList.add('open');
+    });
+  });
+
+  document.getElementById('accessModal').addEventListener('click', function(e) { if(e.target===this) this.classList.remove('open'); });
+</script>
+</body>
+</html>

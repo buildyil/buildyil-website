@@ -1,0 +1,14 @@
+{
+  "name": "Buildy IL — סטודיו דיגיטלי",
+  "short_name": "Buildy IL",
+  "description": "בניית אתרים, דפי נחיתה ומיתוג לעסקים בישראל.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFFFFF",
+  "theme_color": "#FFFFFF",
+  "lang": "he",
+  "dir": "rtl",
+  "icons": [
+    { "src": "/logo.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }
+  ]
+}

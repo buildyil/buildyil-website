@@ -1,0 +1,9 @@
+/work  /work/  301
+
+# Explicit paths for all work subpages (ensure clean URLs work)
+/work/hotel-elia    /work/hotel-elia/   301
+/work/restaurant    /work/restaurant/   301
+/work/law-firm      /work/law-firm/     301
+/work/electrician   /work/electrician/  301
+/work/corporate     /work/corporate/    301
+/work/family        /work/family/       301

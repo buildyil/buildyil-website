@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>עורך דין חברות ועסקים | כהן ושות' — דיני חברות תל אביב</title>
+  <meta name="description" content="עורך דין לדיני חברות — הקמת חברות, חוזים מסחריים, מיזוגים, דיני עבודה. ייעוץ ראשוני חינם. תל אביב." />
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800;900&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&display=swap" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --navy: #0A0F2E; --gold: #C9A84C; --gold-light: #E4C66E;
+      --white: #FFFFFF; --gray: #F5F5F5; --warm-gray: #FAF8F5;
+      --text-dark: #1A1A2E; --text-mid: #4A4A6A; --transition: 0.3s ease;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Heebo', sans-serif; color: var(--text-dark); background: var(--white); direction: rtl; overflow-x: hidden; }
+    h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; }
+
+    /* NAV */
+    nav { position: fixed; top: 0; width: 100%; z-index: 1000; background: rgba(10,15,46,0.97); backdrop-filter: blur(10px); border-bottom: 1px solid rgba(201,168,76,0.2); }
+    .nav-inner { max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; align-items: center; justify-content: space-between; height: 70px; }
+    .logo { display: flex; flex-direction: column; text-decoration: none; }
+    .logo-he { font-family: 'Cormorant Garamond', serif; font-size: 1.25rem; font-weight: 700; color: var(--gold); line-height: 1.1; }
+    .logo-en { font-size: 0.6rem; color: rgba(255,255,255,0.4); letter-spacing: 2px; text-transform: uppercase; }
+    .nav-right { display: flex; gap: 16px; align-items: center; }
+    .nav-link-back { color: rgba(255,255,255,0.6); text-decoration: none; font-size: 0.88rem; transition: color var(--transition); }
+    .nav-link-back:hover { color: var(--gold); }
+    .nav-cta-btn { background: var(--gold); color: var(--navy); padding: 10px 22px; border-radius: 4px; font-size: 0.9rem; font-weight: 700; text-decoration: none; }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: var(--white); border-radius: 1px; }
+    .mobile-menu { display: none; position: fixed; top: 70px; right: 0; width: 100%; background: var(--navy); padding: 24px; z-index: 999; flex-direction: column; border-top: 1px solid rgba(201,168,76,0.2); }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: rgba(255,255,255,0.85); text-decoration: none; font-size: 1.1rem; font-weight: 500; padding: 14px 0; border-bottom: 1px solid rgba(255,255,255,0.08); display: block; }
+
+    /* HERO */
+    .hero { min-height: 100vh; background: linear-gradient(150deg, #0A0F2E 0%, #0d1235 35%, #111840 65%, #0A0F2E 100%); display: flex; align-items: center; padding-top: 70px; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(115deg, rgba(10,15,46,0.93) 0%, rgba(13,18,53,0.86) 45%, rgba(17,24,64,0.62) 100%), url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=2000&q=85&auto=format&fit=crop'); background-size: cover; background-position: center; pointer-events: none; }
+    .hero .hero-inner::before { content: ''; position: absolute; top: -30%; right: -10%; width: 70%; height: 140%; background: radial-gradient(ellipse, rgba(201,168,76,0.10) 0%, transparent 65%); pointer-events: none; z-index: -1; }
+    .hero::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 200px; background: linear-gradient(0deg, var(--white), transparent); pointer-events: none; }
+    .hero-inner { max-width: 1200px; margin: 0 auto; padding: 80px 24px; position: relative; z-index: 1; display: grid; grid-template-columns: 1fr 380px; gap: 60px; align-items: center; }
+    .hero-badge { display: inline-block; background: rgba(201,168,76,0.12); border: 1px solid rgba(201,168,76,0.35); color: var(--gold); padding: 8px 20px; border-radius: 50px; font-size: 0.82rem; font-weight: 600; letter-spacing: 1px; margin-bottom: 28px; }
+    .hero h1 { font-size: clamp(2.6rem, 5vw, 4.6rem); color: var(--white); line-height: 1.1; margin-bottom: 22px; font-weight: 600; }
+    .hero h1 span { color: var(--gold); }
+    .hero-sub { font-family: 'Heebo', sans-serif; font-size: 1.05rem; color: rgba(255,255,255,0.65); line-height: 1.85; max-width: 560px; margin-bottom: 40px; }
+    .hero-cta-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+    .hero-wa { display: inline-flex; align-items: center; gap: 10px; background: #25D366; color: white; padding: 16px 32px; border-radius: 6px; font-size: 1rem; font-weight: 700; text-decoration: none; transition: var(--transition); font-family: 'Heebo', sans-serif; }
+    .hero-wa:hover { background: #22c55e; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,0.4); }
+    .hero-wa svg { width: 22px; height: 22px; fill: white; }
+    .hero-phone { display: inline-flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.7); text-decoration: none; font-size: 0.95rem; font-weight: 600; transition: color var(--transition); }
+    .hero-phone:hover { color: var(--gold); }
+    .hero-trust { display: flex; gap: 24px; margin-top: 40px; flex-wrap: wrap; }
+    .hero-trust-item { display: flex; align-items: center; gap: 8px; color: rgba(255,255,255,0.5); font-size: 0.83rem; }
+    .hero-trust-item .ck { color: var(--gold); font-size: 1rem; }
+    /* Hero card */
+    .hero-card { background: rgba(255,255,255,0.07); backdrop-filter: blur(14px); border: 1px solid rgba(201,168,76,0.25); border-radius: 12px; padding: 32px 28px; }
+    .hero-card h3 { font-family: 'Heebo', sans-serif; font-size: 1rem; font-weight: 700; color: var(--gold); margin-bottom: 20px; letter-spacing: 1px; text-transform: uppercase; }
+    .hc-item { display: flex; align-items: center; gap: 12px; padding: 12px 0; border-bottom: 1px solid rgba(255,255,255,0.07); }
+    .hc-item:last-child { border-bottom: none; }
+    .hc-check { width: 20px; height: 20px; background: var(--gold); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 10px; color: var(--navy); flex-shrink: 0; font-weight: 700; }
+    .hc-item span { color: rgba(255,255,255,0.8); font-size: 0.9rem; }
+
+    /* SHARED */
+    section { padding: 90px 24px; }
+    .section-inner { max-width: 1100px; margin: 0 auto; }
+    .section-header { text-align: center; margin-bottom: 60px; }
+    .stag { font-size: 0.78rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase; color: var(--gold); margin-bottom: 10px; display: block; }
+    .stitle { font-size: clamp(1.8rem, 3.5vw, 2.8rem); color: var(--navy); line-height: 1.2; }
+    .sline { width: 50px; height: 3px; background: var(--gold); margin: 18px auto 0; }
+    .ssub { font-size: 0.98rem; color: var(--text-mid); line-height: 1.8; max-width: 560px; margin: 16px auto 0; }
+
+    /* WHO NEEDS */
+    .who-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+    .who-card { background: var(--warm-gray); border-radius: 10px; padding: 32px 24px; border: 1px solid rgba(10,15,46,0.07); text-align: center; transition: var(--transition); }
+    .who-card:hover { box-shadow: 0 8px 32px rgba(10,15,46,0.1); border-color: rgba(201,168,76,0.4); transform: translateY(-4px); }
+    .who-icon { font-size: 2.4rem; margin-bottom: 16px; display: block; }
+    .who-card h4 { font-family: 'Heebo', sans-serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 10px; }
+    .who-card p { font-size: 0.87rem; color: var(--text-mid); line-height: 1.7; }
+
+    /* SERVICES */
+    .srv-sec { background: var(--warm-gray); }
+    .srv-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .srv-item { background: var(--white); border-radius: 8px; padding: 28px 24px; display: flex; gap: 18px; align-items: flex-start; border: 1px solid rgba(10,15,46,0.07); transition: var(--transition); }
+    .srv-item:hover { box-shadow: 0 8px 32px rgba(10,15,46,0.1); border-color: rgba(201,168,76,0.3); }
+    .srv-icon { font-size: 1.9rem; flex-shrink: 0; margin-top: 2px; }
+    .srv-content h4 { font-family: 'Heebo', sans-serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin-bottom: 7px; }
+    .srv-content p { font-size: 0.87rem; color: var(--text-mid); line-height: 1.7; }
+
+    /* PACKAGES */
+    .pkg-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
+    .pkg { border-radius: 10px; padding: 36px 28px; border: 2px solid rgba(10,15,46,0.1); position: relative; display: flex; flex-direction: column; gap: 20px; transition: var(--transition); }
+    .pkg:hover { border-color: rgba(201,168,76,0.5); transform: translateY(-4px); box-shadow: 0 12px 40px rgba(10,15,46,0.12); }
+    .pkg.popular { border-color: var(--gold); background: linear-gradient(160deg, #0A0F2E, #1a1540); }
+    .pkg.popular::before { content: 'הכי נפוץ'; position: absolute; top: -14px; right: 24px; background: var(--gold); color: var(--navy); font-size: 0.75rem; font-weight: 700; padding: 5px 14px; border-radius: 20px; }
+    .pkg-name { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; font-weight: 600; }
+    .pkg.popular .pkg-name, .pkg.popular .pkg-sub, .pkg.popular li { color: var(--white); }
+    .pkg-name:not(.popular .pkg-name) { color: var(--navy); }
+    .pkg-sub { font-size: 0.85rem; color: var(--text-mid); margin-top: -14px; }
+    .pkg-price { font-family: 'Cormorant Garamond', serif; font-size: 2.4rem; font-weight: 700; color: var(--gold); line-height: 1; }
+    .pkg-price small { font-size: 0.95rem; font-family: 'Heebo', sans-serif; color: var(--text-mid); font-weight: 400; }
+    .pkg ul { list-style: none; display: flex; flex-direction: column; gap: 10px; flex: 1; }
+    .pkg li { font-size: 0.87rem; color: var(--text-mid); display: flex; align-items: center; gap: 8px; }
+    .pkg li::before { content: '✓'; color: var(--gold); font-weight: 700; flex-shrink: 0; }
+    .pkg-btn { display: block; text-align: center; padding: 14px; border-radius: 6px; font-size: 0.9rem; font-weight: 700; text-decoration: none; transition: var(--transition); font-family: 'Heebo', sans-serif; }
+    .pkg-btn-outline { border: 2px solid var(--navy); color: var(--navy); }
+    .pkg-btn-outline:hover { background: var(--navy); color: var(--white); }
+    .pkg-btn-gold { background: var(--gold); color: var(--navy); }
+    .pkg-btn-gold:hover { background: var(--gold-light); }
+
+    /* PROCESS */
+    .process-sec { background: var(--navy); }
+    .process-sec .stitle, .process-sec .ssub { color: var(--white); }
+    .process-sec .ssub { color: rgba(255,255,255,0.55); }
+    .proc-steps { display: grid; grid-template-columns: repeat(4,1fr); gap: 32px; position: relative; }
+    .proc-steps::before { content: ''; position: absolute; top: 32px; right: 10%; left: 10%; height: 1px; background: linear-gradient(90deg, transparent, rgba(201,168,76,0.3), transparent); }
+    .proc-step { text-align: center; position: relative; }
+    .proc-num { width: 64px; height: 64px; border-radius: 50%; background: rgba(201,168,76,0.1); border: 2px solid rgba(201,168,76,0.4); color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 700; display: flex; align-items: center; justify-content: center; margin: 0 auto 18px; position: relative; z-index: 1; }
+    .proc-step h4 { font-family: 'Heebo', sans-serif; font-size: 0.95rem; font-weight: 700; color: var(--white); margin-bottom: 10px; }
+    .proc-step p { color: rgba(255,255,255,0.5); font-size: 0.84rem; line-height: 1.7; }
+
+    /* TESTIMONIAL */
+    .testi-sec { background: var(--warm-gray); }
+    .testi-card { max-width: 780px; margin: 0 auto; background: var(--white); border-radius: 12px; padding: 44px 48px; border-right: 4px solid var(--gold); box-shadow: 0 4px 24px rgba(10,15,46,0.07); }
+    .testi-quote { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.2rem, 2.5vw, 1.55rem); font-style: italic; color: var(--text-dark); line-height: 1.7; margin-bottom: 28px; }
+    .testi-author { display: flex; align-items: center; gap: 16px; }
+    .testi-avatar { width: 52px; height: 52px; border-radius: 50%; background: linear-gradient(135deg, var(--navy), #2a3080); display: flex; align-items: center; justify-content: center; color: var(--gold); font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; font-weight: 700; }
+    .testi-name { font-weight: 700; color: var(--navy); font-size: 0.95rem; }
+    .testi-role { font-size: 0.82rem; color: var(--text-mid); margin-top: 2px; }
+    .testi-stars { color: var(--gold); font-size: 0.9rem; letter-spacing: 2px; margin-bottom: 6px; }
+
+    /* CTA FINAL */
+    .cta-final { background: linear-gradient(135deg, var(--navy) 0%, #151c4a 100%); }
+    .cta-inner { max-width: 700px; margin: 0 auto; text-align: center; }
+    .cta-final h2 { font-size: clamp(2rem, 4vw, 3.2rem); color: var(--white); margin-bottom: 16px; }
+    .cta-final p { color: rgba(255,255,255,0.6); font-size: 0.98rem; line-height: 1.8; margin-bottom: 40px; }
+    .cta-btns { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-wa-big { display: inline-flex; align-items: center; gap: 12px; background: #25D366; color: white; padding: 18px 38px; border-radius: 6px; font-size: 1.05rem; font-weight: 700; text-decoration: none; transition: var(--transition); }
+    .btn-wa-big:hover { background: #22c55e; transform: translateY(-2px); box-shadow: 0 8px 28px rgba(37,211,102,0.45); }
+    .btn-wa-big svg { width: 24px; height: 24px; fill: white; }
+    .btn-phone-big { display: inline-flex; align-items: center; gap: 10px; border: 2px solid rgba(201,168,76,0.5); color: var(--gold); padding: 18px 38px; border-radius: 6px; font-size: 1.05rem; font-weight: 700; text-decoration: none; transition: var(--transition); }
+    .btn-phone-big:hover { background: rgba(201,168,76,0.1); border-color: var(--gold); }
+
+    /* ACCESSIBILITY DECLARATION */
+    .access-modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.7); z-index: 10000; align-items: center; justify-content: center; padding: 20px; }
+    .access-modal.open { display: flex; }
+    .access-body { background: var(--white); border-radius: 12px; max-width: 640px; width: 100%; max-height: 85vh; overflow-y: auto; padding: 40px; position: relative; }
+    .access-body h2 { font-size: 1.6rem; color: var(--navy); margin-bottom: 8px; }
+    .access-body .a-date { font-size: 0.8rem; color: var(--text-mid); margin-bottom: 24px; display: block; }
+    .access-body h3 { font-family: 'Heebo', sans-serif; font-size: 1rem; font-weight: 700; color: var(--navy); margin: 20px 0 8px; }
+    .access-body p, .access-body li { font-size: 0.87rem; color: var(--text-mid); line-height: 1.75; }
+    .access-body ul { padding-right: 20px; margin-bottom: 16px; }
+    .access-close { position: absolute; top: 16px; left: 16px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--text-mid); width: 36px; height: 36px; display: flex; align-items: center; justify-content: center; border-radius: 50%; transition: background var(--transition); }
+    .access-close:hover { background: var(--gray); }
+
+    /* FIXED BUTTONS */
+    .wa-fixed { position: fixed; bottom: 28px; right: 28px; z-index: 9000; width: 58px; height: 58px; background: #25D366; border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(37,211,102,0.5); transition: transform var(--transition); text-decoration: none; }
+    .wa-fixed:hover { transform: scale(1.1); }
+    .wa-fixed svg { width: 30px; height: 30px; fill: white; }
+    .acc-fixed { position: fixed; bottom: 28px; left: 28px; z-index: 9000; width: 50px; height: 50px; background: var(--navy); border-radius: 50%; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 16px rgba(10,15,46,0.3); cursor: pointer; border: 2px solid rgba(201,168,76,0.4); transition: var(--transition); }
+    .acc-fixed:hover { border-color: var(--gold); background: #151c4a; }
+    .acc-fixed svg { width: 24px; height: 24px; fill: var(--gold); }
+
+    /* FOOTER */
+    footer { background: #070A1E; padding: 60px 24px 32px; }
+    .footer-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 2fr 1fr 1fr; gap: 48px; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,0.08); }
+    .footer-logo-he { font-family: 'Cormorant Garamond', serif; font-size: 1.4rem; color: var(--gold); font-weight: 700; display: block; margin-bottom: 6px; }
+    .footer-logo-en { font-size: 0.7rem; color: rgba(255,255,255,0.3); letter-spacing: 2px; display: block; margin-bottom: 16px; }
+    .footer-desc { color: rgba(255,255,255,0.45); font-size: 0.84rem; line-height: 1.75; max-width: 280px; }
+    .footer-col h4 { font-family: 'Heebo', sans-serif; font-size: 0.82rem; font-weight: 700; color: var(--gold); letter-spacing: 2px; text-transform: uppercase; margin-bottom: 18px; }
+    .footer-col a, .footer-col p { display: block; color: rgba(255,255,255,0.5); text-decoration: none; font-size: 0.85rem; margin-bottom: 10px; transition: color var(--transition); }
+    .footer-col a:hover { color: var(--gold); }
+    .footer-bottom { max-width: 1100px; margin: 28px auto 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .footer-bottom p { color: rgba(255,255,255,0.25); font-size: 0.78rem; }
+    .footer-bottom a { color: rgba(201,168,76,0.6); text-decoration: none; font-size: 0.78rem; }
+    .footer-bottom a:hover { color: var(--gold); }
+
+    /* RESPONSIVE */
+    @media (max-width: 1024px) {
+      .hero-inner { grid-template-columns: 1fr; }
+      .hero-card { display: none; }
+      .pkg-grid { grid-template-columns: 1fr 1fr; }
+      .proc-steps { grid-template-columns: 1fr 1fr; }
+      .footer-inner { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 768px) {
+      .who-grid { grid-template-columns: 1fr; }
+      .srv-grid { grid-template-columns: 1fr; }
+      .pkg-grid { grid-template-columns: 1fr; }
+      .proc-steps { grid-template-columns: 1fr 1fr; }
+      .nav-right { display: none; }
+      .hamburger { display: flex; }
+      .testi-card { padding: 28px 24px; }
+      .footer-inner { grid-template-columns: 1fr; }
+      section { padding: 64px 20px; }
+
+      /* Nav */
+      .nav-inner { padding: 0 20px; }
+
+      /* Hero */
+      .hero { padding-top: 70px; }
+      .hero-inner { padding: 60px 20px; grid-template-columns: 1fr; }
+      .hero-card { display: none; }
+      .hero h1 { font-size: clamp(2.2rem, 8vw, 3.8rem); }
+      .hero-sub { max-width: 100%; }
+      .hero-cta-row { flex-direction: column; align-items: flex-start; gap: 12px; }
+      .hero-wa { width: 100%; justify-content: center; }
+
+      /* Sections */
+      section { padding: 60px 20px; }
+
+      /* Who grid: 1 col already */
+
+      /* Packages: 1 col already */
+      .pkg { padding: 28px 20px; }
+
+      /* Process steps */
+      .proc-num { width: 52px; height: 52px; font-size: 1.4rem; }
+      .proc-steps::before { display: none; }
+
+      /* Testi card */
+      .testi-quote { font-size: clamp(1rem, 3.5vw, 1.3rem); }
+
+      /* CTA final */
+      .btn-wa-big { width: 100%; justify-content: center; font-size: 1rem; padding: 16px 24px; }
+      .btn-phone-big { width: 100%; justify-content: center; font-size: 1rem; padding: 16px 24px; }
+      .cta-btns { flex-direction: column; align-items: center; gap: 12px; }
+
+      /* Footer */
+      .footer-inner { gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; gap: 8px; }
+      .footer-bottom div { justify-content: center; }
+
+      /* Fixed buttons — corporate has wa-fixed on right, acc-fixed on left */
+      .wa-fixed  { bottom: 20px; right: 20px; width: 52px; height: 52px; }
+      .acc-fixed { bottom: 20px; left: 20px; width: 52px; height: 52px; }
+
+      /* Modal */
+      .access-body { padding: 28px 20px; max-height: 85vh; overflow-y: auto; }
+    }
+
+    @media (max-width: 480px) {
+      .proc-steps { grid-template-columns: 1fr; }
+      .cta-btns { flex-direction: column; align-items: center; }
+
+      /* Section padding tighter */
+      section { padding: 48px 16px; }
+
+      /* Hero */
+      .hero h1 { font-size: clamp(1.9rem, 9vw, 2.8rem); }
+      .hero-trust { flex-direction: column; gap: 8px; }
+
+      /* Section titles */
+      .stitle { font-size: clamp(1.5rem, 7vw, 2.2rem); }
+
+      /* Who grid: already 1 col */
+      .who-grid { grid-template-columns: 1fr; }
+
+      /* Footer */
+      footer { padding: 40px 16px 24px; }
+
+      /* Fixed buttons — ensure safe touch targets */
+      .wa-fixed  { bottom: 16px; right: 16px; width: 52px; height: 52px; }
+      .acc-fixed { bottom: 16px; left: 16px; width: 52px; height: 52px; }
+
+      /* Package cards */
+      .pkg { padding: 24px 16px; }
+    }
+
+    /* Hide custom cursor on touch devices */
+    @media (hover: none), (pointer: coarse) {
+      * { cursor: auto !important; }
+    }
+
+    /* ANIMATIONS */
+    .reveal { opacity: 0; transform: translateY(40px); }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-inner">
+    <a href="../websites/law-firm/index.html" class="logo">
+      <span class="logo-he">כהן ושות'</span>
+      <span class="logo-en">Cohen &amp; Associates Law</span>
+    </a>
+    <div class="nav-right">
+      <a href="../websites/law-firm/index.html" class="nav-link-back">← חזרה לאתר הראשי</a>
+      <a href="https://wa.me/972500000000?text=שלום, ראיתי את דף הנחיתה לדיני חברות ואשמח לייעוץ חינם" class="nav-cta-btn">ייעוץ חינם ←</a>
+    </div>
+    <button class="hamburger" id="ham" aria-label="תפריט">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+<div class="mobile-menu" id="mob">
+  <a href="../websites/law-firm/index.html">ראשי</a>
+  <a href="../websites/law-firm/index.html#about">אודות</a>
+  <a href="../websites/law-firm/index.html#services">שירותים</a>
+  <a href="../websites/law-firm/index.html#team">הצוות</a>
+  <a href="../websites/law-firm/index.html#contact">צור קשר</a>
+  <a href="https://wa.me/972500000000?text=שלום, ראיתי את דף הנחיתה לדיני חברות ואשמח לייעוץ חינם" style="color:var(--gold);font-weight:700">ייעוץ חינם ←</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-badge">📋 דיני חברות ועסקים</div>
+      <h1>הגנה משפטית<br/>לעסק <span>שלך</span></h1>
+      <p class="hero-sub">הסכמי שותפות, חוזים מסחריים, הקמת חברות, רגולציה — אנחנו מספקים את המחסום המשפטי שהעסק שלך צריך. לפני שבעיה קטנה הופכת לאסון.</p>
+      <div class="hero-cta-row">
+        <a href="https://wa.me/972500000000?text=שלום, ראיתי את דף הנחיתה לדיני חברות ואשמח לייעוץ חינם" class="hero-wa">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          ייעוץ חינם עכשיו
+        </a>
+        <a href="tel:0500000000" class="hero-phone">📞 050-000-0000</a>
+      </div>
+      <div class="hero-trust">
+        <div class="hero-trust-item"><span class="ck">✓</span> ייעוץ ראשוני חינם</div>
+        <div class="hero-trust-item"><span class="ck">✓</span> 20+ שנות ניסיון</div>
+        <div class="hero-trust-item"><span class="ck">✓</span> זמינות 24/7</div>
+      </div>
+    </div>
+    <div class="hero-card">
+      <h3>שירותינו לעסקים</h3>
+      <div class="hc-item"><div class="hc-check">✓</div><span>הקמת חברות ושותפויות</span></div>
+      <div class="hc-item"><div class="hc-check">✓</div><span>חוזים מסחריים</span></div>
+      <div class="hc-item"><div class="hc-check">✓</div><span>מיזוגים ורכישות</span></div>
+      <div class="hc-item"><div class="hc-check">✓</div><span>יחסי עבודה ותעסוקה</span></div>
+      <div class="hc-item"><div class="hc-check">✓</div><span>קניין רוחני</span></div>
+      <div class="hc-item"><div class="hc-check">✓</div><span>רגולציה ורישוי</span></div>
+      <div class="hc-item"><div class="hc-check">✓</div><span>ליטיגציה מסחרית</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHO NEEDS -->
+<section>
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="stag">מי צריך אותנו</span>
+      <h2 class="stitle">אנחנו עובדים עם</h2>
+      <div class="sline"></div>
+      <p class="ssub">כל עסק — קטן או גדול — זקוק להגנה משפטית. אנחנו מותאמים לכל שלב בחיי העסק.</p>
+    </div>
+    <div class="who-grid">
+      <div class="who-card reveal"><span class="who-icon">🚀</span><h4>סטארטאפים</h4><p>הקמת חברה, הסכמי מייסדים, ניהול הון וגיוס משקיעים — נלווה אתכם מהרעיון ועד ה-exit.</p></div>
+      <div class="who-card reveal"><span class="who-icon">🏢</span><h4>חברות קיימות</h4><p>ביקורת חוזים, הגנה על קניין רוחני, ניהול סכסוכים מסחריים ועמידה ברגולציה.</p></div>
+      <div class="who-card reveal"><span class="who-icon">🤝</span><h4>שותפויות</h4><p>הסכמי שותפות ברורים, הגנה על זכויות כל שותף ומניעת סכסוכים עתידיים.</p></div>
+      <div class="who-card reveal"><span class="who-icon">🏪</span><h4>בעלי עסקים עצמאיים</h4><p>חוזים עם לקוחות וספקים, תנאי שימוש, מדיניות פרטיות ורישיונות עסק.</p></div>
+      <div class="who-card reveal"><span class="who-icon">💹</span><h4>משקיעים</h4><p>בדיקת נאותות, הסכמי השקעה, הגנה על ההשקעה ומבנה עסקה בטוח.</p></div>
+      <div class="who-card reveal"><span class="who-icon">🌐</span><h4>חברות בינלאומיות</h4><p>כניסה לשוק הישראלי, ציות לחוק ישראלי, חוזים בינלאומיים ומיסוי בינלאומי.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="srv-sec">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="stag">השירותים שלנו</span>
+      <h2 class="stitle">כיסוי משפטי מלא לעסק</h2>
+      <div class="sline"></div>
+    </div>
+    <div class="srv-grid">
+      <div class="srv-item reveal"><span class="srv-icon">🏗️</span><div class="srv-content"><h4>הקמת חברות ועסקים</h4><p>ייסוד חברה בע"מ, שותפות או עוסק מורשה. בחירת מבנה משפטי נכון, רישום ברשם החברות, תקנון ומסמכי ייסוד.</p></div></div>
+      <div class="srv-item reveal"><span class="srv-icon">📝</span><div class="srv-content"><h4>חוזים מסחריים</h4><p>ניסוח, בדיקה ומשא ומתן על חוזי שירות, הסכמי רכש, חוזי הפצה, NDA, SLA ועוד.</p></div></div>
+      <div class="srv-item reveal"><span class="srv-icon">🔄</span><div class="srv-content"><h4>מיזוגים ורכישות (M&A)</h4><p>ליווי עסקאות מיזוג ורכישה מהמשא ומתן ועד הסגירה: בדיקת נאותות, מבנה העסקה וחוזה.</p></div></div>
+      <div class="srv-item reveal"><span class="srv-icon">👥</span><div class="srv-content"><h4>דיני עבודה ותעסוקה</h4><p>חוזי עבודה, תקנוני עובדים, טיפול בפיטורים, הגנת עובדים ומעסיקים בסכסוכי עבודה.</p></div></div>
+      <div class="srv-item reveal"><span class="srv-icon">💡</span><div class="srv-content"><h4>קניין רוחני</h4><p>רישום פטנטים, מותגים וזכויות יוצרים. הגנה על סודות מסחריים ורישיונות טכנולוגיה.</p></div></div>
+      <div class="srv-item reveal"><span class="srv-icon">⚖️</span><div class="srv-content"><h4>ליטיגציה מסחרית</h4><p>ייצוג בסכסוכים מסחריים, הפרת חוזה, תחרות עסקית בלתי הוגנת ותביעות כספיות.</p></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section>
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="stag">חבילות שירות</span>
+      <h2 class="stitle">בחרו את החבילה המתאימה</h2>
+      <div class="sline"></div>
+      <p class="ssub">תעריפים שקופים ללא הפתעות. כל החבילות כוללות ייעוץ ראשוני חינם.</p>
+    </div>
+    <div class="pkg-grid">
+      <div class="pkg reveal">
+        <div class="pkg-name">בסיסי</div>
+        <div class="pkg-sub">לעצמאים וקטנים</div>
+        <div class="pkg-price">₪490<small> / שעה</small></div>
+        <ul>
+          <li>ייעוץ משפטי שעתי</li>
+          <li>בדיקת חוזה אחד</li>
+          <li>ייסוד חברה בע"מ</li>
+          <li>מענה תוך 48 שעות</li>
+        </ul>
+        <a href="https://wa.me/972500000000?text=שלום, מעוניין בחבילת הבסיסי לדיני חברות" class="pkg-btn pkg-btn-outline">בחר חבילה</a>
+      </div>
+      <div class="pkg popular reveal">
+        <div class="pkg-name">עסקי</div>
+        <div class="pkg-sub">לחברות ושותפויות</div>
+        <div class="pkg-price">₪2,800<small> / חודש</small></div>
+        <ul>
+          <li>עד 8 שעות ייעוץ חודשיות</li>
+          <li>ביקורת חוזים ללא הגבלה</li>
+          <li>ייצוג במשא ומתן</li>
+          <li>ניהול סכסוכי עבודה</li>
+          <li>מענה תוך 24 שעות</li>
+          <li>ייעוץ רגולציה</li>
+        </ul>
+        <a href="https://wa.me/972500000000?text=שלום, מעוניין בחבילת העסקי לדיני חברות" class="pkg-btn pkg-btn-gold">בחר חבילה ←</a>
+      </div>
+      <div class="pkg reveal">
+        <div class="pkg-name">פרמיום</div>
+        <div class="pkg-sub">לתאגידים ורב-לאומיות</div>
+        <div class="pkg-price">₪5,500<small> / חודש</small></div>
+        <ul>
+          <li>ייעוץ ללא הגבלה</li>
+          <li>עורך דין ייעודי</li>
+          <li>ייצוג בהליכים משפטיים</li>
+          <li>M&A ועסקאות מורכבות</li>
+          <li>מענה זמין 24/7</li>
+          <li>בינלאומי ורב-לאומי</li>
+        </ul>
+        <a href="https://wa.me/972500000000?text=שלום, מעוניין בחבילת הפרמיום לדיני חברות" class="pkg-btn pkg-btn-outline">בחר חבילה</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-sec">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="stag" style="color:var(--gold)">תהליך העבודה</span>
+      <h2 class="stitle">4 שלבים לביטחון משפטי</h2>
+      <div class="sline"></div>
+      <p class="ssub">תהליך פשוט, שקוף ויעיל. בכל שלב תדעו בדיוק מה קורה.</p>
+    </div>
+    <div class="proc-steps">
+      <div class="proc-step reveal">
+        <div class="proc-num">01</div>
+        <h4>ייעוץ ראשוני</h4>
+        <p>שיחה של 30 דקות — חינם. נבין את הצרכים שלך ונמליץ על דרך הפעולה.</p>
+      </div>
+      <div class="proc-step reveal">
+        <div class="proc-num">02</div>
+        <h4>אבחון וניתוח</h4>
+        <p>בדיקה מעמיקה של המצב המשפטי הקיים, זיהוי סיכונים והזדמנויות.</p>
+      </div>
+      <div class="proc-step reveal">
+        <div class="proc-num">03</div>
+        <h4>פתרון מותאם</h4>
+        <p>ניסוח מסמכים, חוזים ותוכנית פעולה משפטית מותאמת לעסק שלך.</p>
+      </div>
+      <div class="proc-step reveal">
+        <div class="proc-num">04</div>
+        <h4>ליווי שוטף</h4>
+        <p>אנחנו לא נעלמים אחרי הסגירה — אנחנו שם בכל שאלה ואתגר עתידי.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TESTIMONIAL -->
+<section class="testi-sec">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <span class="stag">מה אומרים עלינו</span>
+      <h2 class="stitle">לקוחות שמרוצים</h2>
+      <div class="sline"></div>
+    </div>
+    <div class="testi-card reveal">
+      <div class="testi-stars">★★★★★</div>
+      <p class="testi-quote">"כשהקמנו את הסטארטאפ שלנו, משרד כהן ושות' היה איתנו מהשלב הראשון. הם ניסחו את הסכמי המייסדים, ליוו אותנו בגיוס ראשון של 2 מיליון שקל, ועזרו לנו להתמודד עם שני ספקים שניסו לשדוד אותנו. ללא ליווי המשפטי שלהם — לא היינו כאן."</p>
+      <div class="testi-author">
+        <div class="testi-avatar">ד</div>
+        <div>
+          <div class="testi-stars" style="font-size:0.7rem;margin-bottom:2px">★★★★★</div>
+          <div class="testi-name">דן כהן</div>
+          <div class="testi-role">מייסד ומנכ"ל, TechFlow Israel</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA FINAL -->
+<section class="cta-final">
+  <div class="section-inner">
+    <div class="cta-inner reveal">
+      <h2>כל יום ללא הגנה משפטית — הוא יום של סיכון</h2>
+      <p>אל תחכו לבעיה. ייעוץ ראשוני בחינם, ללא התחייבות. נשמח לשמוע על העסק שלכם ולהמליץ על הפתרון המתאים.</p>
+      <div class="cta-btns">
+        <a href="https://wa.me/972500000000?text=שלום, ראיתי את דף הנחיתה לדיני חברות ואשמח לייעוץ חינם" class="btn-wa-big">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+          WhatsApp — ייעוץ חינם
+        </a>
+        <a href="tel:0500000000" class="btn-phone-big">📞 050-000-0000</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <span class="footer-logo-he">כהן ושות' — עורכי דין</span>
+      <span class="footer-logo-en">Cohen &amp; Associates Law Firm</span>
+      <p class="footer-desc">משרד עורכי דין מוביל בתל אביב המתמחה בדיני חברות, משפחה ופלילים. מעל 20 שנות ניסיון, מאות לקוחות מרוצים.</p>
+    </div>
+    <div class="footer-col">
+      <h4>תחומי עיסוק</h4>
+      <a href="criminal.html">משפט פלילי</a>
+      <a href="family.html">דיני משפחה</a>
+      <a href="corporate.html">דיני חברות</a>
+      <a href="../websites/law-firm/index.html#services">כל השירותים</a>
+    </div>
+    <div class="footer-col">
+      <h4>צור קשר</h4>
+      <p>שדרות רוטשילד 45, תל אביב</p>
+      <a href="tel:0500000000">050-000-0000</a>
+      <a href="mailto:info@example.com">info@example.com</a>
+      <p>א-ה 8:00-19:00 | ו 8:00-14:00</p>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2024 כהן ושות' — משרד עורכי דין. כל הזכויות שמורות.</p>
+    <div style="display:flex;gap:20px">
+      <a href="#" onclick="openAccess()">הצהרת נגישות</a>
+      <a href="../websites/law-firm/index.html#contact">מדיניות פרטיות</a>
+    </div>
+  </div>
+</footer>
+
+<!-- FIXED BUTTONS -->
+<a href="https://wa.me/972500000000?text=שלום, ראיתי את דף הנחיתה לדיני חברות ואשמח לייעוץ חינם" class="wa-fixed" aria-label="WhatsApp" target="_blank" rel="noopener">
+  <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/></svg>
+</a>
+<button class="acc-fixed" onclick="openAccess()" aria-label="הצהרת נגישות">
+  <svg viewBox="0 0 24 24"><path d="M12 2a2 2 0 110 4 2 2 0 010-4zm-1 6h2v6h-2V8zm-4 9l1.5-1.5 3.5 2 3.5-2L17 17l-5 3-5-3z"/></svg>
+</button>
+
+<!-- ACCESSIBILITY MODAL -->
+<div class="access-modal" id="accessModal" role="dialog" aria-modal="true" aria-labelledby="accTitle">
+  <div class="access-body">
+    <button class="access-close" onclick="closeAccess()" aria-label="סגור">✕</button>
+    <h2 id="accTitle">הצהרת נגישות</h2>
+    <span class="a-date">עדכון אחרון: ינואר 2024</span>
+    <p>משרד כהן ושות' — עורכי דין מחויב להנגשת שירותיו הדיגיטליים לכלל הציבור, לרבות אנשים עם מוגבלויות, בהתאם לתקן הישראלי 5568 ולתקנות שוויון זכויות לאנשים עם מוגבלות (התאמות נגישות לשירות), התשע"ג-2013.</p>
+    <h3>רמת הנגישות</h3>
+    <p>האתר עומד ברמת תאימות AA של תקן WCAG 2.1 (Web Content Accessibility Guidelines). הנגישות נבדקה באמצעות כלים אוטומטיים ובדיקה ידנית.</p>
+    <h3>אמצעי הנגישות המיושמים</h3>
+    <ul>
+      <li>ניווט מלא באמצעות מקלדת בלבד</li>
+      <li>תמיכה בקוראי מסך (NVDA, JAWS, VoiceOver)</li>
+      <li>ניגודיות צבעים עומדת בתקן WCAG AA (יחס 4.5:1 לפחות)</li>
+      <li>טקסטים חלופיים (alt) לכל התמונות</li>
+      <li>מבנה HTML סמנטי תקני</li>
+      <li>תוויות (labels) לכל שדות הטפסים</li>
+      <li>הודעות שגיאה ברורות ונגישות</li>
+      <li>ריווח בין אלמנטים לנגישות מוטורית</li>
+      <li>האתר תומך בהגדלת טקסט עד 200%</li>
+      <li>הימנעות מתכנים מהבהבים שעלולים לגרום להתקפי פוטו-אפילפסיה</li>
+    </ul>
+    <h3>נגישות פיזית</h3>
+    <p>משרדנו ברחוב רוטשילד 45, תל אביב, נגיש לאנשים עם מוגבלות פיזית: כניסה ברמת הרחוב, מעלית, חניה מיוחדת, שירותים נגישים.</p>
+    <h3>יצירת קשר בנושאי נגישות</h3>
+    <p>לשאלות, בקשות סיוע או דיווח על תקלת נגישות, ניתן לפנות:</p>
+    <ul>
+      <li>טלפון: <a href="tel:0500000000">050-000-0000</a></li>
+      <li>אימייל: <a href="mailto:access@example.com">access@example.com</a></li>
+      <li>WhatsApp: <a href="https://wa.me/972500000000">לחץ לפתיחת שיחה</a></li>
+    </ul>
+    <p style="margin-top:16px">נשתדל להשיב תוך 2 ימי עסקים.</p>
+  </div>
+</div>
+
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+// Hamburger
+document.getElementById('ham').addEventListener('click', () => {
+  document.getElementById('mob').classList.toggle('open');
+});
+
+// Reveal animations
+gsap.utils.toArray('.reveal').forEach(el => {
+  gsap.fromTo(el,
+    { opacity: 0, y: 40 },
+    { opacity: 1, y: 0, duration: 0.9, ease: 'power3.out',
+      scrollTrigger: { trigger: el, start: 'top 82%', once: true }
+    }
+  );
+});
+
+// Accessibility modal
+function openAccess() {
+  document.getElementById('accessModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeAccess() {
+  document.getElementById('accessModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+document.getElementById('accessModal').addEventListener('click', e => {
+  if (e.target === e.currentTarget) closeAccess();
+});
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeAccess();
+});
+</script>
+</body>
+</html>
