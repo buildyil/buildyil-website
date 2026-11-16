@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>הצהרת נגישות | Buildy IL</title>
 <meta name="robots" content="noindex">
-<link rel="icon" href="/logo.svg" type="image/svg+xml">
+<link rel="icon" href="/mark.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300..900&display=swap" rel="stylesheet">
@@ -41,14 +41,14 @@ footer a:hover{color:#fff}
 <body>
 <header>
   <div class="wrap inner">
-    <a href="/" style="display:flex;align-items:center;gap:10px"><img src="/logo.svg" alt="Buildy IL"><b>Buildy IL</b></a>
+    <a href="/" style="display:flex;align-items:center;gap:10px"><img src="/mark.svg" alt="Buildy IL"><b>Buildy IL</b></a>
   </div>
 </header>
 
 <div class="page-hero">
   <div class="wrap">
     <h1>הצהרת נגישות</h1>
-    <p>עדכון אחרון: יולי 2026</p>
+    <p>עדכון אחרון: נובמבר 2026</p>
   </div>
 </div>
 
@@ -56,67 +56,44 @@ footer a:hover{color:#fff}
   <div class="wrap">
     <a href="/" class="back">← חזרה לאתר</a>
 
-    <div class="badge">♿ Buildy IL מחויבת לנגישות דיגיטלית לכלל המשתמשים</div>
+    <div class="badge"><span aria-hidden="true">♿</span> Buildy IL פועלת כדי שהאתר יהיה נגיש לכל אחד</div>
 
-    <h2>1. מחויבותנו לנגישות</h2>
-    <p>Buildy IL פועלת להנגשת אתר buildyil.net לאנשים עם מוגבלויות, בהתאם לחוק שוויון זכויות לאנשים עם מוגבלות תשנ"ח-1998, תקנות הנגישות לשירות (2013) ותקן ישראלי 5568 המבוסס על WCAG 2.1 ברמת AA.</p>
-    <p>אנחנו מאמינים שלכל אדם מגיעה גישה שווה למידע ולשירותים דיגיטליים.</p>
+    <h2>1. מחויבות לנגישות</h2>
+    <p>אנחנו פועלים להנגשת האתר buildyil.net לאנשים עם מוגבלות, לפי חוק שוויון זכויות לאנשים עם מוגבלות, התשנ"ח-1998, תקנות הנגישות לשירות, ותקן ישראלי 5568, שמבוסס על הנחיות WCAG ברמה AA.</p>
 
-    <h2>2. רמת הנגישות הנוכחית</h2>
-    <p>האתר עומד ברמת נגישות <strong>AA חלקית</strong> לפי תקן WCAG 2.1. בוצעו ההתאמות הבאות:</p>
+    <h2>2. מה כבר הונגש</h2>
     <ul>
-      <li>כפתור נגישות המאפשר שינוי גודל גופן, ניגודיות גבוהה, גווני אפור, סמן גדול והדגשת קישורים</li>
-      <li>קישור "דלג לתוכן הראשי" בראש העמוד (מוצג בלחיצת Tab)</li>
-      <li>תגיות ARIA מלאות לאלמנטים אינטראקטיביים</li>
-      <li>טקסט חלופי (alt) לכל התמונות הפונקציונליות</li>
-      <li>ניווט מלא במקלדת בלבד</li>
-      <li>ניגודיות צבעים עומדת ביחס מינימום 4.5:1 לטקסט רגיל</li>
-      <li>מבנה כותרות היררכי (H1→H2→H3) לניווט קוראי מסך</li>
-      <li>האתר מותאם לקוראי מסך מובילים: NVDA, JAWS, VoiceOver</li>
-      <li>שפה מוגדרת כ-he (עברית) ב-HTML לקריאת מסך נכונה</li>
-      <li>כל הטפסים כוללים תוויות (labels) נגישות</li>
+      <li>קישור "דלג לתוכן הראשי", שמופיע בלחיצה הראשונה על מקש Tab.</li>
+      <li>ניווט במקלדת, עם סימון פוקוס נראה על קישורים, כפתורים ושדות.</li>
+      <li>תוויות לכל שדות הטופס, והודעת שגיאה כשהשליחה נכשלת.</li>
+      <li>טקסט חלופי לתמונות שמעבירות מידע.</li>
+      <li>ניגודיות צבעים מוגברת בטקסטים משניים.</li>
+      <li>מבנה כותרות מסודר ושפת העמוד מוגדרת כעברית.</li>
+      <li>כיבוי אנימציות למי שהגדיר במכשיר "הפחתת תנועה".</li>
+      <li>כפתור נגישות לשינוי גודל גופן, ניגודיות, גווני אפור, סמן גדול, הדגשת קישורים, גופן קריא וריווח שורות.</li>
     </ul>
 
-    <h2>3. מגבלות נגישות ידועות</h2>
-    <p>למרות מאמצינו, ייתכנו מגבלות נגישות מסוימות:</p>
+    <h2>3. מגבלות ידועות</h2>
     <ul>
-      <li>חלק מאנימציות הגלילה עשויות להפריע למשתמשים הרגישים לתנועה — האנימציות מכובות כאשר מוגדר <code>prefers-reduced-motion</code></li>
-      <li>סרטוני וידאו מוטמעים עשויים לא לכלול כתוביות — אנחנו פועלים לשיפור זה</li>
+      <li>האתרים שבתיק העבודות הם אתרים לדוגמה עם אנימציות גלילה עשירות, וייתכן שחלק מהם עדיין לא נגישים במלואם.</li>
+      <li>קישור חיצוני לאתר החוויה התלת-ממדי של משרד האדריכלות מוביל לאתר נפרד.</li>
     </ul>
+    <p>אם נתקלתם בבעיה, נשמח לשמוע ולתקן.</p>
 
-    <h2>4. טכנולוגיות עזר נתמכות</h2>
-    <p>האתר נבדק ותואם לשימוש עם:</p>
-    <ul>
-      <li>NVDA + Firefox / Chrome (Windows)</li>
-      <li>VoiceOver + Safari (iOS / macOS)</li>
-      <li>TalkBack (Android)</li>
-      <li>ניווט מקלדת בלבד (Tab, Enter, Escape, חצים)</li>
-      <li>תוכנת הגדלה ZoomText</li>
-    </ul>
+    <h2>4. איך הוכנה ההצהרה</h2>
+    <p>ההצהרה מבוססת על בדיקה עצמית של צוות Buildy IL בנובמבר 2026: מעבר על הקוד, ניווט במקלדת ובדיקת ניגודיות צבעים.</p>
 
-    <h2>5. שיטת הכנת ההצהרה</h2>
-    <p>הצהרה זו הוכנה על בסיס הערכה עצמית שבוצעה על ידי צוות Buildy IL בחודש יולי 2026, תוך שימוש בכלים הבאים:</p>
-    <ul>
-      <li>Google Lighthouse — ביקורת נגישות אוטומטית</li>
-      <li>axe DevTools — סריקת שגיאות נגישות</li>
-      <li>בדיקה ידנית עם NVDA ו-VoiceOver</li>
-      <li>בדיקת ניגודיות צבעים — WebAIM Contrast Checker</li>
-    </ul>
-
-    <h2>6. פנייה בנושא נגישות</h2>
+    <h2>5. פנייה בנושא נגישות</h2>
     <div class="contact-box">
-      <h3>🙋 נתקלת בבעיית נגישות?</h3>
-      <p>אנחנו מעוניינים לשמוע ולשפר. פנה אלינו:</p>
-      <p>📧 אימייל: <a href="mailto:info.buildyil@gmail.com">info.buildyil@gmail.com</a></p>
-      <p>📱 טלפון / וואטסאפ: <a href="tel:+972539870260">053-9870260</a></p>
-      <p style="font-size:13px;color:#5B6472;margin-top:12px">אנחנו מתחייבים להשיב תוך 5 ימי עסקים ולטפל בבעיה בהקדם.</p>
+      <h3>נתקלתם בבעיית נגישות?</h3>
+      <p>רכז הנגישות: בעל העסק</p>
+      <p>אימייל: <a href="mailto:info.buildyil@gmail.com">info.buildyil@gmail.com</a></p>
+      <p>טלפון או וואטסאפ: <a href="tel:+972539870260">053-9870260</a></p>
+      <p style="font-size:13px;color:#5B6472;margin-top:12px">נחזור אליכם תוך 5 ימי עסקים.</p>
     </div>
 
-    <h2>7. גורם ממונה על נגישות</h2>
-    <p>הגורם הממונה על נגישות ב-Buildy IL הוא מנהל החברה. ניתן לפנות אליו בכתובת: <a href="mailto:info.buildyil@gmail.com">info.buildyil@gmail.com</a></p>
-
-    <h2>8. תאריך עדכון הצהרה</h2>
-    <p>הצהרה זו עודכנה לאחרונה ב: <strong>יולי 2026</strong>. אנחנו מתחייבים לעדכן הצהרה זו לפחות אחת לשנה.</p>
+    <h2>6. עדכון ההצהרה</h2>
+    <p>ההצהרה עודכנה בנובמבר 2026.</p>
   </div>
 </div>
 

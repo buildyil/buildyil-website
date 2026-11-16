@@ -1,0 +1,12 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Buildy IL">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="44" y2="48" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6D5DF6"/>
+      <stop offset="1" stop-color="#22D3EE"/>
+    </linearGradient>
+  </defs>
+  <rect width="48" height="48" rx="14" fill="url(#g)"/>
+  <rect x="10" y="25" width="7" height="13" rx="2.5" fill="#fff"/>
+  <rect x="20.5" y="18" width="7" height="20" rx="2.5" fill="#fff"/>
+  <rect x="31" y="10" width="7" height="28" rx="2.5" fill="#fff" opacity="0.92"/>
+</svg>
