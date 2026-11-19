@@ -1,7 +1,7 @@
 /* Buildy IL — marks portfolio pages as demo sites.
    Shows a notice bar, and stops demo forms / placeholder phone links from pretending to work. */
 (function () {
-  var WA = 'https://wa.me/972539870260?text=' + encodeURIComponent('שלום, ראיתי אתר לדוגמה אצלכם ואשמח לאתר כזה לעסק שלי');
+  var WA = 'https://wa.me/972542603160?text=' + encodeURIComponent('שלום, ראיתי אתר לדוגמה אצלכם ואשמח לאתר כזה לעסק שלי');
   var css = '#dm{position:fixed;z-index:99999;left:0;right:0;bottom:0;background:#0B1220;color:#fff;font:500 14px/1.5 Heebo,Arial,sans-serif;direction:rtl;padding:10px 16px;display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;box-shadow:0 -6px 24px rgba(0,0,0,.3)}' +
     '#dm a{background:#fff;color:#0B1220;font-weight:700;padding:7px 14px;border-radius:8px;text-decoration:none;white-space:nowrap}' +
     '#dm button{background:none;border:0;color:#fff;font-size:20px;cursor:pointer;padding:4px 8px;line-height:1}' +
