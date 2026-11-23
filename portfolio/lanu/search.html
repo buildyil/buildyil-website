@@ -1,0 +1,336 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>תוצאות חיפוש · לנו</title>
+<meta name="description" content="מלונות, צימרים ודירות בכל הארץ, עם סינון לפי סוג, אזור, מחיר ומה שיש במקום. אתר לדוגמה של Buildy IL.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="stylesheet" href="css/site.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<a class="skip" href="#main">דלג לתוכן</a>
+<div class="demo" role="note"><span><b>אתר לדוגמה</b> שעיצבה Buildy IL. המקומות, המחירים וההזמנות אינם אמיתיים.</span><a href="https://buildyil.net/">רוצים אתר כזה?</a></div>
+<header class="top"><a class="logo" href="index.html" aria-label="לנו, לדף הבית"><svg viewBox="0 0 26 30" aria-hidden="true"><path d="M0 30V13a13 13 0 0 1 26 0v17z"/><circle cx="18" cy="19" r="2.2" fill="#fff"/></svg>לנו</a><nav aria-label="ראשי"><ul class="nav"><li><a href="search.html?type=zimmer">צימרים</a></li><li><a href="search.html?type=hotel">מלונות</a></li><li><a href="search.html?type=apartment">דירות</a></li><li><a href="help.html">עזרה</a></li></ul></nav></header>
+<main id="main">
+  <div class="pagehead bar">
+    <h1>מקומות לינה בכל הארץ</h1>
+    <form class="search" action="search.html" method="get" role="search" aria-label="חיפוש מקום לינה">
+  <div class="field wide"><label for="sq">לאן נוסעים</label><input id="sq" name="q" list="places" placeholder="עיר, אזור או שם המקום" autocomplete="off"></div>
+  <div class="field"><label for="sin">הגעה</label><input id="sin" name="in" type="date" required></div>
+  <div class="field"><label for="sout">עזיבה</label><input id="sout" name="out" type="date" required></div>
+  <div class="field wide"><span class="lbl" id="sg">מי מגיע</span><div class="guests" role="group" aria-labelledby="sg"><div><label class="vh" for="sa">מבוגרים</label><select id="sa" name="a" aria-label="מבוגרים"><option value="1">מבוגר אחד</option><option value="2" selected>2 מבוגרים</option><option value="3">3 מבוגרים</option><option value="4">4 מבוגרים</option><option value="5">5 מבוגרים</option><option value="6">6 מבוגרים</option></select></div><div><label class="vh" for="sc">ילדים</label><select id="sc" name="c" aria-label="ילדים"><option value="0">בלי ילדים</option><option value="1">ילד אחד</option><option value="2">2 ילדים</option><option value="3">3 ילדים</option><option value="4">4 ילדים</option></select></div></div></div>
+  <button class="btn" type="submit">חיפוש</button>
+  
+</form><datalist id="places"><option value="כל הארץ"><option value="רמת הגולן"><option value="הגליל העליון"><option value="הכנרת"><option value="חיפה והכרמל"><option value="תל אביב–יפו"><option value="ירושלים"><option value="ים המלח"><option value="מצפה רמון והנגב"><option value="אילת"><option value="אודם"><option value="קצרין"><option value="ראש פינה"><option value="מטולה"><option value="טבריה"><option value="מגדל"><option value="חיפה"><option value="תל אביב"><option value="יפו"><option value="ירושלים"><option value="עין בוקק"><option value="נווה זוהר"><option value="מצפה רמון"><option value="אילת"></datalist>
+  </div>
+  <div class="results">
+    <aside class="filters" aria-label="סינון תוצאות">
+      <form id="filters" onsubmit="return false">
+        <fieldset><legend>סוג לינה</legend><label class="chk"><input type="checkbox" name="type" value="hotel">מלון</label><label class="chk"><input type="checkbox" name="type" value="zimmer">צימר</label><label class="chk"><input type="checkbox" name="type" value="apartment">דירה</label></fieldset>
+        <fieldset class="range" style="margin-top:28px"><legend>מחיר ללילה</legend><label for="max" class="vh">מחיר מקסימלי ללילה</label><input type="range" id="max" name="max" min="400" max="2000" step="50" value="2000"><output id="maxout" for="max">ללא הגבלה</output></fieldset>
+        <fieldset style="margin-top:28px"><legend>מה צריך שיהיה</legend><label class="chk"><input type="checkbox" name="amen" value="pool">בריכה</label><label class="chk"><input type="checkbox" name="amen" value="jacuzzi">ג׳קוזי</label><label class="chk"><input type="checkbox" name="amen" value="breakfast">ארוחת בוקר</label><label class="chk"><input type="checkbox" name="amen" value="kosher">כשר</label><label class="chk"><input type="checkbox" name="amen" value="pets">מותר עם כלב</label><label class="chk"><input type="checkbox" name="amen" value="accessible">נגיש לכיסא גלגלים</label><label class="chk"><input type="checkbox" name="amen" value="kids">מתאים לילדים</label><label class="chk"><input type="checkbox" name="amen" value="parking">חניה חינם</label><label class="chk"><input type="checkbox" name="amen" value="sea">קרוב לחוף</label><label class="chk"><input type="checkbox" name="amen" value="kitchen">מטבח מאובזר</label><label class="chk"><input type="checkbox" name="free" value="1">ביטול חינם</label></fieldset>
+        <fieldset style="margin-top:28px"><legend>אזור</legend><label class="chk"><input type="checkbox" name="region" value="golan">רמת הגולן</label><label class="chk"><input type="checkbox" name="region" value="galil">הגליל העליון</label><label class="chk"><input type="checkbox" name="region" value="kinneret">הכנרת</label><label class="chk"><input type="checkbox" name="region" value="haifa">חיפה והכרמל</label><label class="chk"><input type="checkbox" name="region" value="tlv">תל אביב–יפו</label><label class="chk"><input type="checkbox" name="region" value="jerusalem">ירושלים</label><label class="chk"><input type="checkbox" name="region" value="deadsea">ים המלח</label><label class="chk"><input type="checkbox" name="region" value="negev">מצפה רמון והנגב</label><label class="chk"><input type="checkbox" name="region" value="eilat">אילת</label></fieldset>
+        <button type="button" id="clearf" class="btn ghost" style="margin-top:28px">ניקוי הסינון</button>
+      </form>
+      <div class="close"><button type="button" class="btn wide">הצגת התוצאות</button></div>
+    </aside>
+    <section aria-label="תוצאות">
+      <div class="rtop">
+        <p class="count" aria-live="polite">18 מקומות</p>
+        <button type="button" class="btn ghost openf" aria-expanded="false">סינון</button>
+        <div class="field"><label for="sort">מיון</label><select id="sort"><option value="rec">מומלץ</option><option value="low">מחיר: מהזול ליקר</option><option value="high">מחיר: מהיקר לזול</option><option value="size">החדר הגדול ביותר</option></select></div>
+      </div>
+      <ol class="list"><li class="row rise" style="--i:0" data-id="basalt-cabins" data-rank="0">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1664369058082-ee8e36028106?w=800&q=80&auto=format&fit=crop" alt="סלון בבקתת עץ עם ספה ושטיח" loading="eager" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">צימר · אודם, רמת הגולן</p>
+    <h2><a href="makom-basalt-cabins.html">בקתות הבזלת</a></h2>
+    <p>שלוש בקתות עץ בקצה היער, עם ג׳קוזי עץ פרטי במרפסת.</p>
+    <ul class="facts"><li>7 דקות נסיעה לברכת רם</li><li>מקום ל־2 עד 4 אורחים בבקתה</li><li>עצים לקמין כלולים</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">בקתת היער</p>
+    <p class="total num">מ־₪790</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-basalt-cabins.html">לבחירת חדר</a>
+  </div>
+</li><li class="row rise" style="--i:1" data-id="old-stable" data-rank="1">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1729881001108-93ceee132220?w=800&q=80&auto=format&fit=crop" alt="בית אבן עם חלונות עץ" loading="eager" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">צימר · קצרין, רמת הגולן</p>
+    <h2><a href="makom-old-stable.html">האורווה הישנה</a></h2>
+    <p>מבנה אבן משנות החמישים שהפך לשתי סוויטות גדולות.</p>
+    <ul class="facts"><li>5 דקות לפארק קצרין העתיקה</li><li>עד 4 אורחים בסוויטה</li><li>חימום תת־רצפתי</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">סוויטת התאנה</p>
+    <p class="total num">מ־₪820</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-old-stable.html">לבחירת חדר</a>
+  </div>
+</li><li class="row rise" style="--i:2" data-id="rosh-pina-loft" data-rank="2">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1730131255658-c51e724003c2?w=800&q=80&auto=format&fit=crop" alt="בית אבן עם תריסים אדומים" loading="eager" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">צימר · ראש פינה, הגליל העליון</p>
+    <h2><a href="makom-rosh-pina-loft.html">עליית הגג</a></h2>
+    <p>שני חדרים מעל בית ישן ברחוב המייסדים, עם מרפסת לעמק החולה.</p>
+    <ul class="facts"><li>3 דקות הליכה למסעדות</li><li>בית מ־1890</li><li>מרפסת לעמק החולה</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">החדר המערבי</p>
+    <p class="total num">מ־₪690</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-rosh-pina-loft.html">לבחירת חדר</a>
+  </div>
+</li><li class="row rise" style="--i:0" data-id="almond-hill" data-rank="3">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1761828122922-5a839ada5b76?w=800&q=80&auto=format&fit=crop" alt="כניסה מקושתת עם דלתות עץ מגולפות" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">מלון · מטולה, הגליל העליון</p>
+    <h2><a href="makom-almond-hill.html">מלון גבעת השקד</a></h2>
+    <p>מלון בוטיק של 14 חדרים בבית חווה משופץ, בכניסה למטולה.</p>
+    <ul class="facts"><li>14 חדרים</li><li>ארוחת בוקר עד 11:00</li><li>10 דקות הליכה לשמורת עיון</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">חדר קלאסי</p>
+    <p class="total num">מ־₪980</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-almond-hill.html">לבחירת חדר</a>
+  </div>
+</li><li class="row rise" style="--i:1" data-id="waterline-tiberias" data-rank="4">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1584132967334-10e028bd69f7?w=800&q=80&auto=format&fit=crop" alt="בריכה מול המים בין עצים" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">מלון · טבריה, הכנרת</p>
+    <h2><a href="makom-waterline-tiberias.html">מלון שפת המים</a></h2>
+    <p>מלון על החוף הצפוני של טבריה, עם בריכה שגולשת אל הכנרת.</p>
+    <ul class="facts"><li>כל החדרים פונים לכנרת</li><li>10 דקות הליכה לנמל</li><li>בריכה מקורה בחורף</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">חדר זוגי, ללא החזר</p>
+    <p class="total num">מ־₪760</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-waterline-tiberias.html">לבחירת חדר</a>
+  </div>
+</li><li class="row rise" style="--i:2" data-id="fishermans-house" data-rank="5">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1702830499141-a0634d87d6af?w=800&q=80&auto=format&fit=crop" alt="חלון גדול מול המים" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">דירה · מגדל, הכנרת</p>
+    <h2><a href="makom-fishermans-house.html">בית הדייגים</a></h2>
+    <p>דירת שלושה חדרים עם חלון ענק לכנרת, ארבעים מטר מהמים.</p>
+    <ul class="facts"><li>40 מטר מהמים</li><li>2 חדרי שינה</li><li>מכולת ומאפייה במרחק 200 מטר</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">כל הדירה</p>
+    <p class="total num">מ־₪990</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-fishermans-house.html">לבחירת חדר</a>
+  </div>
+</li><li class="row" style="--i:0" data-id="carmel-ridge" data-rank="6">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1671683886944-6478e6c84cbc?w=800&q=80&auto=format&fit=crop" alt="חזית בניין מלון" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">מלון · חיפה, חיפה והכרמל</p>
+    <h2><a href="makom-carmel-ridge.html">מלון רכס הכרמל</a></h2>
+    <p>מלון עירוני על שדרות הנשיא, עם חדרים שפונים למפרץ חיפה.</p>
+    <ul class="facts"><li>3 דקות הליכה לכרמלית</li><li>נוף למפרץ מקומה 4 ומעלה</li><li>חדר כושר פתוח כל היום</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">חדר עירוני</p>
+    <p class="total num">מ־₪620</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-carmel-ridge.html">לבחירת חדר</a>
+  </div>
+</li><li class="row" style="--i:1" data-id="colony-apartment" data-rank="7">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1493809842364-78817add7ffb?w=800&q=80&auto=format&fit=crop" alt="סלון עם ספה אפורה וחלון גבוה" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">דירה · חיפה, חיפה והכרמל</p>
+    <h2><a href="makom-colony-apartment.html">דירה במושבה הגרמנית</a></h2>
+    <p>דירת שני חדרים בבית טמפלרי, מול המדרגות של הגנים.</p>
+    <ul class="facts"><li>בית משנת 1871</li><li>מסעדות בשדרה מחוץ לדלת</li><li>עד 3 אורחים</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">כל הדירה</p>
+    <p class="total num">מ־₪640</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-colony-apartment.html">לבחירת חדר</a>
+  </div>
+</li><li class="row" style="--i:2" data-id="roof-neve-tzedek" data-rank="8">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1493246318656-5bfd4cfb29b8?w=800&q=80&auto=format&fit=crop" alt="גג עם שולחנות מול העיר בשקיעה" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">מלון · תל אביב, תל אביב–יפו</p>
+    <h2><a href="makom-roof-neve-tzedek.html">מלון הגג</a></h2>
+    <p>עשרים חדרים בבניין לבן בנווה צדק, עם בר על הגג.</p>
+    <ul class="facts"><li>10 דקות הליכה לחוף</li><li>בר על הגג עד חצות</li><li>20 חדרים</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">חדר קטן</p>
+    <p class="total num">מ־₪790</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-roof-neve-tzedek.html">לבחירת חדר</a>
+  </div>
+</li><li class="row" style="--i:0" data-id="jaffa-flat" data-rank="9">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1689717887631-088197cdc2ca?w=800&q=80&auto=format&fit=crop" alt="מרפסת עם מעקה מול הים" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">דירה · יפו, תל אביב–יפו</p>
+    <h2><a href="makom-jaffa-flat.html">הדירה בסמטה</a></h2>
+    <p>דירת חדר וחצי בסמטה של יפו העתיקה, שתי דקות מהנמל.</p>
+    <ul class="facts"><li>2 דקות הליכה לנמל יפו</li><li>גג משותף מול הים</li><li>עד 2 אורחים</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">כל הדירה</p>
+    <p class="total num">מ־₪720</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-jaffa-flat.html">לבחירת חדר</a>
+  </div>
+</li><li class="row" style="--i:1" data-id="stone-house-jlm" data-rank="10">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1650134405603-ceacf013fbf0?w=800&q=80&auto=format&fit=crop" alt="בית אבן עם מרפסת" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">דירה · ירושלים, ירושלים</p>
+    <h2><a href="makom-stone-house-jlm.html">בית האבן</a></h2>
+    <p>דירת גן בנחלאות, חמש דקות הליכה לשוק מחנה יהודה.</p>
+    <ul class="facts"><li>5 דקות הליכה לשוק</li><li>חצר פרטית</li><li>פלטה ומיחם לשבת</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">כל הדירה</p>
+    <p class="total num">מ־₪1,150</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-stone-house-jlm.html">לבחירת חדר</a>
+  </div>
+</li><li class="row" style="--i:2" data-id="city-gate" data-rank="11">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1573052905904-34ad8c27f0cc?w=800&q=80&auto=format&fit=crop" alt="לובי עם קשתות ומדרגות" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">מלון · ירושלים, ירושלים</p>
+    <h2><a href="makom-city-gate.html">מלון שער העיר</a></h2>
+    <p>מלון של 48 חדרים ברחוב יפו, עשר דקות הליכה משער יפו.</p>
+    <ul class="facts"><li>10 דקות הליכה לעיר העתיקה</li><li>חדרים שקטים לחצר</li><li>מעלית שבת</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">חדר זוגי</p>
+    <p class="total num">מ־₪720</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-city-gate.html">לבחירת חדר</a>
+  </div>
+</li><li class="row" style="--i:0" data-id="salt-hotel" data-rank="12">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1682879654264-5f2a52e1ea0f?w=800&q=80&auto=format&fit=crop" alt="בריכה בין עצי דקל במדבר" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">מלון · עין בוקק, ים המלח</p>
+    <h2><a href="makom-salt-hotel.html">מלון מלח</a></h2>
+    <p>מלון ספא על החוף של עין בוקק, עם בריכת מים מינרליים.</p>
+    <ul class="facts"><li>החוף מעבר לכביש</li><li>כניסה לספא כלולה</li><li>ארוחת ערב בחצי פנסיון</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">חדר להרים, ללא החזר</p>
+    <p class="total num">מ־₪880</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-salt-hotel.html">לבחירת חדר</a>
+  </div>
+</li><li class="row" style="--i:1" data-id="tamar-rooms" data-rank="13">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1750859876124-7a57a12c8275?w=800&q=80&auto=format&fit=crop" alt="חצר עם קיר אדום ועץ זית" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">צימר · נווה זוהר, ים המלח</p>
+    <h2><a href="makom-tamar-rooms.html">חדרי תמר</a></h2>
+    <p>ארבעה חדרי אירוח עם חצר תמרים, עשר דקות מהחוף.</p>
+    <ul class="facts"><li>20 דקות נסיעה למצדה</li><li>בריכת טבילה בחצר</li><li>ארבעה חדרים בלבד</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">חדר החצר</p>
+    <p class="total num">מ־₪590</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-tamar-rooms.html">לבחירת חדר</a>
+  </div>
+</li><li class="row" style="--i:2" data-id="crater-edge" data-rank="14">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1690935986319-c11e6cae84f7?w=800&q=80&auto=format&fit=crop" alt="חדר עם חלון גדול לנוף" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">מלון · מצפה רמון, מצפה רמון והנגב</p>
+    <h2><a href="makom-crater-edge.html">מלון שפת המכתש</a></h2>
+    <p>מלון של 32 חדרים על קו המצוק, עם חלון לכל רוחב המכתש.</p>
+    <ul class="facts"><li>תצפית כוכבים בלילות ללא ירח</li><li>בריכה מחוממת</li><li>שביל המצוק עובר ליד המלון</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">חדר מכתש</p>
+    <p class="total num">מ־₪1,290</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-crater-edge.html">לבחירת חדר</a>
+  </div>
+</li><li class="row" style="--i:0" data-id="wind-khan" data-rank="15">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1590076812942-a0bd12a70861?w=800&q=80&auto=format&fit=crop" alt="בקתת בוץ במדבר" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">צימר · מצפה רמון, מצפה רמון והנגב</p>
+    <h2><a href="makom-wind-khan.html">חאן הרוח</a></h2>
+    <p>חמש בקתות מדבר בשולי העיר, עם שמיים בלי פנסים.</p>
+    <ul class="facts"><li>מטבח משותף</li><li>אין תאורת רחוב</li><li>5 בקתות</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">בקתה זוגית</p>
+    <p class="total num">מ־₪460</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-wind-khan.html">לבחירת חדר</a>
+  </div>
+</li><li class="row" style="--i:1" data-id="reef-line" data-rank="16">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1586611292717-f828b167408c?w=800&q=80&auto=format&fit=crop" alt="בריכה מול הים" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">מלון · אילת, אילת</p>
+    <h2><a href="makom-reef-line.html">מלון קו השונית</a></h2>
+    <p>מלון בחוף הדרומי של אילת, מול שמורת האלמוגים.</p>
+    <ul class="facts"><li>300 מטר לשמורת האלמוגים</li><li>שלוש בריכות</li><li>מזח פרטי</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">חדר לבריכה</p>
+    <p class="total num">מ־₪940</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-reef-line.html">לבחירת חדר</a>
+  </div>
+</li><li class="row" style="--i:2" data-id="mountain-view-eilat" data-rank="17">
+  <div class="ph"><img src="https://images.unsplash.com/photo-1714919286244-6f3f6cce6e65?w=800&q=80&auto=format&fit=crop" alt="מרפסת עם שולחן ברזל וכיסאות" loading="lazy" width="800" height="600"></div>
+  <div class="body">
+    <p class="meta">דירה · אילת, אילת</p>
+    <h2><a href="makom-mountain-view-eilat.html">דירת ההרים האדומים</a></h2>
+    <p>דירת שלושה חדרים בקומה תשיעית, עם מרפסת להרי אדום.</p>
+    <ul class="facts"><li>מרפסת לזריחה</li><li>מזגן בכל חדר</li><li>חניה פרטית</li></ul>
+  </div>
+  <div class="buy">
+    <p class="room">כל הדירה</p>
+    <p class="total num">מ־₪850</p>
+    <p class="per">ללילה באמצע שבוע</p>
+    <p class="cx"></p>
+    <a class="btn" href="makom-mountain-view-eilat.html">לבחירת חדר</a>
+  </div>
+</li></ol>
+      <p class="empty" hidden>אין מקום שמתאים לכל הסינונים יחד. נסו להוריד סינון אחד, או <button type="button" class="btn ghost" onclick="document.getElementById('clearf').click()">לנקות את הכל</button></p>
+    </section>
+  </div>
+</main>
+<footer class="foot">
+  <p class="big" aria-hidden="true"><svg viewBox="0 0 26 30" aria-hidden="true"><path d="M0 30V13a13 13 0 0 1 26 0v17z"/><circle cx="18" cy="19" r="2.2" fill="#fff"/></svg>לנו</p>
+  <div class="cols">
+    <div><p>לנו הוא אתר לדוגמה שעיצבה ובנתה Buildy IL, סוכנות אתרים מישראל. המקומות, המחירים והחדרים בדויים, ואי אפשר להזמין כאן לינה אמיתית.</p><p style="margin-top:12px"><a href="https://buildyil.net/">לאתר של Buildy IL</a></p></div>
+    <div><ul><li><a href="search.html?type=zimmer">צימרים</a></li><li><a href="search.html?type=hotel">מלונות</a></li><li><a href="search.html?type=apartment">דירות</a></li><li><a href="search.html">כל המקומות</a></li></ul></div>
+    <div><ul><li><a href="help.html">עזרה וביטולים</a></li><li><a href="privacy.html">מדיניות פרטיות</a></li><li><a href="terms.html">תנאי שימוש</a></li><li><a href="accessibility.html">הצהרת נגישות</a></li></ul></div>
+  </div>
+  <p class="small">צילומים: Unsplash, לפי רישיון Unsplash. פירוט ב<a href="terms.html#credits">תנאי השימוש</a>. האתר לא משתמש בעוגיות ולא שולח מידע.</p>
+</footer>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

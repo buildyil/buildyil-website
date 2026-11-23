@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>השלמת הזמנה · לנו</title>
+<meta name="description" content="פרטי האורח וסיכום ההזמנה. אתר לדוגמה: שום פרט לא נשלח.">
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://images.unsplash.com">
+<link rel="stylesheet" href="css/site.css">
+<script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+<a class="skip" href="#main">דלג לתוכן</a>
+<div class="demo" role="note"><span><b>אתר לדוגמה</b> שעיצבה Buildy IL. המקומות, המחירים וההזמנות אינם אמיתיים.</span><a href="https://buildyil.net/">רוצים אתר כזה?</a></div>
+<header class="top"><a class="logo" href="index.html" aria-label="לנו, לדף הבית"><svg viewBox="0 0 26 30" aria-hidden="true"><path d="M0 30V13a13 13 0 0 1 26 0v17z"/><circle cx="18" cy="19" r="2.2" fill="#fff"/></svg>לנו</a><nav aria-label="ראשי"><ul class="nav"><li><a href="search.html?type=zimmer">צימרים</a></li><li><a href="search.html?type=hotel">מלונות</a></li><li><a href="search.html?type=apartment">דירות</a></li><li><a href="help.html">עזרה</a></li></ul></nav></header>
+<main id="main">
+  <div class="pagehead"><h1>השלמת ההזמנה</h1></div>
+  <div class="nobook doc" hidden><p style="font-size:20px;margin-top:24px">לא נבחר חדר. <a href="search.html">חזרה לחיפוש</a></p></div>
+  <div class="book">
+    <div>
+      <p class="mismatch empty" hidden style="margin-bottom:16px">החדר הזה לא מתאים בדיוק לתאריכים או למספר האורחים שבחרתם. אפשר <a data-back-place href="search.html">לחזור ולבחור חדר אחר</a>.</p>
+      <div class="formhead"><h2>מי מגיע</h2></div>
+      <form novalidate>
+        <div class="field"><label for="first">שם פרטי</label><input id="first" name="first" autocomplete="given-name" required aria-describedby="first-err"><span class="err" id="first-err" aria-live="polite"></span></div>
+        <div class="field"><label for="last">שם משפחה</label><input id="last" name="last" autocomplete="family-name" required aria-describedby="last-err"><span class="err" id="last-err" aria-live="polite"></span></div>
+        <div class="field"><label for="email">מייל לאישור</label><input id="email" name="email" type="email" autocomplete="email" dir="ltr" required aria-describedby="email-err"><span class="err" id="email-err" aria-live="polite"></span></div>
+        <div class="field"><label for="phone">טלפון נייד</label><input id="phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" dir="ltr" required aria-describedby="phone-err"><span class="err" id="phone-err" aria-live="polite"></span></div>
+        <div class="field full"><label for="arrive">שעת הגעה משוערת</label><select id="arrive" name="arrive"><option>עוד לא יודעים</option><option>14:00–16:00</option><option>16:00–18:00</option><option>18:00–20:00</option><option>20:00–22:00</option><option>אחרי 22:00</option></select></div>
+        <div class="field full"><label for="notes">בקשות למקום (לא חובה)</label><textarea id="notes" name="notes" placeholder="מיטת תינוק, קומה נמוכה, הגעה עם כלב"></textarea></div>
+        <label class="chk agree"><input type="checkbox" name="agree" aria-describedby="agree-err">קראתי את תנאי הביטול של החדר ואת <a href="terms.html">תנאי השימוש</a><span class="err" id="agree-err" aria-live="polite" style="margin-inline-start:8px"></span></label>
+        <p class="sendnote">זה אתר לדוגמה. הפרטים לא נשלחים לשום מקום ולא נשמרים, וגם לא תתבצע הזמנה.</p>
+        <button class="btn" type="submit" disabled>סיום ההזמנה</button>
+        <noscript><p class="sendnote">כדי לנסות את מסך ההזמנה צריך להפעיל JavaScript בדפדפן.</p></noscript>
+      </form>
+      <div class="done" hidden>
+        <h2>כך הייתה נראית ההזמנה שלך, <span data-d="name"></span></h2>
+        <p>באתר אמיתי היה נשלח אליך עכשיו אישור במייל, ו<span data-d="place"></span> היה נשמר עבורך, <span data-d="dates"></span>. הסכום, <b data-d="total"></b>, משולם במקום ביום ההגעה.</p>
+        <p style="margin-top:12px">זה אתר לדוגמה, ולכן לא נשלח שום דבר והפרטים נמחקו מהטופס.</p>
+        <a class="btn" href="search.html">חזרה לחיפוש</a>
+      </div>
+    </div>
+    <aside class="summary" aria-label="סיכום ההזמנה">
+      <img src="" alt="" width="900" height="560">
+      <div class="in">
+        <h3></h3><p class="where"></p>
+        <dl><dt>חדר</dt><dd data-s="room"></dd><dt>הגעה</dt><dd data-s="in"></dd><dt>עזיבה</dt><dd data-s="out"></dd><dt>אורחים</dt><dd data-s="guests"></dd></dl>
+        <div class="lines"></div>
+        <p class="cx"></p>
+      </div>
+    </aside>
+  </div>
+</main>
+<footer class="foot">
+  <p class="big" aria-hidden="true"><svg viewBox="0 0 26 30" aria-hidden="true"><path d="M0 30V13a13 13 0 0 1 26 0v17z"/><circle cx="18" cy="19" r="2.2" fill="#fff"/></svg>לנו</p>
+  <div class="cols">
+    <div><p>לנו הוא אתר לדוגמה שעיצבה ובנתה Buildy IL, סוכנות אתרים מישראל. המקומות, המחירים והחדרים בדויים, ואי אפשר להזמין כאן לינה אמיתית.</p><p style="margin-top:12px"><a href="https://buildyil.net/">לאתר של Buildy IL</a></p></div>
+    <div><ul><li><a href="search.html?type=zimmer">צימרים</a></li><li><a href="search.html?type=hotel">מלונות</a></li><li><a href="search.html?type=apartment">דירות</a></li><li><a href="search.html">כל המקומות</a></li></ul></div>
+    <div><ul><li><a href="help.html">עזרה וביטולים</a></li><li><a href="privacy.html">מדיניות פרטיות</a></li><li><a href="terms.html">תנאי שימוש</a></li><li><a href="accessibility.html">הצהרת נגישות</a></li></ul></div>
+  </div>
+  <p class="small">צילומים: Unsplash, לפי רישיון Unsplash. פירוט ב<a href="terms.html#credits">תנאי השימוש</a>. האתר לא משתמש בעוגיות ולא שולח מידע.</p>
+</footer>
+<script src="js/data.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>
