@@ -119,6 +119,8 @@ section.s{padding:90px 0}
 .wcard .meta{padding:18px 20px;display:flex;justify-content:space-between;align-items:center}
 .wcard .meta .t{font-weight:700;font-size:17px}
 .wcard .meta .tag{font-size:13px;color:var(--gray2)}
+.work-grid.two{grid-template-columns:repeat(2,minmax(0,1fr));max-width:1100px;margin:0 auto}.work-grid.two .wcard .img{aspect-ratio:1200/554}
+@media(max-width:700px){.work-grid.two{grid-template-columns:minmax(0,1fr)}.work-grid.two .meta{flex-direction:column;align-items:flex-start;gap:4px}}
 .work-grid.one{grid-template-columns:1fr;max-width:1000px;margin:0 auto}
 .work-grid.one .wcard .img{aspect-ratio:1200/554}
 @media(max-width:820px){.work-grid{grid-template-columns:1fr 1fr}.work-grid .big{grid-column:span 2}}
@@ -398,13 +400,17 @@ footer .ckbtn:hover{color:#fff}
   <div class="wrap">
     <div class="sec-head">
       <span class="eyebrow">עבודות</span>
-      <h2>אתר שבנינו, מקצה לקצה</h2>
-      <p class="lead" style="margin-inline:auto">אתר תדמית מלא למשרד תיווך בחיפה: חיפוש וסינון נכסים, עמוד לכל נכס עם מחשבון משכנתא, מדריך לקונה, נגישות ומסמכים משפטיים. אתר לדוגמה, אפשר להיכנס ולגלוש בו.</p>
+      <h2>אתרים שבנינו</h2>
+      <p class="lead" style="margin-inline:auto">משרד תיווך בחיפה עם חיפוש נכסים ומחשבון משכנתא, ומשרד רואי חשבון בבאר שבע עם לוח דיווחים חי. אתרים לדוגמה, אפשר להיכנס ולגלוש בהם.</p>
     </div>
-    <div class="work-grid one">
+    <div class="work-grid two">
       <a class="wcard" href="/portfolio/delet/" target="_blank" rel="noopener">
         <div class="img"><img src="assets/work/delet.jpg" alt="דף הבית של אתר הנדל&quot;ן דלת נכסים" loading="lazy" width="1200" height="554"></div>
         <div class="meta"><span class="t">דלת נכסים · נדל"ן בחיפה</span><span class="tag">17 עמודים · לצפייה באתר</span></div>
+      </a>
+      <a class="wcard" href="/portfolio/hamisha-asar/" target="_blank" rel="noopener">
+        <div class="img"><img src="assets/work/hamisha-asar.jpg" alt="דף הבית של אתר רואי החשבון החמישה־עשר" loading="lazy" width="1200" height="750"></div>
+        <div class="meta"><span class="t">החמישה־עשר · רואי חשבון בבאר שבע</span><span class="tag">10 עמודים · לצפייה באתר</span></div>
       </a>
     </div>
   </div>
